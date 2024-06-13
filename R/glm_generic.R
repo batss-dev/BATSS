@@ -16,18 +16,18 @@ print.bats = function(x, ...){
     for(i in 2:length(x$call$var)){
         cat("  *",names(x$call$var)[i],":",as.character(x$call$var)[i],"\n")
     }
-    if(!is.null(x$par$RAR)){    
+    if(!is.null(x$par$RAR)){
         cat("\nGroup randomisation:\n")
-        cat("  *",x$par$RAR,"\n")        
+        cat("  *",x$call$RAR,"\n")
     }
     cat("\n Model:\n")
-    cat("  *",format(x$call$model)," (with",x$call$link, "link)\n")
+    cat("  *",format(x$call$model)," (with", ifelse(is.null(x$call$link),"identity",x$call$link), "link)\n")
     cat("\n Call:\n ")
     print(x$call)
 }
 
 
- 
+
 
 
 
