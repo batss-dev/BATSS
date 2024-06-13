@@ -1,6 +1,6 @@
 #' @name summary.bats
 #' @title Summary function for BATS outputs
-#' @description Summary method function for objects of class 'bats'.  
+#' @description Summary method function for objects of class 'bats'.
 #' @param object An object of class 'bats' (i.e., output of the function BATS::bats).
 #' @param full A logical indicating if a standard (full = FALSE, default) or extended output (full = TRUE) should be returned.
 #' @param ... Additional arguments affecting the summary produced.
@@ -27,19 +27,19 @@ summary.bats = function(object, full=FALSE, ...){
     for(i in 2:length(object$call$var)){
       cat("  *",names(object$call$var)[i],":",as.character(object$call$var)[i],"\n")
     }
-    if(!is.null(object$par$RAR)){    
+    if(!is.null(object$par$RAR)){
         cat("\n")
-        cli_h3("Group randomisation:")        
-        cat("  *",object$par$RAR,"\n")        
+        cli_h3("Group randomisation:")
+        cat("  *",object$call$RAR,"\n")
     }
     cat("\n")
-    cli_h3("Model:")        
-    cat("  *",format(object$call$model)," (with",object$call$link, "link)\n")
+    cli_h3("Model: ")
+    cat("  *",format(object$call$model)," (with",ifelse(is.null(object$call$link),"identity",object$call$link), "link)\n")
     cat("\n")
     cli_h3("Fixed effect parameters:\n")
     objectw = object$beta
     colnames(objectw)[1] = ""
-    print(objectw,row.names=FALSE) 
+    print(objectw,row.names=FALSE)
     cat("\n")
     cli_h3("Sample size per interim analyis:\n")
     objectw = object$look
@@ -82,13 +82,13 @@ summary.bats = function(object, full=FALSE, ...){
                             'q10'=apply(temp,2,quantile,probs=0.1),
                             'q50'=apply(temp,2,quantile,probs=0.5),
                             'q90'=apply(temp,2,quantile,probs=0.9))
-          colnames(temp)[c(1,5:7)] = c("",paste0("q(",c(0.1,0.5,0.9),")"))                          
+          colnames(temp)[c(1,5:7)] = c("",paste0("q(",c(0.1,0.5,0.9),")"))
           temp[,1][nrow(temp)] = ""
           print(temp,row.names=FALSE)
           #
           cat("\n")
           cli_h3("Scenarios:\n")
-          print(object$H0$scenario,row.names=FALSE) 
+          print(object$H0$scenario,row.names=FALSE)
           cat(" where 0 = no stop, 1 = efficacy stop, 2 = futility stop\n")
           }
     }
@@ -129,16 +129,16 @@ summary.bats = function(object, full=FALSE, ...){
                             'q10'=apply(temp,2,quantile,probs=0.1),
                             'q50'=apply(temp,2,quantile,probs=0.5),
                             'q90'=apply(temp,2,quantile,probs=0.9))
-          colnames(temp)[c(1,5:7)] = c("",paste0("q(",c(0.1,0.5,0.9),")"))                          
+          colnames(temp)[c(1,5:7)] = c("",paste0("q(",c(0.1,0.5,0.9),")"))
           temp[,1][nrow(temp)] = ""
           print(temp,row.names=FALSE)
           #
           cat("\n")
           cli_h3("Scenarios:\n")
-          print(object$H1$scenario,row.names=FALSE) 
+          print(object$H1$scenario,row.names=FALSE)
           cat(" where 0 = no stop, 1 = efficacy stop, 2 = futility stop\n")
           }
     }
-    cli_h1("")#cat(paste0(rep("-",options()$width),collapse=""))    
-    cat("\n")    
+    cli_h1("")#cat(paste0(rep("-",options()$width),collapse=""))
+    cat("\n")
 }
