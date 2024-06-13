@@ -35,9 +35,10 @@
 #' @export
 #' @examples
 #'\dontrun{
-#' # Example: fixed efficacy (0.975) and futility (0.05) stops, no RAR, 
-#' #          3 groups with group means C = 1 (ref), T1 = 2, T2 = 3, 
-#' #          Gaussian conditional distribution with sigma = 2, 6 looks.
+#' # Example: 
+#' # fixed efficacy (0.975) and futility (0.05) stops, no RAR, 
+#' # 3 groups with group means C = 1 (ref), T1 = 2, T2 = 3, 
+#' # Gaussian conditional distribution with sigma = 2, 6 looks.
 #' 
 #' sim = bats.glm(  
 #'                model            = y ~ group,   
