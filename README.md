@@ -6,7 +6,7 @@
 
 BATS - Bayesian Adaptive Trials Simulator - provides a flexible structure for the fast simulation of Bayesian adaptive designs for clinical trials. 
 
-This package can be usedto define and evaluate the operating characteristics of Bayesian adaptive designs for various different types of primary outcomes (e.g., those that follow a normal, binary, Poisson or negative binomial distribution) and can incorporate the most common types of adaptations: stopping treatments (or the entire trial) for efficacy or futility, and Bayesian response adaptive randomisation - based on user-defined adaptation rules. 
+This package can be used to define and evaluate the operating characteristics of Bayesian adaptive designs for various different types of primary outcomes (e.g., those that follow a normal, binary, Poisson or negative binomial distribution) and can incorporate the most common types of adaptations: stopping treatments (or the entire trial) for efficacy or futility, and Bayesian response adaptive randomisation - based on user-defined adaptation rules. 
 
 Other important features of this highly modular package include: parallel processing, customisability, use on a cluster computer or PC/Mac, and adjustment for covariates.
 
