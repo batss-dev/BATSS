@@ -6,6 +6,7 @@
 .Rbuildignore
 update-package.R
 dlc/
+.com.greenworldsoft.syncfolderspro
 
 ############################################
 # OSX generated files 
