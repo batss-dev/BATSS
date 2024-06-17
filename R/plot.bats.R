@@ -5,14 +5,6 @@
 #' @param focus A character string indicating the type of plot with options 'size' (default) to display the total and per group sample size observed in the Monte Carlo trials, and 'estimates' to display the Monte Carlo trial target estimates as a function of the sample size.   
 #' @param hypothesis A character string indicating which alternative hypothesis to use for analyses considering both "H0" and "H1", with options "H1" (default) and "H0".
 #' @param ... Additional arguments affecting the plot produced.
-#' @examples
-#'\dontrun{
-#' data(sim2B)
-#' plot(sim2B,focus="size",hypothesis="H0")
-#' plot(sim2B,focus="size",hypothesis="H1")
-#' plot(sim2B,focus="estimates",hypothesis="H0")
-#' plot(sim2B,focus="estimates",hypothesis="H1")
-#' }
 #' @export
 plot.bats = function(x,focus="size",hypothesis="H1", ...){
     # hypothesis 

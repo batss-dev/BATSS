@@ -1,6 +1,6 @@
 Package: BATS
 Title: Bayesian Adaptive Trial Simulator (BATS) for generalised linear models
-Version: 0.7.5
+Version: 0.7.6
 Authors@R: c(
   person("Dominique-Laurent", "Couturier", role = c("aut", "cre"), email = "dominique.couturier@mrc-bsu.cam.ac.uk", comment = c(ORCID = "0000-0001-5774-5036")),
   person("Stephane", "Heritier", role = "aut", comment = c(ORCID = "0000-0002-3640-079X")),

@@ -4,14 +4,6 @@
 #' @param object An object of class 'bats' (i.e., output of the function BATS::bats).
 #' @param full A logical indicating if a standard (full = FALSE, default) or extended output (full = TRUE) should be returned.
 #' @param ... Additional arguments affecting the summary produced.
-#' @examples
-#'\dontrun{
-#' data(sim2B)
-#' plot(sim2B,focus="size",hypothesis="H0")
-#' plot(sim2B,focus="size",hypothesis="H1")
-#' plot(sim2B,focus="estimates",hypothesis="H0")
-#' plot(sim2B,focus="estimates",hypothesis="H1")
-#' }
 #' @export
 summary.bats = function(object, full=FALSE, ...){
     # common part

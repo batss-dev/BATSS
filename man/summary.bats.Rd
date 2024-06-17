@@ -16,12 +16,3 @@
 \description{
 Summary method function for objects of class 'bats'.
 }
-\examples{
-\dontrun{
-data(sim2B)
-plot(sim2B,focus="size",hypothesis="H0")
-plot(sim2B,focus="size",hypothesis="H1")
-plot(sim2B,focus="estimates",hypothesis="H0")
-plot(sim2B,focus="estimates",hypothesis="H1")
-}
-}
