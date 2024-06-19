@@ -1,10 +1,11 @@
 #' @name plot.bats
 #' @title Plot function for BATS outputs
 #' @description Plot for objects of class 'bats' 
-#' @param x An object of class 'bats' (i.e., output of the function BATS::bats).
+#' @param x An object of class 'bats' (i.e., output of the function [bats.glm]).
 #' @param focus A character string indicating the type of plot with options 'size' (default) to display the total and per group sample size observed in the Monte Carlo trials, and 'estimates' to display the Monte Carlo trial target estimates as a function of the sample size.   
 #' @param hypothesis A character string indicating which alternative hypothesis to use for analyses considering both "H0" and "H1", with options "H1" (default) and "H0".
 #' @param ... Additional arguments affecting the plot produced.
+#' @seealso [bats.glm()], the function generating S3 objects of class 'bats'. 
 #' @export
 plot.bats = function(x,focus="size",hypothesis="H1", ...){
     # hypothesis 

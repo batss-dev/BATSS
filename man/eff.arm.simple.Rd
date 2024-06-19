@@ -7,13 +7,13 @@
 eff.arm.simple(posterior, b)
 }
 \arguments{
-\item{posterior}{posterior probability of P(theta>delta) > b}
+\item{posterior}{the BATS ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability P(beta>delta.eff) for a given target parameter.}
 
-\item{b}{probability boundary for efficacy}
+\item{b}{the cut-off value to declare efficacy.}
 }
 \value{
 \link{eff.arm.simple} returns a logical constant.
 }
 \description{
-allows stopping an arm for efficacy when the probability of the corresponding target parameter being greater than delta is greater than a fixed value b
+allows stopping an arm for efficacy when the probability of the corresponding target parameter being greater than \code{delta.eff} is greater than a fixed value \code{b}.
 }

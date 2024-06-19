@@ -7,11 +7,11 @@
 fut.trial.all(fut.target)
 }
 \arguments{
-\item{fut.target}{logical vector with length of active intervention arms}
+\item{fut.target}{the BATS ingredient '\code{fut.target}' corresponding to a \link[base]{logical} vector of the same length as argument \code{which} (i.e., the number of target parameters) indicating if futility was declared for each target parameter at that stage or at a previous stage.}
 }
 \value{
 \link{fut.trial.all} returns a logical constant.
 }
 \description{
-allows stopping the trial for futility at a given look if all active treatments reached efficacy
+allows stopping the trial for efficacy if \emph{all} active treatment reached futility at the look of interest or before.
 }

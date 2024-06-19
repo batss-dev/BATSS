@@ -38,68 +38,68 @@ bats.glm(
 )
 }
 \arguments{
-\item{model}{A character string indicating a symbolic description of the model to be fitted (as in the lm() and glm() functions).}
+\item{model}{an object of class '\link[stats]{formula}' indicating a symbolic description of the model to be fitted (as in the \link[stats]{lm} and \link[stats]{glm} functions).}
 
-\item{var}{A list. Each entry corresponds to a variable described under 'model' and indicates, by means of a character string, how each variable is generated. The list names have to match the variable names as indicated under 'model' and the first list element corresponds to the outcome. The variable corresponding to the 'treatment' has to be a factor with levels corresponding to the names indicated for prob0 (see below).}
+\item{var}{A list. Each entry corresponds to a variable described under '\code{model}' and indicates the name of a function allowing to generate variates (like \link[stats]{rnorm} and \link[stats]{rexp}, for example). The list names have to match the variable names unded in '\code{model}' and its first element should correspond to the model outcome. The grouping variable corresponding to the target parameters has to be of class '\link[base]{factor}' with levels corresponding to the names indicated in argument \code{prob0} (see below).}
 
-\item{var.control}{An optional list of control parameters for functions in 'var'. The names of the list items need to correspond with the names of 'var'. Each element is another list with names of the elements corresponding to the parameter names of the functions specified in 'var'.}
+\item{var.control}{An optional list of control parameters for the functions indicated in '\code{var}'. The names of the list items need to correspond to the names used in '\code{var}'. Each element is another list with names of the elements corresponding to the parameter names of the functions specified in '\code{var}'.}
 
-\item{family}{A character string indicating the name of the conditional distribution as described the package INLA. Default set to 'gaussian'.}
+\item{family}{A character string indicating the name of the conditional distribution as described in the package INLA (check \link[INLA]{inla.list.models}). Default set to '\code{gaussian}'.}
 
-\item{link}{A character string describing the link function to be used in the model to relate the outcome to the set of predictors: "identity", "logit" and "log" are the currently available options. Default set to 'identity'.}
+\item{link}{A character string describing the link function to be used in the model to relate the outcome to the set of predictors: 'identity', 'log', 'logit', 'probit', 'robit', 'cauchit', 'loglog' and 'cloglog' are the currently available options. Default set to 'identity'.}
 
-\item{beta}{A numerical vector of parameter values for the linear predictor. Its length has to match the number of column of the X matrix induced by the formula indicated under 'model' (check ?model.matrix).}
+\item{beta}{A numerical vector of parameter values for the linear predictor. Its length has to match the number of column of the \strong{X} matrix induced by the formula indicated under '\code{model}' (check \link[stats]{model.matrix}).}
 
-\item{which}{A numerical vector indicating the position of the target parameters.}
+\item{which}{A numerical vector indicating the position of the target \code{beta} parameters.}
 
-\item{alternative}{The direction of the alternative hypothesis corresponding to each target parameter indicated under 'which'. Possibilities are 'greater' (default) or 'less'. If the vector is of length 1, the same direction will be used for all target parameter tests.}
+\item{alternative}{A vector of strings providing the one-sided direction of the alternative hypothesis corresponding to each target parameter indicated under '\code{which}' (in the same order). Possibilities are 'greater' (default) or 'less'. If the vector is of length 1, the same direction will be used for all target parameter tests.}
 
-\item{R}{a scalar corresponding to the number of Monte Carlo trials or a vector of natural numbers to be used as seeds (?set.seed) for the different Monte Carlo trial (the vector length will thus correspond to the number of Monte Carlo trials).}
+\item{R}{a vector of natural numbers to be used as seeds (check \link[base]{set.seed}) for the different Monte Carlo trials (the vector length will thus correspond to the number of Monte Carlo trials). When \code{R} is a scalar, seeds \code{1} to \code{R} are used where \code{R} corresponds to the number of Monte Carlo trials.}
 
-\item{N}{A scalar indicating the total sample size.}
+\item{N}{A scalar indicating the maximum sample size.}
 
-\item{interim}{A list of parameters related to interim analyses. Currently, only the parameter 'recruited' is available.  It consists in a vector of integers indicating the number of completed observations at each look, last excluded, in increasing order.}
+\item{interim}{A list of parameters related to interim analyses. Currently, only '\code{recruited}' is available.  It consists in a vector of integers indicating the number of completed observations at each look, last excluded, in increasing order.}
 
-\item{prob0}{A named vector with initial allocation probabilities. Names need to correspond with the levels of the grouping variable.}
+\item{prob0}{A named vector with initial allocation probabilities. Names need to correspond to the levels of the grouping variable. If \code{RAR=NULL}, these probabilities/ratios will be used throughout (fixed allocation probabilities).}
 
-\item{delta.eff}{A scalar or vector defining the boundaries for efficacy.}
+\item{delta.eff}{A vector (of length equal to the number of looks (i.e., number of interims + 1)) of clinically meaningful treatment effect values (on the linear predictor scale) to be used to define the efficacy-related posterior probabilities for each target parameter at each look. If a scalar is provided, the same value is used at each look. The default is \code{delta.eff = 0}.}
 
-\item{delta.fut}{A scalar or vector defining the boundaries for futility.}
+\item{delta.fut}{A vector (of length equal to the number of looks (i.e., number of interims + 1)) of clinically meaningful treatment effect values (on the linear predictor scale) to be used to define the futility-related posterior probabilities for each target parameter at each look. If a scalar is provided, the same value is used at each look. The default is \code{delta.eff = delta.eff}.}
 
-\item{delta.RAR}{A scalar or vector defining the boundaries for RAR.}
+\item{delta.RAR}{A vector (of length equal to the number of looks (i.e., number of interims + 1)) of clinically meaningful treatment effect values (on the linear predictor scale) to be used to define the RAR-related posterior probabilities for each target parameter at each look. If a scalar is provided, the same value is used at each interim analysis. The default is \code{delta.RAR = 0}. Note that, when a vector is provided, its last value is ignored as no randomisation is made at the last look.}
 
-\item{eff.arm}{A character string showing an expression indicating how to evaluate if efficacy has been achieved at a given look given the information (ingredients) available at that stage for a given target parameter. The output of this expression must be logical for each target parameter. Check ?BATS::eff.arm_example for examples.}
+\item{eff.arm}{A function defining if efficacy has been achieved at a given look given the information available at that stage for each target parameter. The output of this function must be a vector of \link[base]{logical} values of the same length as \code{which} (i.e., number of target parameters). Arguments of this function will typically consider BATS 'ingredients'. Check \link{eff.arm.simple} and \link{eff.arm.infofract} for examples.}
 
-\item{eff.arm.control}{A list of parameters for functions in 'eff.arm'}
+\item{eff.arm.control}{An optional list of parameters for the function indicated in '\code{eff.arm}'.}
 
-\item{eff.trial}{A character string showing an expression (a function of ingredient eff.target) indicating if the trial can be stopped for efficacy given the output of the function specified in eff.arm on all parameters. The output of this expression must be a logical of length one. When eff.trial=NULL (default), the trial stops for efficacy when all target parameters are found to be effective. Check ?BATS::eff.trial_example for examples.}
+\item{eff.trial}{A function defining if the trial can be stopped for efficacy given the output of the function indicated in '\code{eff.arm}'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the BATS ingredient \code{eff.target}. Check \link{eff.trial.all} and \link{eff.trial.any} for examples. When eff.trial=NULL (default), the trial stops for efficacy when \emph{all} target parameters are found to be effective (like in \link{eff.trial.all}).}
 
-\item{eff.trial.control}{A list of parameters for functions in 'eff.trial'}
+\item{eff.trial.control}{An optional of parameters for the function indicated in '\code{eff.trial}'.}
 
-\item{fut.arm}{A character string showing an expression indicating how to evaluate if futility has been achieved at a given look given the information (ingredients) available at that stage for a given target parameter. The output of this expression must be a logical for each target parameter. Check ?BATS::fut.arm_example for examples.}
+\item{fut.arm}{A function defining if futility has been achieved at a given look given the information available at that stage for each target parameter. The output of this function must be a vector of \link[base]{logical} values of the same length as \code{which} (i.e., number of target parameters). Arguments of this function will typically consider BATS 'ingredients'. Check \link{fut.arm.simple} to see an example of such a function.}
 
-\item{fut.arm.control}{A list of parameters for functions in 'fut.arm'}
+\item{fut.arm.control}{An optional of parameters for the function indicated in '\code{fut.arm}'.}
 
-\item{fut.trial}{A character string showing an expression (a function of ingredient fut.target) indicating if the trial can be stopped for futility given the output of the function specified in fut.arm on all parameters. The output of this expression must be logical of length one. When fut.trial=NULL (default), the trial stops when all target parameters are found to be futile. Check ?BATS::fut.trial_example for examples.}
+\item{fut.trial}{A function defining if the trial can be stopped for futility given the output of the function indicated in '\code{fut.arm}'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the BATS ingredient \code{fut.target}. Check \link{fut.trial.all} for an example of such a function. When fut.trial=NULL (default), the trial stops for futility when \emph{all} target parameters are found to be effective (like in \link{fut.trial.all}).}
 
-\item{fut.trial.control}{A list of parameters for functions in 'fut.trial'}
+\item{fut.trial.control}{An optional of parameters for the function indicated in '\code{fut.trial}'.}
 
-\item{RAR}{A character string indicating the how the response-adaptive randomised probabilities corresponding to each group, reference group included, are defined. If RAR=NULL, equal probabilities of being attributed to each (active) group are used. Check ?BATS::prob.fun for examples.}
+\item{RAR}{A function defining the response-adaptive randomisation probabilities of each group - reference group included - with the same group names and ordering as used in '\code{prob0}'. Arguments of this function will typically consider BATS 'ingredients'. Check \link{RAR.trippa} and \link{RAR.optimal} for examples. If RAR=NULL (default), the probabilities/ratios indicated under \code{prob0} will be used throughout (fixed allocation probabilities).}
 
-\item{RAR.control}{An optional list of control parameters the function in 'RAR'.}
+\item{RAR.control}{An optional list of control parameters for the function provided in '\code{RAR}'.}
 
-\item{H0}{A logical indicating whether the simulation should also consider the case with all target parameters set to 0 (or to the first value of par$delta) to check the probability of rejecting the hypothesis that the target parameter value is equal to par$delta individually (type I error when par$delta=0) or globally (FWER when par$delta=0).}
+\item{H0}{A logical indicating whether the simulation should also consider the case with all target parameters set to 0 to check the probability of rejecting the hypothesis that the target parameter value is equal to 0 individually (type I error) or globally (FWER). Default set to \code{H0=TRUE}.}
 
-\item{computation}{A character string indicating how to parallelise the task, with possibilities 'parallel' when running this task on a single computer (the option 'cluster' - using the Slurm workload manager - is temporarily removed due to issues with cluster variants of INLA shared objects not being available).}
+\item{computation}{A character string indicating how the computation should be performed. Possibilities are 'parallel' or 'sequential' with default \code{computation="parallel"} meaning that the computation is split between \code{mc.cores}.}
 
-\item{mc.cores}{An integer indicating how many CPUs to use when computation='parallel' (Default to 3 if no global option was set).}
+\item{mc.cores}{An integer indicating the number of CPUs to be used when \code{computation="parallel"} (Default to the number of cores minus 1).}
 
-\item{extended}{an integer indicating the type of results to be returned. 0 (default) provides summary statistics, 1 adds the results of each Monte Carlo trial and 2 additionally returns the each Monte Carlo datasets. BATS::bats.combine requires extended > 0 as the function needs to merge results of different sets of seeds.}
+\item{extended}{an integer indicating the type of results to be returned. 0 (default) provides summary statistics, 1 adds the results of each Monte Carlo trial and 2 additionally returns each Monte Carlo dataset. \link{bats.combine} requires extended > 0 as the function needs to merge results of different sets of seeds.}
 
-\item{...}{Additional arguments to control fitting in INLA}
+\item{...}{Additional arguments to control fitting in \link[INLA]{inla}.}
 }
 \value{
-The function \link{bats.glm} returns an S3 object of class 'bats.glm' with available print/summary/plot functions.
+The function \link{bats.glm} returns an S3 object of class 'bats' with available print/summary/plot functions.
 }
 \description{
 Simulation of Bayesian adaptive trials with GLM endpoint using INtegrated Laplace Approximation (INLA).
@@ -107,9 +107,18 @@ Simulation of Bayesian adaptive trials with GLM endpoint using INtegrated Laplac
 \examples{
 \dontrun{
 # Example: 
-# fixed efficacy (0.975) and futility (0.05) stops, no RAR, 
-# 3 groups with group means C = 1 (ref), T1 = 2, T2 = 3, 
-# Gaussian conditional distribution with sigma = 2, 6 looks.
+# * Gaussian conditional distribution with sigma = 5
+# * 3 groups with group means 'C' = 1 (ref), 'T1' = 2, 'T2' = 3,
+#     where higher means correspond to better outcomes 
+# * 5 interim analyses occurring when n = 100, 120, 140, 160, and 180
+# * fixed and equal allocation probabilities per arm (i.e., no RAR)
+# * max sample size = 200 
+# * efficacy stop per arm when the prob of the corresponding parameter 
+#     being greater than 0 is greater than 0.975 (?eff.arm.simple)
+# * futility stop per arm when the prob of the corresponding parameter 
+#     being greater than 0 is smaller than 0.05 (?fut.arm.simple) 
+# * trial stop once all arms have stopped (?eff.trial.all and ?fut.trial.all)
+#     or the max sample size was reached 
 
 sim = bats.glm(  
                model            = y ~ group,   
@@ -118,8 +127,8 @@ sim = bats.glm(
                var.control      = list(y = list(sd = 5)),
                beta             = c(1, 1, 2),
                which            = c(2:3),
-               R                = 25,
                alternative      = "greater",
+               R                = 25,
                N                = 200,
                interim          = list(recruited = seq(100, 180, 20)),
                prob0            = c(C = 1/3, T1 = 1/3, T2 = 1/3),
@@ -131,4 +140,7 @@ sim = bats.glm(
                H0               = TRUE,
                mc.cores         = parallel::detectCores()-1)
 }
+}
+\seealso{
+\code{\link[=summary.bats]{summary.bats()}} and \code{\link[=plot.bats]{plot.bats()}} for detailed summaries and plots, and \code{\link[=bats.combine]{bats.combine()}} to combine different evaluations of \link{bats.glm} considering the same trial design but different sets of seeds (useful for cluster computation).
 }

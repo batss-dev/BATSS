@@ -7,11 +7,11 @@
 eff.trial.any(eff.target)
 }
 \arguments{
-\item{eff.target}{logical vector with length of active intervention arms}
+\item{eff.target}{the BATS ingredient '\code{eff.target}' corresponding to a \link[base]{logical} vector of the same length as argument \code{which} (i.e., the number of target parameters) indicating if efficacy was reached for each target parameter at that stage or at a previous stage.}
 }
 \value{
 \link{eff.trial.any} returns a logical constant.
 }
 \description{
-allows stopping the trial for efficacy at a given look if at least one active treatment reached efficacy
+allows stopping the trial for efficacy if \emph{at least one} target parameter reached efficacy at the look of interest.
 }

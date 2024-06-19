@@ -1,44 +1,54 @@
 #' @name bats.glm
 #' @title BATS for generalised linear models
 #' @description Simulation of Bayesian adaptive trials with GLM endpoint using INtegrated Laplace Approximation (INLA).  
-#' @param model A character string indicating a symbolic description of the model to be fitted (as in the lm() and glm() functions).
-#' @param var A list. Each entry corresponds to a variable described under 'model' and indicates, by means of a character string, how each variable is generated. The list names have to match the variable names as indicated under 'model' and the first list element corresponds to the outcome. The variable corresponding to the 'treatment' has to be a factor with levels corresponding to the names indicated for prob0 (see below).
-#' @param var.control An optional list of control parameters for functions in 'var'. The names of the list items need to correspond with the names of 'var'. Each element is another list with names of the elements corresponding to the parameter names of the functions specified in 'var'. 
-#' @param family A character string indicating the name of the conditional distribution as described the package INLA. Default set to 'gaussian'.
-#' @param link A character string describing the link function to be used in the model to relate the outcome to the set of predictors: "identity", "logit" and "log" are the currently available options. Default set to 'identity'.
-#' @param beta A numerical vector of parameter values for the linear predictor. Its length has to match the number of column of the X matrix induced by the formula indicated under 'model' (check ?model.matrix).
-#' @param which A numerical vector indicating the position of the target parameters.
-#' @param R a scalar corresponding to the number of Monte Carlo trials or a vector of natural numbers to be used as seeds (?set.seed) for the different Monte Carlo trial (the vector length will thus correspond to the number of Monte Carlo trials).
-#' @param alternative The direction of the alternative hypothesis corresponding to each target parameter indicated under 'which'. Possibilities are 'greater' (default) or 'less'. If the vector is of length 1, the same direction will be used for all target parameter tests.
-#' @param RAR A character string indicating the how the response-adaptive randomised probabilities corresponding to each group, reference group included, are defined. If RAR=NULL, equal probabilities of being attributed to each (active) group are used. Check ?BATS::prob.fun for examples.
-#' @param RAR.control An optional list of control parameters the function in 'RAR'. 
-#' @param N A scalar indicating the total sample size.
-#' @param interim A list of parameters related to interim analyses. Currently, only the parameter 'recruited' is available.  It consists in a vector of integers indicating the number of completed observations at each look, last excluded, in increasing order.
-#' @param prob0 A named vector with initial allocation probabilities. Names need to correspond with the levels of the grouping variable.
-#' @param delta.eff A scalar or vector defining the boundaries for efficacy.
-#' @param delta.fut A scalar or vector defining the boundaries for futility.
-#' @param delta.RAR A scalar or vector defining the boundaries for RAR.
-#' @param eff.arm A character string showing an expression indicating how to evaluate if efficacy has been achieved at a given look given the information (ingredients) available at that stage for a given target parameter. The output of this expression must be logical for each target parameter. Check ?BATS::eff.arm_example for examples. 
-#' @param eff.arm.control A list of parameters for functions in 'eff.arm'
-#' @param eff.trial A character string showing an expression (a function of ingredient eff.target) indicating if the trial can be stopped for efficacy given the output of the function specified in eff.arm on all parameters. The output of this expression must be a logical of length one. When eff.trial=NULL (default), the trial stops for efficacy when all target parameters are found to be effective. Check ?BATS::eff.trial_example for examples. 
-#' @param eff.trial.control A list of parameters for functions in 'eff.trial'
-#' @param fut.arm A character string showing an expression indicating how to evaluate if futility has been achieved at a given look given the information (ingredients) available at that stage for a given target parameter. The output of this expression must be a logical for each target parameter. Check ?BATS::fut.arm_example for examples. 
-#' @param fut.arm.control A list of parameters for functions in 'fut.arm'
-#' @param fut.trial A character string showing an expression (a function of ingredient fut.target) indicating if the trial can be stopped for futility given the output of the function specified in fut.arm on all parameters. The output of this expression must be logical of length one. When fut.trial=NULL (default), the trial stops when all target parameters are found to be futile. Check ?BATS::fut.trial_example for examples. 
-#' @param fut.trial.control A list of parameters for functions in 'fut.trial'
-#' @param H0 A logical indicating whether the simulation should also consider the case with all target parameters set to 0 (or to the first value of par$delta) to check the probability of rejecting the hypothesis that the target parameter value is equal to par$delta individually (type I error when par$delta=0) or globally (FWER when par$delta=0).
-#' @param computation A character string indicating how to parallelise the task, with possibilities 'parallel' when running this task on a single computer (the option 'cluster' - using the Slurm workload manager - is temporarily removed due to issues with cluster variants of INLA shared objects not being available).
-#' @param mc.cores An integer indicating how many CPUs to use when computation='parallel' (Default to 3 if no global option was set).
-#' @param extended an integer indicating the type of results to be returned. 0 (default) provides summary statistics, 1 adds the results of each Monte Carlo trial and 2 additionally returns the each Monte Carlo datasets. BATS::bats.combine requires extended > 0 as the function needs to merge results of different sets of seeds.
-#' @param ... Additional arguments to control fitting in INLA
-#' @returns The function [bats.glm] returns an S3 object of class 'bats.glm' with available print/summary/plot functions.
+#' @param model an object of class '\link[stats]{formula}' indicating a symbolic description of the model to be fitted (as in the \link[stats]{lm} and \link[stats]{glm} functions).
+#' @param var A list. Each entry corresponds to a variable described under '`model`' and indicates the name of a function allowing to generate variates (like \link[stats]{rnorm} and \link[stats]{rexp}, for example). The list names have to match the variable names unded in '`model`' and its first element should correspond to the model outcome. The grouping variable corresponding to the target parameters has to be of class '\link[base]{factor}' with levels corresponding to the names indicated in argument `prob0` (see below).
+#' @param var.control An optional list of control parameters for the functions indicated in '`var`'. The names of the list items need to correspond to the names used in '`var`'. Each element is another list with names of the elements corresponding to the parameter names of the functions specified in '`var`'. 
+#' @param family A character string indicating the name of the conditional distribution as described in the package INLA (check \link[INLA]{inla.list.models}). Default set to '`gaussian`'.
+#' @param link A character string describing the link function to be used in the model to relate the outcome to the set of predictors: 'identity', 'log', 'logit', 'probit', 'robit', 'cauchit', 'loglog' and 'cloglog' are the currently available options. Default set to 'identity'.
+#' @param beta A numerical vector of parameter values for the linear predictor. Its length has to match the number of column of the **X** matrix induced by the formula indicated under '`model`' (check \link[stats]{model.matrix}).
+#' @param which A numerical vector indicating the position of the target `beta` parameters.
+#' @param R a vector of natural numbers to be used as seeds (check \link[base]{set.seed}) for the different Monte Carlo trials (the vector length will thus correspond to the number of Monte Carlo trials). When `R` is a scalar, seeds `1` to `R` are used, where `R` corresponds to the number of Monte Carlo trials. 
+#' @param alternative A vector of strings providing the one-sided direction of the alternative hypothesis corresponding to each target parameter indicated under '`which`' (in the same order). Possibilities are 'greater' (default) or 'less'. If the vector is of length 1, the same direction will be used for all target parameter tests.
+#' @param RAR A function defining the response-adaptive randomisation probabilities of each group - reference group included - with the same group names and ordering as used in '`prob0`'. Arguments of this function will typically consider BATS 'ingredients'. Check [RAR.trippa] and [RAR.optimal] for examples. If `RAR = NULL` (default), the probabilities/ratios indicated under `prob0` will be used throughout (fixed allocation probabilities).
+#' @param RAR.control An optional list of control parameters for the function provided in '`RAR`'. 
+#' @param N A scalar indicating the maximum sample size.
+#' @param interim A list of parameters related to interim analyses. Currently, only '`recruited`' is available.  It consists in a vector of integers indicating the number of completed observations at each look, last excluded, in increasing order.
+#' @param prob0 A named vector with initial allocation probabilities. Names need to correspond to the levels of the grouping variable. If `RAR = NULL`, these probabilities/ratios will be used throughout (fixed allocation probabilities).
+#' @param delta.eff A vector (of length equal to the number of looks (i.e., number of interims + 1)) of clinically meaningful treatment effect values (on the linear predictor scale) to be used to define the efficacy-related posterior probabilities for each target parameter at each look. If a scalar is provided, the same value is used at each look. The default is `delta.eff = 0`. 
+#' @param delta.fut A vector (of length equal to the number of looks (i.e., number of interims + 1)) of clinically meaningful treatment effect values (on the linear predictor scale) to be used to define the futility-related posterior probabilities for each target parameter at each look. If a scalar is provided, the same value is used at each look. The default is `delta.eff = delta.eff`. 
+#' @param delta.RAR A vector (of length equal to the number of looks (i.e., number of interims + 1)) of clinically meaningful treatment effect values (on the linear predictor scale) to be used to define the RAR-related posterior probabilities for each target parameter at each look. If a scalar is provided, the same value is used at each interim analysis. The default is `delta.RAR = 0`. Note that, when a vector is provided, its last value is ignored as no randomisation is made at the last look.
+#' @param eff.arm A function defining if efficacy has been achieved at a given look given the information available at that stage for each target parameter. The output of this function must be a vector of \link[base]{logical} values of the same length as `which` (i.e., number of target parameters). Arguments of this function will typically consider BATS 'ingredients'. Check [eff.arm.simple] and [eff.arm.infofract] for examples. 
+#' @param eff.arm.control An optional list of parameters for the function indicated in '`eff.arm`'.
+#' @param eff.trial A function defining if the trial can be stopped for efficacy given the output of the function indicated in '`eff.arm`'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the BATS ingredient `eff.target`. Check [eff.trial.all] and [eff.trial.any] for examples. When `eff.trial = NULL` (default), the trial stops for efficacy when *all* target parameters are found to be effective (like in [eff.trial.all]). 
+#' @param eff.trial.control An optional of parameters for the function indicated in '`eff.trial`'.
+#' @param fut.arm A function defining if futility has been achieved at a given look given the information available at that stage for each target parameter. The output of this function must be a vector of \link[base]{logical} values of the same length as `which` (i.e., number of target parameters). Arguments of this function will typically consider BATS 'ingredients'. Check [fut.arm.simple] to see an example of such a function. 
+#' @param fut.arm.control An optional of parameters for the function indicated in '`fut.arm`'.
+#' @param fut.trial A function defining if the trial can be stopped for futility given the output of the function indicated in '`fut.arm`'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the BATS ingredient `fut.target`. Check [fut.trial.all] for an example of such a function. When `fut.trial = NULL` (default), the trial stops for futility when *all* target parameters are found to be effective (like in [fut.trial.all]).
+#' @param fut.trial.control An optional of parameters for the function indicated in '`fut.trial`'.
+#' @param H0 A logical indicating whether the simulation should also consider the case with all target parameters set to 0 to check the probability of rejecting the hypothesis that the target parameter value is equal to 0 individually (type I error) or globally (FWER). Default set to `H0=TRUE`.
+#' @param computation A character string indicating how the computation should be performed. Possibilities are 'parallel' or 'sequential' with default `computation="parallel"` meaning that the computation is split between `mc.cores`. 
+#' @param mc.cores An integer indicating the number of CPUs to be used when `computation="parallel"` (Default to the number of cores minus 1).
+#' @param extended an integer indicating the type of results to be returned. 0 (default) provides summary statistics, 1 adds the results of each Monte Carlo trial and 2 additionally returns each Monte Carlo dataset. [bats.combine] requires extended > 0 as the function needs to merge results of different sets of seeds.
+#' @param ... Additional arguments to control fitting in \link[INLA]{inla}.
+#' @returns The function [bats.glm] returns an S3 object of class 'bats' with available print/summary/plot functions.
 #' @export
+#' @seealso [summary.bats()] and [plot.bats()] for detailed summaries and plots, and [bats.combine()] to combine different evaluations of [bats.glm] considering the same trial design but different sets of seeds (useful for cluster computation). 
 #' @examples
 #'\dontrun{
 #' # Example: 
-#' # fixed efficacy (0.975) and futility (0.05) stops, no RAR, 
-#' # 3 groups with group means C = 1 (ref), T1 = 2, T2 = 3, 
-#' # Gaussian conditional distribution with sigma = 2, 6 looks.
+#' # * Gaussian conditional distribution with sigma = 5
+#' # * 3 groups with group means 'C' = 1 (ref), 'T1' = 2, 'T2' = 3,
+#' #     where higher means correspond to better outcomes 
+#' # * 5 interim analyses occurring when n = 100, 120, 140, 160, and 180
+#' # * fixed and equal allocation probabilities per arm (i.e., no RAR)
+#' # * max sample size = 200 
+#' # * efficacy stop per arm when the prob of the corresponding parameter 
+#' #     being greater than 0 is greater than 0.975 (?eff.arm.simple)
+#' # * futility stop per arm when the prob of the corresponding parameter 
+#' #     being greater than 0 is smaller than 0.05 (?fut.arm.simple) 
+#' # * trial stop once all arms have stopped (?eff.trial.all and ?fut.trial.all)
+#' #     or the max sample size was reached 
 #' 
 #' sim = bats.glm(  
 #'                model            = y ~ group,   
@@ -47,8 +57,8 @@
 #'                var.control      = list(y = list(sd = 5)),
 #'                beta             = c(1, 1, 2),
 #'                which            = c(2:3),
-#'                R                = 25,
 #'                alternative      = "greater",
+#'                R                = 25,
 #'                N                = 200,
 #'                interim          = list(recruited = seq(100, 180, 20)),
 #'                prob0            = c(C = 1/3, T1 = 1/3, T2 = 1/3),
@@ -314,8 +324,8 @@ if(!all(beta[which]==0)){
 
     cat("\tEvaluation of H1\n")           
     H1 = TRUE
-    # lapply
-    if(computation!="parallel"&computation!="cluster"){
+    # sequential
+    if(computation!="parallel"){
         trial_r = lapply(id.seed,bats.trial,
                data=data,model=model,link=link,family=family,beta=beta,
                RAR=RAR,RAR.control=RAR.control,twodelta=twodelta,delta.eff=delta.eff,delta.fut=delta.fut,
@@ -329,6 +339,7 @@ if(!all(beta[which]==0)){
                var=var,var.control=var.control,id.var=id.var,n.var=n.var,
                #linux.os=linux.os,
                extended = extended, ...)
+    # parallel
     }else{if(computation=="parallel"){           
         # unix via forking
         if(Sys.info()[[1]]!="Windows"){
@@ -366,9 +377,6 @@ if(!all(beta[which]==0)){
                                       extended = extended,...)
         stopCluster(cl)    
         }
-        # cluster via rslurm (>=0.6)
-        }else{
-        stop("'cluster' option temporarily not available")            
     }}     
     
     
@@ -406,8 +414,8 @@ if(H0==TRUE | all(beta[which]==0)){
     H0 = TRUE
     beta0 = beta
     beta0[which] = 0
-    # lapply
-    if(computation!="parallel"&computation!="cluster"){
+    # sequential
+    if(computation!="parallel"){
         trial_r = lapply(id.seed,bats.trial,
                          data=data,model=model,link=link,family=family,beta=beta0,
                          RAR=RAR,RAR.control=RAR.control,twodelta=twodelta,delta.eff=delta.eff,delta.fut=delta.fut,
@@ -421,6 +429,7 @@ if(H0==TRUE | all(beta[which]==0)){
                          var=var,var.control=var.control,id.var=id.var,n.var=n.var,
                          #linux.os=linux.os,
                          extended = extended, ...)
+    # parallel    
     }else{if(computation=="parallel"){           
         # unix via forking
         if(Sys.info()[[1]]!="Windows"){
@@ -459,9 +468,6 @@ if(H0==TRUE | all(beta[which]==0)){
                                       extended=extended, ...)
         stopCluster(cl)    
         }
-        # cluster via rslurm (>=0.6)
-        }else{
-        stop("'cluster' option temporarily not available")            
     }}     
     
     ##

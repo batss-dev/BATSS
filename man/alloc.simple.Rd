@@ -7,18 +7,21 @@
 alloc.simple(m, prob)
 }
 \arguments{
-\item{m}{scalar of number of participants to be allocated}
+\item{m}{a scalar of number of participants to be allocated.}
 
-\item{prob}{named vector of allocation ratio or probabilities}
+\item{prob}{a named vector of allocation ratio or probabilities.}
 }
 \value{
-\link{alloc.simple} returns an object of class \link[base]{factor} with levels as provided in the input vector 'prob' and length 'm'.
+\link{alloc.simple} returns an object of class \link[base]{factor} of length '\code{m}' with levels matching the names of the vector '\code{prob}'.
 }
 \description{
-\link{alloc.simple} independently randomises each unit to a group (i.e., flips a coin for each unit) so that the observed allocation probabilities may be far from the target ones.
+\link{alloc.simple} independently randomises each unit to a group (i.e., flips a coin for each unit) so that the observed allocation probabilities may be far from the target ones. This strategy is often considered to be a poor choice.
 }
 \examples{
 alloc.simple(100, prob = c(A=.4,B=.6))
 table(alloc.simple(100, prob = c(A=.4,B=.6)))
 table(alloc.simple(100, prob = c(A=.4,B=.6)))
+}
+\seealso{
+\code{\link[=alloc.balanced]{alloc.balanced()}}, another group allocation function.
 }

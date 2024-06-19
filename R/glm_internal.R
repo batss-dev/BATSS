@@ -280,8 +280,8 @@ bats.trial = function(int,data,model,link,family,beta,prob0,
         eff.target = apply(mx.efficacy.lt[1:lw,,drop=FALSE],2,any)
         fut.target = apply(mx.futility.lt[1:lw,,drop=FALSE],2,any)
 
-        if (!is.null(eff.arm)) eff.stop = eff.trial(eff.target) else eff.stop = FALSE                 #call function directly (I don't think this would have worked with a user specified function before)
-        if (!is.null(fut.arm)) fut.stop = fut.trial(fut.target) else fut.stop = FALSE
+        if (!is.null(eff.trial)) eff.stop = eff.trial(eff.target) else eff.stop = FALSE 
+        if (!is.null(eff.trial)) fut.stop = fut.trial(fut.target) else fut.stop = FALSE
         #---
         # efficacy       
         if(any(mx.efficacy.lt[lw,aw])){

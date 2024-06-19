@@ -7,7 +7,7 @@
 \method{plot}{bats}(x, focus = "size", hypothesis = "H1", ...)
 }
 \arguments{
-\item{x}{An object of class 'bats' (i.e., output of the function BATS::bats).}
+\item{x}{An object of class 'bats' (i.e., output of the function \link{bats.glm}).}
 
 \item{focus}{A character string indicating the type of plot with options 'size' (default) to display the total and per group sample size observed in the Monte Carlo trials, and 'estimates' to display the Monte Carlo trial target estimates as a function of the sample size.}
 
@@ -17,4 +17,7 @@
 }
 \description{
 Plot for objects of class 'bats'
+}
+\seealso{
+\code{\link[=bats.glm]{bats.glm()}}, the function generating S3 objects of class 'bats'.
 }

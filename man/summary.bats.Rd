@@ -7,7 +7,7 @@
 \method{summary}{bats}(object, full = FALSE, ...)
 }
 \arguments{
-\item{object}{An object of class 'bats' (i.e., output of the function BATS::bats).}
+\item{object}{An object of class 'bats' (i.e., output of the function \link{bats.glm}).}
 
 \item{full}{A logical indicating if a standard (full = FALSE, default) or extended output (full = TRUE) should be returned.}
 
@@ -15,4 +15,7 @@
 }
 \description{
 Summary method function for objects of class 'bats'.
+}
+\seealso{
+\code{\link[=bats.glm]{bats.glm()}}, the function generating S3 objects of class 'bats'.
 }

@@ -7,15 +7,15 @@
 eff.arm.infofract(posterior, b, n, N, p)
 }
 \arguments{
-\item{posterior}{posterior probability of P(theta>delta) > b}
+\item{posterior}{the BATS ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability P(beta>delta.eff) for a given target parameter.}
 
-\item{b}{probability boundary for efficacy}
+\item{b}{a tuning parameter (to be defined in \code{eff.arm.control}).}
 
-\item{n}{number of recruited participants}
+\item{n}{the BATS ingredient '\code{n}' corresponding to the vector of number of recruited participants per arm including the control group.}
 
-\item{N}{total (planned) sample size}
+\item{N}{the BATS ingredient '`N' corresponding to the maximum (planned) sample size.}
 
-\item{p}{tuning parameter}
+\item{p}{a tuning parameter (to be defined in \code{eff.arm.control}).}
 }
 \value{
 \link{eff.arm.infofract} returns a logical constant.

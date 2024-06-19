@@ -1,9 +1,10 @@
 #' @name summary.bats
 #' @title Summary function for BATS outputs
 #' @description Summary method function for objects of class 'bats'.
-#' @param object An object of class 'bats' (i.e., output of the function BATS::bats).
+#' @param object An object of class 'bats' (i.e., output of the function [bats.glm]).
 #' @param full A logical indicating if a standard (full = FALSE, default) or extended output (full = TRUE) should be returned.
 #' @param ... Additional arguments affecting the summary produced.
+#' @seealso [bats.glm()], the function generating S3 objects of class 'bats'. 
 #' @export
 summary.bats = function(object, full=FALSE, ...){
     # common part

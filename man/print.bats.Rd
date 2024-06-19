@@ -12,5 +12,8 @@
 \item{...}{Additional arguments affecting the print produced.}
 }
 \description{
-Print method function for objects of class 'bats'.
+Print method function for objects of class 'bats' (i.e., output of the function \link{bats.glm}).
+}
+\seealso{
+\code{\link[=bats.glm]{bats.glm()}}, the function generating S3 objects of class 'bats'.
 }

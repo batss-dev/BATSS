@@ -7,21 +7,21 @@
 RAR.trippa(posterior, n, N, ref, active, gamma, eta, nu)
 }
 \arguments{
-\item{posterior}{posterior probability of P(theta>delta) < b}
+\item{posterior}{the BATS ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability P(beta>delta.RAR) for a given target parameter.}
 
-\item{n}{current sample size}
+\item{n}{the BATS ingredient '\code{n}' corresponding to the vector of number of recruited participants per arm including the control group at the look of interest.}
 
-\item{N}{total sample size}
+\item{N}{the BATS ingredient '`N' corresponding to the maximum (planned) sample size.}
 
-\item{ref}{vector indicating the reference group}
+\item{ref}{the BATS ingredient '\code{ref}' corresponding to a \link[base]{logical} vector of length "number of arms plus 1 (for the reference group)" and indicating which group is the reference one.}
 
-\item{active}{vector indicating which treatments are active}
+\item{active}{the BATS ingredient '\code{active}' corresponding to a \link[base]{logical} vector of the same length as argument \code{which} (i.e., the number of target parameters) indicating if each arm is active at the look of interest.}
 
-\item{gamma}{scaling factor}
+\item{gamma}{a scaling factor (to be defined in \code{fut.arm.control}).}
 
-\item{eta}{scaling factor}
+\item{eta}{a scaling factor (to be defined in \code{fut.arm.control}).}
 
-\item{nu}{scaling factor}
+\item{nu}{a scaling factor (to be defined in \code{fut.arm.control}).}
 }
 \value{
 \link{RAR.trippa} returns a vector of probabilities with length of active.

@@ -7,12 +7,12 @@
 alloc.balanced(m, prob)
 }
 \arguments{
-\item{m}{scalar of number of participants to be allocated}
+\item{m}{a scalar of number of participants to be allocated.}
 
-\item{prob}{named vector of allocation ratio or probabilities}
+\item{prob}{a named vector of allocation ratio or probabilities.}
 }
 \value{
-\link{alloc.balanced} returns an object of class \link[base]{factor} with levels as provided in the input vector 'prob' and length 'm'.
+\link{alloc.balanced} returns an object of class \link[base]{factor} of length '\code{m}' with levels matching the names of the vector '\code{prob}'.
 }
 \description{
 \link{alloc.balanced} first allocates the largest possible number of units to the different groups given their exact target probabilities and then assigns randomly the remaining units to the different groups according to multinomial draws. This method leads to observed allocation probabilities matching the target ones when m*prob is an integer for each group and to observed allocation probabilities (on average) closer to the target ones compared to \link{alloc.simple}.
@@ -21,4 +21,7 @@ alloc.balanced(m, prob)
 alloc.balanced(100, prob = c(A=.4,B=.6))
 table(alloc.balanced(100, prob = c(A=.4,B=.6)))
 table(alloc.balanced(100, prob = c(A=.4,B=.6)))
+}
+\seealso{
+\code{\link[=alloc.simple]{alloc.simple()}}, another group allocation function.
 }

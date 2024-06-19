@@ -1,8 +1,9 @@
 #' @name print.bats
 #' @title Print function for BATS outputs
-#' @description Print method function for objects of class 'bats'.
+#' @description Print method function for objects of class 'bats' (i.e., output of the function [bats.glm]).
 #' @param x An object of class 'bats'.
 #' @param ... Additional arguments affecting the print produced.
+#' @seealso [bats.glm()], the function generating S3 objects of class 'bats'. 
 #' @export
 print.bats = function(x, ...){
     cat("\n Bayesian adaptive trial Monte Carlo simulation.\n")

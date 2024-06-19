@@ -7,9 +7,9 @@
 fut.arm.simple(posterior, b)
 }
 \arguments{
-\item{posterior}{posterior probability of P(theta>delta) < b}
+\item{posterior}{the BATS ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability P(beta>delta.fut) for a given target parameter.}
 
-\item{b}{probability boundary for futility}
+\item{b}{the cut-off value to declare futility (to be defined in \code{fut.arm.control}).}
 }
 \value{
 \link{fut.arm.simple} returns a logical constant.
