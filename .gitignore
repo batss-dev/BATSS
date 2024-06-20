@@ -6,6 +6,7 @@
 .Rbuildignore
 update-package.R
 dlc/
+vignettes/
 .com.greenworldsoft.syncfolderspro
 
 ############################################

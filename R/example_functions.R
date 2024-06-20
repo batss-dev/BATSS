@@ -3,8 +3,8 @@
 #' @name alloc.simple
 #' @title Simple allocation function
 #' @description [alloc.simple] independently randomises each unit to a group (i.e., flips a coin for each unit) so that the observed allocation probabilities may be far from the target ones. This strategy is often considered to be a poor choice.
-#' @param m a scalar of number of participants to be allocated.
-#' @param prob a named vector of allocation ratio or probabilities.
+#' @param m the BATS ingredient '`m`', a scalar corresponding to the number of participants to be allocated.
+#' @param prob the BATS ingredient '`prob`', a named vector of allocation ratios or probabilities.
 #' @return [alloc.simple] returns an object of class \link[base]{factor} of length '`m`' with levels matching the names of the vector '`prob`'.
 #' @seealso [alloc.balanced()], another group allocation function.
 #' @examples
@@ -20,8 +20,8 @@ alloc.simple = function(m,prob){
 #' @name alloc.balanced
 #' @title Balanced allocation function
 #' @description [alloc.balanced] first allocates the largest possible number of units to the different groups given their exact target probabilities and then assigns randomly the remaining units to the different groups according to multinomial draws. This method leads to observed allocation probabilities matching the target ones when m*prob is an integer for each group and to observed allocation probabilities (on average) closer to the target ones compared to [alloc.simple].
-#' @param m a scalar of number of participants to be allocated.
-#' @param prob a named vector of allocation ratio or probabilities.
+#' @param m the BATS ingredient '`m`', a scalar corresponding to the number of participants to be allocated.
+#' @param prob the BATS ingredient '`prob`', a named vector of allocation ratios or probabilities.
 #' @return [alloc.balanced] returns an object of class \link[base]{factor} of length '`m`' with levels matching the names of the vector '`prob`'.
 #' @seealso [alloc.simple()], another group allocation function.
 #' @examples
@@ -42,9 +42,9 @@ alloc.balanced = function(m,prob){
 
 #' @name eff.arm.simple
 #' @title Simple arm efficacy stop 
-#' @description allows stopping an arm for efficacy when the probability of the corresponding target parameter being greater than `delta.eff` is greater than a fixed value `b`.
+#' @description allows stopping an arm for efficacy at a given look when the probability of the corresponding target parameter being greater or smaller (depending on the argument `'alternative'` of [bats.glm]) than `delta.eff` is greater than a fixed value `b`.
 #' @param posterior the BATS ingredient '`posterior`' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument `'alternative'` of [bats.glm]) than '`delta.eff`'.
-#' @param b the cut-off value to declare efficacy.
+#' @param b the cut-off value used to declare efficacy (to be defined in `eff.arm.control`).
 #' @return [eff.arm.simple] returns a logical constant.
 #' @export
 eff.arm.simple = function(posterior,b){
@@ -53,7 +53,7 @@ eff.arm.simple = function(posterior,b){
 
 #' @name eff.arm.infofract
 #' @title information-fraction based arm efficacy stop 
-#' @description allows stopping an arm for efficacy at a given look when the probability of the corresponding target parameter being greater than delta is greater than a function of the information fraction at that look.
+#' @description allows stopping an arm for efficacy at a given look when the probability of the corresponding target parameter being greater or smaller (depending on the argument `'alternative'` of [bats.glm]) than `delta.eff` is greater than a function of the information fraction at that look.
 #' @param posterior the BATS ingredient '`posterior`' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument `'alternative'` of [bats.glm]) than '`delta.eff`'.
 #' @param b a tuning parameter (to be defined in `eff.arm.control`).
 #' @param n the BATS ingredient '`n`' corresponding to the vector of number of recruited participants per arm including the control group.
@@ -89,9 +89,9 @@ eff.trial.any = function(eff.target){any(eff.target)}
 
 #' @name fut.arm.simple
 #' @title arm futility stop 
-#' @description allows stopping an arm for futility when the probability of the corresponding target parameter being greater than delta is smaller than a fixed value 'b'
+#' @description allows stopping an arm for futility when the probability of the corresponding target parameter being greater or smaller (depending on the argument `'alternative'` of [bats.glm]) than '`delta.fut`' is smaller than a fixed value '`b`'
 #' @param posterior the BATS ingredient '`posterior`' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument `'alternative'` of [bats.glm]) than '`delta.fut`'.
-#' @param b the cut-off value to declare futility (to be defined in `fut.arm.control`).
+#' @param b the cut-off value used to declare futility (to be defined in `fut.arm.control`).
 #' @return [fut.arm.simple] returns a logical constant.
 #' @export
 fut.arm.simple = function(posterior,b){
@@ -115,7 +115,7 @@ fut.trial.all = function(fut.target){all(fut.target)}
 #' @name RAR.trippa
 #' @title RAR of Trippa et al. (2012)
 #' @description define the group allocation probabilities based on the response adaptive randomisation rule of Trippa et al. (2012)
-#' @param posterior the BATS ingredient '`posterior`' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument `'alternative'` of [bats.glm]) than '`delta.RAR`'.
+#' @param posterior the BATS ingredient '`posterior`' corresponding, in this context, to the (posterior) probability of the target parameters being greater or smaller (depending on the argument `'alternative'` of [bats.glm]) than '`delta.RAR`'.
 #' @param n the BATS ingredient '`n`' corresponding to the vector of number of recruited participants per arm including the control group at the look of interest.
 #' @param N the BATS ingredient '`N' corresponding to the maximum (planned) sample size.
 #' @param ref the BATS ingredient '`ref`' corresponding to a \link[base]{logical} vector of the same length and order as `'prob0'` (i.e., number of arms initially included in the study including the reference group)) and indicating which group is the reference one.

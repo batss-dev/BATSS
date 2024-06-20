@@ -7,7 +7,7 @@
 RAR.trippa(posterior, n, N, ref, active, gamma, eta, nu)
 }
 \arguments{
-\item{posterior}{the BATS ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument \code{'alternative'} of \link{bats.glm}) than '\code{delta.RAR}'.}
+\item{posterior}{the BATS ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability of the target parameters being greater or smaller (depending on the argument \code{'alternative'} of \link{bats.glm}) than '\code{delta.RAR}'.}
 
 \item{n}{the BATS ingredient '\code{n}' corresponding to the vector of number of recruited participants per arm including the control group at the look of interest.}
 

@@ -9,11 +9,11 @@ eff.arm.simple(posterior, b)
 \arguments{
 \item{posterior}{the BATS ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument \code{'alternative'} of \link{bats.glm}) than '\code{delta.eff}'.}
 
-\item{b}{the cut-off value to declare efficacy.}
+\item{b}{the cut-off value used to declare efficacy (to be defined in \code{eff.arm.control}).}
 }
 \value{
 \link{eff.arm.simple} returns a logical constant.
 }
 \description{
-allows stopping an arm for efficacy when the probability of the corresponding target parameter being greater than \code{delta.eff} is greater than a fixed value \code{b}.
+allows stopping an arm for efficacy at a given look when the probability of the corresponding target parameter being greater or smaller (depending on the argument \code{'alternative'} of \link{bats.glm}) than \code{delta.eff} is greater than a fixed value \code{b}.
 }

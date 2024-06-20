@@ -9,11 +9,11 @@ fut.arm.simple(posterior, b)
 \arguments{
 \item{posterior}{the BATS ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument \code{'alternative'} of \link{bats.glm}) than '\code{delta.fut}'.}
 
-\item{b}{the cut-off value to declare futility (to be defined in \code{fut.arm.control}).}
+\item{b}{the cut-off value used to declare futility (to be defined in \code{fut.arm.control}).}
 }
 \value{
 \link{fut.arm.simple} returns a logical constant.
 }
 \description{
-allows stopping an arm for futility when the probability of the corresponding target parameter being greater than delta is smaller than a fixed value 'b'
+allows stopping an arm for futility when the probability of the corresponding target parameter being greater or smaller (depending on the argument \code{'alternative'} of \link{bats.glm}) than '\code{delta.fut}' is smaller than a fixed value '\code{b}'
 }

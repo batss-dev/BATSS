@@ -21,5 +21,5 @@ eff.arm.infofract(posterior, b, n, N, p)
 \link{eff.arm.infofract} returns a logical constant.
 }
 \description{
-allows stopping an arm for efficacy at a given look when the probability of the corresponding target parameter being greater than delta is greater than a function of the information fraction at that look.
+allows stopping an arm for efficacy at a given look when the probability of the corresponding target parameter being greater or smaller (depending on the argument \code{'alternative'} of \link{bats.glm}) than \code{delta.eff} is greater than a function of the information fraction at that look.
 }
