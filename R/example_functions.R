@@ -43,7 +43,7 @@ alloc.balanced = function(m,prob){
 #' @name eff.arm.simple
 #' @title Simple arm efficacy stop 
 #' @description allows stopping an arm for efficacy when the probability of the corresponding target parameter being greater than `delta.eff` is greater than a fixed value `b`.
-#' @param posterior the BATS ingredient '`posterior`' corresponding, in this context, to the (posterior) probability P(beta>delta.eff) for a given target parameter.
+#' @param posterior the BATS ingredient '`posterior`' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument `'alternative'` of [bats.glm]) than '`delta.eff`'.
 #' @param b the cut-off value to declare efficacy.
 #' @return [eff.arm.simple] returns a logical constant.
 #' @export
@@ -54,7 +54,7 @@ eff.arm.simple = function(posterior,b){
 #' @name eff.arm.infofract
 #' @title information-fraction based arm efficacy stop 
 #' @description allows stopping an arm for efficacy at a given look when the probability of the corresponding target parameter being greater than delta is greater than a function of the information fraction at that look.
-#' @param posterior the BATS ingredient '`posterior`' corresponding, in this context, to the (posterior) probability P(beta>delta.eff) for a given target parameter.
+#' @param posterior the BATS ingredient '`posterior`' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument `'alternative'` of [bats.glm]) than '`delta.eff`'.
 #' @param b a tuning parameter (to be defined in `eff.arm.control`).
 #' @param n the BATS ingredient '`n`' corresponding to the vector of number of recruited participants per arm including the control group.
 #' @param N the BATS ingredient '`N' corresponding to the maximum (planned) sample size.
@@ -90,7 +90,7 @@ eff.trial.any = function(eff.target){any(eff.target)}
 #' @name fut.arm.simple
 #' @title arm futility stop 
 #' @description allows stopping an arm for futility when the probability of the corresponding target parameter being greater than delta is smaller than a fixed value 'b'
-#' @param posterior the BATS ingredient '`posterior`' corresponding, in this context, to the (posterior) probability P(beta>delta.fut) for a given target parameter.
+#' @param posterior the BATS ingredient '`posterior`' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument `'alternative'` of [bats.glm]) than '`delta.fut`'.
 #' @param b the cut-off value to declare futility (to be defined in `fut.arm.control`).
 #' @return [fut.arm.simple] returns a logical constant.
 #' @export
@@ -115,14 +115,14 @@ fut.trial.all = function(fut.target){all(fut.target)}
 #' @name RAR.trippa
 #' @title RAR of Trippa et al. (2012)
 #' @description define the group allocation probabilities based on the response adaptive randomisation rule of Trippa et al. (2012)
-#' @param posterior the BATS ingredient '`posterior`' corresponding, in this context, to the (posterior) probability P(beta>delta.RAR) for a given target parameter.
+#' @param posterior the BATS ingredient '`posterior`' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument `'alternative'` of [bats.glm]) than '`delta.RAR`'.
 #' @param n the BATS ingredient '`n`' corresponding to the vector of number of recruited participants per arm including the control group at the look of interest.
 #' @param N the BATS ingredient '`N' corresponding to the maximum (planned) sample size.
-#' @param ref the BATS ingredient '`ref`' corresponding to a \link[base]{logical} vector of length "number of arms plus 1 (for the reference group)" and indicating which group is the reference one.
-#' @param active the BATS ingredient '`active`' corresponding to a \link[base]{logical} vector of the same length as argument `which` (i.e., the number of target parameters) indicating if each arm is active at the look of interest.
-#' @param gamma a scaling factor (to be defined in `fut.arm.control`).
-#' @param eta a scaling factor (to be defined in `fut.arm.control`).
-#' @param nu a scaling factor (to be defined in `fut.arm.control`).
+#' @param ref the BATS ingredient '`ref`' corresponding to a \link[base]{logical} vector of the same length and order as `'prob0'` (i.e., number of arms initially included in the study including the reference group)) and indicating which group is the reference one.
+#' @param active the BATS ingredient '`active`' corresponding to a \link[base]{logical} vector of the same length and order as `'prob0'` (i.e., number of arms initially included in the study including the reference group)) and  indicating if each arm is active at the look of interest.
+#' @param gamma a scaling factor (to be defined in `RAR.arm.control`).
+#' @param eta a scaling factor (to be defined in `RAR.arm.control`).
+#' @param nu a scaling factor (to be defined in `RAR.arm.control`).
 #' @return [RAR.trippa] returns a vector of probabilities with length of active.
 #' @export
 RAR.trippa = function(posterior,n,N,ref,active,gamma,eta,nu){
@@ -141,7 +141,7 @@ RAR.trippa = function(posterior,n,N,ref,active,gamma,eta,nu){
 #' @name RAR.optimal
 #' @title 'Optimal' control allocation
 #' @description technically not response adaptive but keeps allocation ratio to control at the square root of active intervention arms
-#' @param active the BATS ingredient '`active`' corresponding to a \link[base]{logical} vector of the same length as argument `which` (i.e., the number of target parameters) indicating if each arm is active at the look of interest.
+#' @param active the BATS ingredient '`active`' corresponding to a \link[base]{logical} vector of the same length and order as `'prob0'` (i.e., number of arms initially included in the study including the reference group)) and  indicating if each arm is active at the look of interest.
 #' @return [RAR.optimal] returns a vector of probabilities with length of active.
 #' @export
 RAR.optimal = function(active){

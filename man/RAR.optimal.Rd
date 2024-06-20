@@ -7,7 +7,7 @@
 RAR.optimal(active)
 }
 \arguments{
-\item{active}{the BATS ingredient '\code{active}' corresponding to a \link[base]{logical} vector of the same length as argument \code{which} (i.e., the number of target parameters) indicating if each arm is active at the look of interest.}
+\item{active}{the BATS ingredient '\code{active}' corresponding to a \link[base]{logical} vector of the same length and order as \code{'prob0'} (i.e., number of arms initially included in the study including the reference group)) and  indicating if each arm is active at the look of interest.}
 }
 \value{
 \link{RAR.optimal} returns a vector of probabilities with length of active.

@@ -7,21 +7,21 @@
 RAR.trippa(posterior, n, N, ref, active, gamma, eta, nu)
 }
 \arguments{
-\item{posterior}{the BATS ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability P(beta>delta.RAR) for a given target parameter.}
+\item{posterior}{the BATS ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument \code{'alternative'} of \link{bats.glm}) than '\code{delta.RAR}'.}
 
 \item{n}{the BATS ingredient '\code{n}' corresponding to the vector of number of recruited participants per arm including the control group at the look of interest.}
 
 \item{N}{the BATS ingredient '`N' corresponding to the maximum (planned) sample size.}
 
-\item{ref}{the BATS ingredient '\code{ref}' corresponding to a \link[base]{logical} vector of length "number of arms plus 1 (for the reference group)" and indicating which group is the reference one.}
+\item{ref}{the BATS ingredient '\code{ref}' corresponding to a \link[base]{logical} vector of the same length and order as \code{'prob0'} (i.e., number of arms initially included in the study including the reference group)) and indicating which group is the reference one.}
 
-\item{active}{the BATS ingredient '\code{active}' corresponding to a \link[base]{logical} vector of the same length as argument \code{which} (i.e., the number of target parameters) indicating if each arm is active at the look of interest.}
+\item{active}{the BATS ingredient '\code{active}' corresponding to a \link[base]{logical} vector of the same length and order as \code{'prob0'} (i.e., number of arms initially included in the study including the reference group)) and  indicating if each arm is active at the look of interest.}
 
-\item{gamma}{a scaling factor (to be defined in \code{fut.arm.control}).}
+\item{gamma}{a scaling factor (to be defined in \code{RAR.arm.control}).}
 
-\item{eta}{a scaling factor (to be defined in \code{fut.arm.control}).}
+\item{eta}{a scaling factor (to be defined in \code{RAR.arm.control}).}
 
-\item{nu}{a scaling factor (to be defined in \code{fut.arm.control}).}
+\item{nu}{a scaling factor (to be defined in \code{RAR.arm.control}).}
 }
 \value{
 \link{RAR.trippa} returns a vector of probabilities with length of active.

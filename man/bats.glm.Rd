@@ -54,45 +54,45 @@ bats.glm(
 
 \item{alternative}{A vector of strings providing the one-sided direction of the alternative hypothesis corresponding to each target parameter indicated under '\code{which}' (in the same order). Possibilities are 'greater' (default) or 'less'. If the vector is of length 1, the same direction will be used for all target parameter tests.}
 
-\item{R}{a vector of natural numbers to be used as seeds (check \link[base]{set.seed}) for the different Monte Carlo trials (the vector length will thus correspond to the number of Monte Carlo trials). When \code{R} is a scalar, seeds \code{1} to \code{R} are used where \code{R} corresponds to the number of Monte Carlo trials.}
+\item{R}{a vector of natural numbers to be used as seeds (check \link[base]{set.seed}) for the different Monte Carlo trials (the vector length will thus correspond to the number of Monte Carlo trials). When \code{R} is a scalar, seeds \code{1} to \code{R} are used, where \code{R} corresponds to the number of Monte Carlo trials.}
 
 \item{N}{A scalar indicating the maximum sample size.}
 
 \item{interim}{A list of parameters related to interim analyses. Currently, only '\code{recruited}' is available.  It consists in a vector of integers indicating the number of completed observations at each look, last excluded, in increasing order.}
 
-\item{prob0}{A named vector with initial allocation probabilities. Names need to correspond to the levels of the grouping variable. If \code{RAR=NULL}, these probabilities/ratios will be used throughout (fixed allocation probabilities).}
+\item{prob0}{A named vector with initial allocation probabilities. Names need to correspond to the levels of the grouping variable. If \code{RAR = NULL}, these probabilities/ratios will be used throughout (fixed allocation probabilities).}
 
 \item{delta.eff}{A vector (of length equal to the number of looks (i.e., number of interims + 1)) of clinically meaningful treatment effect values (on the linear predictor scale) to be used to define the efficacy-related posterior probabilities for each target parameter at each look. If a scalar is provided, the same value is used at each look. The default is \code{delta.eff = 0}.}
 
-\item{delta.fut}{A vector (of length equal to the number of looks (i.e., number of interims + 1)) of clinically meaningful treatment effect values (on the linear predictor scale) to be used to define the futility-related posterior probabilities for each target parameter at each look. If a scalar is provided, the same value is used at each look. The default is \code{delta.eff = delta.eff}.}
+\item{delta.fut}{A vector (of length equal to the number of looks (i.e., number of interims + 1)) of clinically meaningful treatment effect values (on the linear predictor scale) to be used to define the futility-related posterior probabilities for each target parameter at each look. If a scalar is provided, the same value is used at each look. The default is \code{delta.fut = delta.eff}.}
 
 \item{delta.RAR}{A vector (of length equal to the number of looks (i.e., number of interims + 1)) of clinically meaningful treatment effect values (on the linear predictor scale) to be used to define the RAR-related posterior probabilities for each target parameter at each look. If a scalar is provided, the same value is used at each interim analysis. The default is \code{delta.RAR = 0}. Note that, when a vector is provided, its last value is ignored as no randomisation is made at the last look.}
 
-\item{eff.arm}{A function defining if efficacy has been achieved at a given look given the information available at that stage for each target parameter. The output of this function must be a vector of \link[base]{logical} values of the same length as \code{which} (i.e., number of target parameters). Arguments of this function will typically consider BATS 'ingredients'. Check \link{eff.arm.simple} and \link{eff.arm.infofract} for examples.}
+\item{eff.arm}{A function defining if efficacy has been achieved at a given look given the information available at that stage a given target parameter. The output of this function must be a \link[base]{logical} (of length 1). Arguments of this function will typically consider BATS 'ingredients'. Check \link{eff.arm.simple} and \link{eff.arm.infofract} for examples.}
 
 \item{eff.arm.control}{An optional list of parameters for the function indicated in '\code{eff.arm}'.}
 
-\item{eff.trial}{A function defining if the trial can be stopped for efficacy given the output of the function indicated in '\code{eff.arm}'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the BATS ingredient \code{eff.target}. Check \link{eff.trial.all} and \link{eff.trial.any} for examples. When eff.trial=NULL (default), the trial stops for efficacy when \emph{all} target parameters are found to be effective (like in \link{eff.trial.all}).}
+\item{eff.trial}{A function defining if the trial can be stopped for efficacy given the output of the function indicated in '\code{eff.arm}'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the BATS ingredient \code{eff.target}. Check \link{eff.trial.all} and \link{eff.trial.any} for examples. When \code{eff.trial = NULL} (default), the trial stops for efficacy when \emph{all} target parameters are found to be effective (like in \link{eff.trial.all}).}
 
-\item{eff.trial.control}{An optional of parameters for the function indicated in '\code{eff.trial}'.}
+\item{eff.trial.control}{An optional list of parameters for the function indicated in '\code{eff.trial}'.}
 
-\item{fut.arm}{A function defining if futility has been achieved at a given look given the information available at that stage for each target parameter. The output of this function must be a vector of \link[base]{logical} values of the same length as \code{which} (i.e., number of target parameters). Arguments of this function will typically consider BATS 'ingredients'. Check \link{fut.arm.simple} to see an example of such a function.}
+\item{fut.arm}{A function defining if futility has been achieved at a given look given the information available at that stage for each target parameter. The output of this function must be a \link[base]{logical} (of length 1). Arguments of this function will typically consider BATS 'ingredients'. Check \link{fut.arm.simple} to see an example of such a function.}
 
-\item{fut.arm.control}{An optional of parameters for the function indicated in '\code{fut.arm}'.}
+\item{fut.arm.control}{An optional list of parameters for the function indicated in '\code{fut.arm}'.}
 
-\item{fut.trial}{A function defining if the trial can be stopped for futility given the output of the function indicated in '\code{fut.arm}'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the BATS ingredient \code{fut.target}. Check \link{fut.trial.all} for an example of such a function. When fut.trial=NULL (default), the trial stops for futility when \emph{all} target parameters are found to be effective (like in \link{fut.trial.all}).}
+\item{fut.trial}{A function defining if the trial can be stopped for futility given the output of the function indicated in '\code{fut.arm}'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the BATS ingredient \code{fut.target}. Check \link{fut.trial.all} for an example of such a function. When \code{fut.trial = NULL} (default), the trial stops for futility when \emph{all} target parameters are found to be futile (like in \link{fut.trial.all}).}
 
-\item{fut.trial.control}{An optional of parameters for the function indicated in '\code{fut.trial}'.}
+\item{fut.trial.control}{An optional list of parameters for the function indicated in '\code{fut.trial}'.}
 
-\item{RAR}{A function defining the response-adaptive randomisation probabilities of each group - reference group included - with the same group names and ordering as used in '\code{prob0}'. Arguments of this function will typically consider BATS 'ingredients'. Check \link{RAR.trippa} and \link{RAR.optimal} for examples. If RAR=NULL (default), the probabilities/ratios indicated under \code{prob0} will be used throughout (fixed allocation probabilities).}
+\item{RAR}{A function defining the response-adaptive randomisation probabilities of each group - reference group included - with the same group names and ordering as used in '\code{prob0}'. Arguments of this function will typically consider BATS 'ingredients'. Check \link{RAR.trippa} and \link{RAR.optimal} for examples. If \code{RAR = NULL} (default), the probabilities/ratios indicated under \code{prob0} will be used throughout (fixed allocation probabilities).}
 
 \item{RAR.control}{An optional list of control parameters for the function provided in '\code{RAR}'.}
 
-\item{H0}{A logical indicating whether the simulation should also consider the case with all target parameters set to 0 to check the probability of rejecting the hypothesis that the target parameter value is equal to 0 individually (type I error) or globally (FWER). Default set to \code{H0=TRUE}.}
+\item{H0}{A logical indicating whether the simulation should also consider the case with all target parameters set to 0 to check the probability of rejecting the hypothesis that the target parameter value is equal to 0 individually (pairwise type I error) or globally (family-wise error rate). Default set to \code{H0=TRUE}.}
 
 \item{computation}{A character string indicating how the computation should be performed. Possibilities are 'parallel' or 'sequential' with default \code{computation="parallel"} meaning that the computation is split between \code{mc.cores}.}
 
-\item{mc.cores}{An integer indicating the number of CPUs to be used when \code{computation="parallel"} (Default to the number of cores minus 1).}
+\item{mc.cores}{An integer indicating the number of CPUs to be used when \code{computation="parallel"} (Default to 3 if no global '\code{mc.cores}' global option is available via \link[base]{getOption}).}
 
 \item{extended}{an integer indicating the type of results to be returned. 0 (default) provides summary statistics, 1 adds the results of each Monte Carlo trial and 2 additionally returns each Monte Carlo dataset. \link{bats.combine} requires extended > 0 as the function needs to merge results of different sets of seeds.}
 

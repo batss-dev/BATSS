@@ -193,7 +193,7 @@ bats.trial = function(int,data,model,link,family,beta,prob0,
                          dimnames=list(id.look$id,id.group$id))   
     #cat("C")    
     
-    dots <- rlang::dots_list(...,.named=TRUE)
+    dots <- rlang::dots_list(...,.named=TRUE) # dots=NULL
     
     # loop
     #if(INLA::inla.os.type()=="linux"&!is.na(linux.os)){
