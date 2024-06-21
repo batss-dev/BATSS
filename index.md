@@ -1,6 +1,6 @@
 
 
-# 'BATS' R package <a href="https://github.com/bats-dev/BATS"><img src="misc/hex-BATS.png" alt="" align="right" height="138" width="125" /></a>
+# 'BATS' R package <img src="man/figures/logo.png" align="right" height="139" alt="" />
 
 <h2>Package description</h2> 
 

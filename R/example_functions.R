@@ -115,7 +115,7 @@ fut.trial.all = function(fut.target){all(fut.target)}
 #' @name RAR.trippa
 #' @title RAR of Trippa et al. (2012)
 #' @description define the group allocation probabilities based on the response adaptive randomisation rule of Trippa et al. (2012)
-#' @param posterior the BATS ingredient '`posterior`' corresponding, in this context, to the (posterior) probability of the target parameters being greater or smaller (depending on the argument `'alternative'` of [bats.glm]) than '`delta.RAR`'.
+#' @param posterior the BATS ingredient '`posterior`' corresponding, in this context, to the (posterior) probability of the active target parameters being greater or smaller (depending on the argument `'alternative'` of [bats.glm]) than '`delta.RAR`'.
 #' @param n the BATS ingredient '`n`' corresponding to the vector of number of recruited participants per arm including the control group at the look of interest.
 #' @param N the BATS ingredient '`N' corresponding to the maximum (planned) sample size.
 #' @param ref the BATS ingredient '`ref`' corresponding to a \link[base]{logical} vector of the same length and order as `'prob0'` (i.e., number of arms initially included in the study including the reference group)) and indicating which group is the reference one.
@@ -128,14 +128,14 @@ fut.trial.all = function(fut.target){all(fut.target)}
 RAR.trippa = function(posterior,n,N,ref,active,gamma,eta,nu){
   g = sum(active)
   h = gamma*(sum(n)/N)^eta
-  p = rep(NA,g)
+  prob = rep(NA,g)
 
   # reference
-  p[1] = (exp(max(n[!ref])-n[ref])^nu)/(g-1)
+  prob[1] = (exp(max(n[!ref])-n[ref])^nu)/(g-1)
   # targets
-  p[2:g] = (posterior^h)/(sum(posterior^h))
+  prob[2:g] = (posterior^h)/(sum(posterior^h))
   #
-  unlist(p)
+  unlist(prob)
 }
 
 #' @name RAR.optimal
@@ -145,8 +145,8 @@ RAR.trippa = function(posterior,n,N,ref,active,gamma,eta,nu){
 #' @return [RAR.optimal] returns a vector of probabilities with length of active.
 #' @export
 RAR.optimal = function(active){
-  K <-  sum(active)-1
-  tot <- K+sqrt(K)
-
-  p = c(sqrt(K), rep(1,K))/tot
+  K    = sum(active)-1
+  tot  = K+sqrt(K)
+  prob = c(sqrt(K), rep(1,K))/tot
+  prob
 }

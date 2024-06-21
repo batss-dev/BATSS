@@ -1,0 +1,11 @@
+pandoc: 3.1.2
+pkgdown: 2.0.9
+pkgdown_sha: ~
+articles:
+  binomial: web_only/binomial.html
+  Cluster: web_only/Cluster.html
+  Ingredients: web_only/Ingredients.html
+  negbin: web_only/negbin.html
+  Priors: web_only/Priors.html
+last_built: 2024-06-21T15:24Z
+

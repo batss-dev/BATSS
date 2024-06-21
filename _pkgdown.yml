@@ -1,0 +1,23 @@
+url: ~
+template:
+  bootstrap: 5
+  navbar:
+  structure:
+    left: [intro, reference, tutorials, articles, news]
+navbar:
+ components:
+   articles:
+    text: Tutorials
+    menu:
+    - text: Main topics
+    - text: BATS Ingredients
+      href: articles/web_only/Ingredients.html
+    - text: INLA's Priors
+      href: articles/web_only/Priors.html
+    - text: Cluster support
+      href: articles/web_only/Cluster.html
+    - text: Examples
+    - text: Negative binomial endpoint
+      href: articles/web_only/negbin.html
+    - text: Binomial endpoint
+      href: articles/web_only/binomial.html

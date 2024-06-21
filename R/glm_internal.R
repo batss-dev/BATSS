@@ -253,9 +253,8 @@ bats.trial = function(int,data,model,link,family,beta,prob0,
         for(tw in 1:n.target){
             if(aw[tw]){
                 # efficacy
-                assign("target",names(id.look[lw,names(temp)])==id.target[tw,"group"],
-                       envir = env)
                 assign("posterior",mx.posterior_eff.lt[lw,tw], envir = env)
+                    # assign("target",names(id.look[lw,names(temp)])==id.target[tw,"group"],envir = env)
                 if (is.null(eff.arm) || is.na(delta.eff[lw])) {
                     mx.efficacy.lt[lw,tw] = FALSE
                   } else {
