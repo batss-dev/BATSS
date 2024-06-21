@@ -12,9 +12,9 @@ navbar:
     - text: Main topics
     - text: BATS Ingredients
       href: articles/web_only/Ingredients.html
-    - text: INLA's Priors
+    - text: Prior distributions
       href: articles/web_only/Priors.html
-    - text: Cluster support
+    - text: Cluster computation
       href: articles/web_only/Cluster.html
     - text: Examples
     - text: Negative binomial endpoint

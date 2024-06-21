@@ -107,13 +107,13 @@ if (is.null(intersect(names(var),intersect(setdiff(unlist(strsplit(all.vars(mode
                                            setdiff(unlist(strsplit(all.vars(model),"2")),all.vars(model))))) && 
     !setequal(all.vars(model),names(var)))
   stop("all variables in the model formula must have a generating function in the 'var' list")
-if (!(family %in% names(inla.models()$likelihood))){
+if (!(family %in% names(INLA::inla.models()$likelihood))){
   stop("invalid 'family' argument, see help files and inla documentation for available families")
 } else {
   if (!(family %in% c("gaussian","binomial","nbinomial","poisson")))
     warning("functionality only tested for gaussian, binomial, negative binomial and poisson distributions")
 }
-if (!(link %in% inla.models()$likelihood[[family]]$link) || !(link %in% c("identity","log","logit","probit","robit","cauchit","loglog","cloglog")))
+if (!(link %in% INLA::inla.models()$likelihood[[family]]$link) || !(link %in% c("identity","log","logit","probit","robit","cauchit","loglog","cloglog")))
   stop("'link' not supported, see help files and inla documentation for available link functions")
 if (!is.null(interim)){
   if(!inherits(interim,"list")){stop("'interim' should be a list")}

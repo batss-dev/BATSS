@@ -50,8 +50,8 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-tutorials">
     <h6 class="dropdown-header" data-toc-skip>Main topics</h6>
     <a class="dropdown-item" href="../../articles/web_only/Ingredients.html">BATS Ingredients</a>
-    <a class="dropdown-item" href="../../articles/web_only/Priors.html">INLA's Priors</a>
-    <a class="dropdown-item" href="../../articles/web_only/Cluster.html">Cluster support</a>
+    <a class="dropdown-item" href="../../articles/web_only/Priors.html">Prior distributions</a>
+    <a class="dropdown-item" href="../../articles/web_only/Cluster.html">Cluster computation</a>
     <h6 class="dropdown-header" data-toc-skip>Examples</h6>
     <a class="dropdown-item" href="../../articles/web_only/negbin.html">Negative binomial endpoint</a>
     <a class="dropdown-item" href="../../articles/web_only/binomial.html">Binomial endpoint</a>
@@ -87,7 +87,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">BATS</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bats-dev.github.io/BATS/" class="external-link">BATS</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -136,12 +136,12 @@ here the posterior mariginals can be approximated. Refer to <span class="citatio
 (with a default mean <span class="math inline">\(\mu=0\)</span> and
 precision <span class="math inline">\(\tau=0.001\)</span>, and since
 <span class="math inline">\(\sigma^{2}=1/{\tau}\)</span>, <span class="math inline">\(N(0,\,1000)\)</span>).</p>
-<p>The <code>control.fixed</code> argument of the <code><a href="https://rdrr.io/pkg/INLA/man/INLA.html" class="external-link">inla()</a></code>
+<p>The <code>control.fixed</code> argument of the <code>inla()</code>
 function allows users to change <span class="math inline">\(\mu\)</span>
 or <span class="math inline">\(\tau\)</span>. The
 <code><a href="../../reference/bats.glm.html">bats.glm()</a></code> function allows control elements of the
-<code><a href="https://rdrr.io/pkg/INLA/man/INLA.html" class="external-link">inla()</a></code> function to be passed on to the embedded INLA
-routine via the <code>...</code> argument. <code><a href="https://rdrr.io/pkg/INLA/man/INLA.html" class="external-link">inla()</a></code>
+<code>inla()</code> function to be passed on to the embedded INLA
+routine via the <code>...</code> argument. <code>inla()</code>
 differentiates between the intercept, <code>mean.intercept</code> and
 <code>prec.intercept</code>, and all other fixed effects,
 <code>mean</code> and <code>prec</code>,
@@ -282,7 +282,7 @@ description of complexity priors). Detailed information can be viewed by
 typing <code>inla.models()$likelihood$[FAMILYNAME]</code> including
 default parameters, e.g. for the normal distribution:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/INLA/man/models.html" class="external-link">inla.models</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">likelihood</span><span class="op">$</span><span class="va">gaussian</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">INLA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/INLA/man/models.html" class="external-link">inla.models</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">likelihood</span><span class="op">$</span><span class="va">gaussian</span></span></code></pre></div>
 <pre><code><span><span class="co">## $doc</span></span>
 <span><span class="co">## [1] "The Gaussian likelihoood"</span></span>
 <span><span class="co">## </span></span>
@@ -336,16 +336,16 @@ default parameters, e.g. for the normal distribution:</p>
 <span><span class="co">## $hyper$theta1$to.theta</span></span>
 <span><span class="co">## function (x) </span></span>
 <span><span class="co">## log(x)</span></span>
-<span><span class="co">## &lt;bytecode: 0x11418a748&gt;</span></span>
-<span><span class="co">## &lt;environment: 0x114177120&gt;</span></span>
+<span><span class="co">## &lt;bytecode: 0x10c9e9980&gt;</span></span>
+<span><span class="co">## &lt;environment: 0x10c9e60f0&gt;</span></span>
 <span><span class="co">## attr(,"inla.read.only")</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $hyper$theta1$from.theta</span></span>
 <span><span class="co">## function (x) </span></span>
 <span><span class="co">## exp(x)</span></span>
-<span><span class="co">## &lt;bytecode: 0x11418a860&gt;</span></span>
-<span><span class="co">## &lt;environment: 0x114177120&gt;</span></span>
+<span><span class="co">## &lt;bytecode: 0x10c9e9a98&gt;</span></span>
+<span><span class="co">## &lt;environment: 0x10c9e60f0&gt;</span></span>
 <span><span class="co">## attr(,"inla.read.only")</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## </span></span>
@@ -399,16 +399,16 @@ default parameters, e.g. for the normal distribution:</p>
 <span><span class="co">## $hyper$theta2$to.theta</span></span>
 <span><span class="co">## function (x) </span></span>
 <span><span class="co">## log(x)</span></span>
-<span><span class="co">## &lt;bytecode: 0x11418a748&gt;</span></span>
-<span><span class="co">## &lt;environment: 0x114177120&gt;</span></span>
+<span><span class="co">## &lt;bytecode: 0x10c9e9980&gt;</span></span>
+<span><span class="co">## &lt;environment: 0x10c9e60f0&gt;</span></span>
 <span><span class="co">## attr(,"inla.read.only")</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $hyper$theta2$from.theta</span></span>
 <span><span class="co">## function (x) </span></span>
 <span><span class="co">## exp(x)</span></span>
-<span><span class="co">## &lt;bytecode: 0x11418a860&gt;</span></span>
-<span><span class="co">## &lt;environment: 0x114177120&gt;</span></span>
+<span><span class="co">## &lt;bytecode: 0x10c9e9a98&gt;</span></span>
+<span><span class="co">## &lt;environment: 0x10c9e60f0&gt;</span></span>
 <span><span class="co">## attr(,"inla.read.only")</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## </span></span>
@@ -430,7 +430,7 @@ default parameters, e.g. for the normal distribution:</p>
 hyperparameter <span class="math inline">\(\theta=log(\tau)\)</span> is
 a log-gamma distribution with parameters <span class="math inline">\(a=1\)</span> and <span class="math inline">\(b=0.00005\)</span>. To change the prior
 distribution or its parameters use the <code>control.family</code>
-argument of the <code><a href="https://rdrr.io/pkg/INLA/man/INLA.html" class="external-link">inla()</a></code> function.</p>
+argument of the <code>inla()</code> function.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#BATS using normal priors with N(1,4) for the fixed effect of intervention T1 and </span></span>
 <span><span class="co">#the intercept and N(0,4) for intervention T2 and all other fixed effects and a </span></span>
@@ -464,7 +464,7 @@ argument of the <code><a href="https://rdrr.io/pkg/INLA/man/INLA.html" class="ex
 <p>Priors for hyperparameters can either be a built-in prior or a
 user-defined function. Available predefined priors in INLA:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/INLA/man/list-models.html" class="external-link">inla.list.models</a></span><span class="op">(</span><span class="st">"prior"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">INLA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/INLA/man/list-models.html" class="external-link">inla.list.models</a></span><span class="op">(</span><span class="st">"prior"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Section [prior]</span></span>
 <span><span class="co">##      betacorrelation               Beta prior for the correlation          </span></span>
 <span><span class="co">##      dirichlet                     Dirichlet prior                         </span></span>
@@ -513,7 +513,7 @@ user-defined function. Available predefined priors in INLA:</p>
 <span><span class="co">##      wishart5d                     Wishart prior dim=5                     </span></span>
 <span><span class="co">##      wishartkd                     Wishart prior</span></span></code></pre>
 <p>To change a prior to one of the predefined INLA priors simply use the
-<code>control.family</code> argument of the <code><a href="https://rdrr.io/pkg/INLA/man/INLA.html" class="external-link">inla()</a></code>
+<code>control.family</code> argument of the <code>inla()</code>
 function. For example,
 <code>control.family = list(hyper = list(prec = list(prior = "logtnormal")))</code>
 will change the prior distribution of the precision to a truncated

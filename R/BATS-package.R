@@ -1,7 +1,6 @@
 #' BATS
 #'
 #' @name BATS
-#' @import INLA
 #' @import plyr
 #' @import R.utils
 #' @import parallel

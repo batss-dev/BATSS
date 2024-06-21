@@ -11,7 +11,7 @@ Description: Defines operating characteristics of Bayesian Adaptive Trials consi
 URL: https://bats-dev.github.io/BATS/
 License: GPL-2
 Encoding: UTF-8
-Depends:
+Suggests:
     INLA
 Imports:
     parallel, methods, stats, grDevices, abind, plyr, rlang, R.utils, cli

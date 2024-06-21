@@ -160,12 +160,12 @@ bats.trial = function(int,data,model,link,family,beta,prob0,
     assign("mu",switch(link,
                        "identity" = XB,
                        "log" = exp(XB),
-                       "logit" = inla.link.logit(XB, inverse=TRUE),
-                       "probit" = inla.link.probit(XB, inverse=TRUE),
-                       "robit" = inla.link.robit(XB, inverse=TRUE),
-                       "cauchit" = inla.link.cauchit(XB, inverse=TRUE),
-                       "loglog" = inla.link.loglog(XB, inverse=TRUE),
-                       "cloglog" = inla.link.cloglog(XB, inverse=TRUE)),envir=env)
+                       "logit" = INLA::inla.link.logit(XB, inverse=TRUE),
+                       "probit" = INLA::inla.link.probit(XB, inverse=TRUE),
+                       "robit" = INLA::inla.link.robit(XB, inverse=TRUE),
+                       "cauchit" = INLA::inla.link.cauchit(XB, inverse=TRUE),
+                       "loglog" = INLA::inla.link.loglog(XB, inverse=TRUE),
+                       "cloglog" = INLA::inla.link.cloglog(XB, inverse=TRUE)),envir=env)
           
     tmp_nam <- names(var)[1] 
     args_ <- plyr::.(n=m,mu=mu)                                                             # create a quoted(!) list of available 'ingredients' 
@@ -182,7 +182,7 @@ bats.trial = function(int,data,model,link,family,beta,prob0,
     #cat("B")
     # prepare
     posterior.fun = function(inf,fit,delta){
-        prob = inla.pmarginal(delta, fit$marginals.fixed[[unlist(inf[1])]])
+        prob = INLA::inla.pmarginal(delta, fit$marginals.fixed[[unlist(inf[1])]])
         ifelse(inf[2]=="greater",1-prob,prob)
     }    
     mx.posterior_eff.lt = mx.posterior_fut.lt = matrix(NA,nrow=n.look,ncol=n.target,dimnames=list(id.look$id,id.target$id))
@@ -214,13 +214,13 @@ bats.trial = function(int,data,model,link,family,beta,prob0,
           dots$control.family <- c(dots$control.family,control.link)
           # fit = inla(formula=model, data=data, family=family,
            #           verbose=FALSE,dots)     does nor  work like this
-          fit = do.call(inla,c(list(formula=model, data=data, family=family,
+          fit = do.call(INLA::inla,c(list(formula=model, data=data, family=family,
                      verbose=FALSE),dots))
         } else {
           # fit = inla(formula=model, data=data, family=family,
           #            control.family=list(control.link=list(model=link)),
           #            verbose=FALSE,dots)
-          fit = do.call(inla,c(list(formula=model, data=data, family=family,
+          fit = do.call(INLA::inla,c(list(formula=model, data=data, family=family,
                      control.family=list(control.link=list(model=link)),
                      verbose=FALSE),dots))
         }
@@ -381,12 +381,12 @@ bats.trial = function(int,data,model,link,family,beta,prob0,
             assign("mu",switch(link,
                                "identity" = XB,
                                "log" = exp(XB),
-                               "logit" = inla.link.logit(XB, inverse=TRUE),
-                               "probit" = inla.link.probit(XB, inverse=TRUE),
-                               "robit" = inla.link.robit(XB, inverse=TRUE),
-                               "cauchit" = inla.link.cauchit(XB, inverse=TRUE),
-                               "loglog" = inla.link.loglog(XB, inverse=TRUE),
-                               "cloglog" = inla.link.cloglog(XB, inverse=TRUE)),envir=env)
+                               "logit" = INLA::inla.link.logit(XB, inverse=TRUE),
+                               "probit" = INLA::inla.link.probit(XB, inverse=TRUE),
+                               "robit" = INLA::inla.link.robit(XB, inverse=TRUE),
+                               "cauchit" = INLA::inla.link.cauchit(XB, inverse=TRUE),
+                               "loglog" = INLA::inla.link.loglog(XB, inverse=TRUE),
+                               "cloglog" = INLA::inla.link.cloglog(XB, inverse=TRUE)),envir=env)
             
             tmp_nam <- names(var)[1] 
             args_ <- plyr::.(n=m,mu=mu)                                                             # create a quoted(!) list of available 'ingredients' 
