@@ -31,9 +31,6 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/BATS.html</loc>
-  </url>
-  <url>
     <loc>/reference/BATSS.html</loc>
   </url>
   <url>
@@ -47,12 +44,6 @@
   </url>
   <url>
     <loc>/reference/alloc.simple.html</loc>
-  </url>
-  <url>
-    <loc>/reference/bats.combine.html</loc>
-  </url>
-  <url>
-    <loc>/reference/bats.glm.html</loc>
   </url>
   <url>
     <loc>/reference/batss.combine.html</loc>
@@ -82,19 +73,10 @@
     <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/plot.bats.html</loc>
-  </url>
-  <url>
     <loc>/reference/plot.batss.html</loc>
   </url>
   <url>
-    <loc>/reference/print.bats.html</loc>
-  </url>
-  <url>
     <loc>/reference/print.batss.html</loc>
-  </url>
-  <url>
-    <loc>/reference/summary.bats.html</loc>
   </url>
   <url>
     <loc>/reference/summary.batss.html</loc>

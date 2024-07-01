@@ -10,7 +10,7 @@ navbar:
     text: Tutorials
     menu:
     - text: Main topics
-    - text: BATS Ingredients
+    - text: BATSS Ingredients
       href: articles/web_only/Ingredients.html
     - text: Prior distributions
       href: articles/web_only/Priors.html
