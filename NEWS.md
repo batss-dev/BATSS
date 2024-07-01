@@ -1,3 +1,3 @@
-## Version 0.7.11
+## Version 0.7.12
 
--   Initial release with pkgdown
+-   Initial release of BATSS with pkgdown
