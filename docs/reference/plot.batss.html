@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">BATSS</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.12</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.13</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for batss</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, focus <span class="op">=</span> <span class="st">"size"</span>, hypothesis <span class="op">=</span> <span class="st">"H1"</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"size"</span>, hypothesis <span class="op">=</span> <span class="st">"H1"</span>, title <span class="op">=</span> <span class="cn">TRUE</span>, legend <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -67,7 +67,7 @@
 <dd><p>An object of class 'batss' (i.e., output of the function <a href="batss.glm.html">batss.glm</a>).</p></dd>
 
 
-<dt>focus</dt>
+<dt>type</dt>
 <dd><p>A character string indicating the type of plot with options 'size' (default) to display the total and per group sample size observed in the Monte Carlo trials, and 'estimates' to display the Monte Carlo trial target estimates as a function of the sample size.</p></dd>
 
 
@@ -75,8 +75,16 @@
 <dd><p>A character string indicating which alternative hypothesis to use for analyses considering both "H0" and "H1", with options "H1" (default) and "H0".</p></dd>
 
 
+<dt>title</dt>
+<dd><p>Either a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> indicating if a title should be added or a string (of class <a href="https://rdrr.io/r/base/character.html" class="external-link">character</a>) indicating the title to be added. If <code>title</code> equals <code>TRUE</code> (default), the title 'Under 'H1' or 'Under 'H0' (depending on the argument <code>hypothesis</code>) is added to the outer margin of the plot. No outer margin space is added if <code>title = FALSE</code>.</p></dd>
+
+
+<dt>legend</dt>
+<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> (with default set to <code>TRUE</code>) indicating if, when '<code>type = estimates</code>', a legend should be added at the bottom of the plot.</p></dd>
+
+
 <dt>...</dt>
-<dd><p>Additional arguments affecting the plot produced.</p></dd>
+<dd><p>Additional arguments affecting the plot produced, like ylim and ylab.</p></dd>
 
 </dl></div>
     <div class="section level2">

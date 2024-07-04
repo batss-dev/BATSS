@@ -4,16 +4,20 @@
 \alias{plot.batss}
 \title{Plot function for BATSS outputs}
 \usage{
-\method{plot}{batss}(x, focus = "size", hypothesis = "H1", ...)
+\method{plot}{batss}(x, type = "size", hypothesis = "H1", title = TRUE, legend = TRUE, ...)
 }
 \arguments{
 \item{x}{An object of class 'batss' (i.e., output of the function \link{batss.glm}).}
 
-\item{focus}{A character string indicating the type of plot with options 'size' (default) to display the total and per group sample size observed in the Monte Carlo trials, and 'estimates' to display the Monte Carlo trial target estimates as a function of the sample size.}
+\item{type}{A character string indicating the type of plot with options 'size' (default) to display the total and per group sample size observed in the Monte Carlo trials, and 'estimates' to display the Monte Carlo trial target estimates as a function of the sample size.}
 
 \item{hypothesis}{A character string indicating which alternative hypothesis to use for analyses considering both "H0" and "H1", with options "H1" (default) and "H0".}
 
-\item{...}{Additional arguments affecting the plot produced.}
+\item{title}{Either a \link[base]{logical} indicating if a title should be added or a string (of class \link[base]{character}) indicating the title to be added. If \code{title} equals \code{TRUE} (default), the title 'Under 'H1' or 'Under 'H0' (depending on the argument \code{hypothesis}) is added to the outer margin of the plot. No outer margin space is added if \code{title = FALSE}.}
+
+\item{legend}{a \link[base]{logical} (with default set to \code{TRUE}) indicating if, when '\code{type = estimates}', a legend should be added at the bottom of the plot.}
+
+\item{...}{Additional arguments affecting the plot produced, like ylim and ylab.}
 }
 \description{
 Plot for objects of class 'batss'

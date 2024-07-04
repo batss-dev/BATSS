@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../../index.html">BATSS</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.12</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.13</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,9 +98,10 @@ patients.</p>
 combinations compared to a control arm in treatment-naive patients that
 are predicted to be unlikely to respond to standard first line
 immunotherapy treatments. The primary outcome is the objective response
-rate (ORR) according to the Response Evaluation Criteria in Solid Tumors
-(RECIST) (partial or complete response vs stable disease or progressive
-disease) at 6 months post randomisation.</p>
+rate (ORR, i.e., the probability of observing a one/success) according
+to the Response Evaluation Criteria in Solid Tumors (RECIST) (partial or
+complete response vs stable disease or progressive disease) at 6 months
+post randomisation.</p>
 </div>
 <div class="section level2">
 <h2 id="design">Design<a class="anchor" aria-label="anchor" href="#design"></a>
@@ -136,7 +137,7 @@ are proportional to:
 <ul>
 <li>control arm: <span class="math display">\[
 \frac{\text{exp}\left(\text{max}(n_{kj}) -
-n_{0j}\right)^{\nu}}{K_j-1}\]</span> where
+n_{0j}\right)^{\nu}}{K_j}\]</span> where
 <ul>
 <li>
 <span class="math inline">\(n_{kj}\)</span> corresponds to the
@@ -145,7 +146,7 @@ sample size of arm <span class="math inline">\(k\)</span> (where <span class="ma
 intervention arms only (i.e. for <span class="math inline">\(k&gt;0\)</span>),</li>
 <li>
 <span class="math inline">\(K_j\)</span> is the number of active
-arms (including control) at look <span class="math inline">\(j\)</span>,</li>
+arms (excluding control) at look <span class="math inline">\(j\)</span>,</li>
 <li>
 <span class="math inline">\(\nu=0.1\)</span> is a tuning
 parameter.</li>
@@ -380,14 +381,14 @@ is the default one of the function <code>batss.glm</code> when
 <p>We consider two scenarios:</p>
 <ul>
 <li>
-<strong>Scenario 1</strong>: each arm has a probability of success
-of 0.4 (global null),</li>
+<strong>Scenario 1</strong>: each arm has an ORR of 0.4 (global
+null),</li>
 <li>
 <strong>Scenario 2</strong>:
 <ul>
-<li>arms “A”, “B” and “C” have a probability of success of 0.4,</li>
-<li>arms “D” has a probability of success of 0.5,</li>
-<li>arms “E” and “F” have a probability of success of 0.7.</li>
+<li>arms “A”, “B” and “C” have an ORR of 0.4,</li>
+<li>arms “D” has an ORR of 0.5,</li>
+<li>arms “E” and “F” have an ORR of 0.7.</li>
 </ul>
 </li>
 </ul>
@@ -433,12 +434,12 @@ of 0.4 (global null),</li>
 <ul>
 <li>
 <code>y</code> is generated via the function <code>rbinom</code> and
-has expected probabilities of success of respectively
+has an ORR of respectively
 <ul>
 <li>
 <code>expit(logit(0.4)) = 0.4</code> for the reference group, where
-<code>logit(0.4) = -0.405</code> corresponds to the log odds of success
-for the control group,</li>
+<code>logit(0.4) = -0.405</code> corresponds to the log odds of
+‘success’ for the control group,</li>
 <li>
 <code>expit(logit(0.4+0)) = 0.4</code> for all other groups (as
 contrasts of type treatment are used for the factor
@@ -448,10 +449,10 @@ log odds ratio value related to groups “B” to “F” (i.e., no
 effect),</li>
 </ul>
 </li>
-<li>the target parameters (corresponding to the shift in probabilities
-of success of treatment arms “B” to “F” compared to the “control” on the
-logit scale) are in position 2 to 6 of the fitted coefficients obtained
-when using the formula <code>y~group</code>,</li>
+<li>the target parameters (corresponding to the shift in ORR of
+treatment arms “B” to “F” compared to the “control” on the logit scale)
+are in position 2 to 6 of the fitted coefficients obtained when using
+the formula <code>y~group</code>,</li>
 <li>
 <code>prob0</code> provides
 <ul>
@@ -502,10 +503,10 @@ save time.</p>
 <span>  var.control     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>  family          <span class="op">=</span> <span class="st">"binomial"</span>,</span>
 <span>  link            <span class="op">=</span> <span class="st">"logit"</span>,</span>
-<span>  beta            <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">logit</span><span class="op">(</span><span class="fl">0.4</span><span class="op">)</span>,                    <span class="co"># log off of reference group</span></span>
-<span>                      <span class="fl">0</span>,<span class="fl">0</span>,                           <span class="co"># log odd ratio of groups B and C       </span></span>
-<span>                      <span class="fu">logit</span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span><span class="op">-</span><span class="fu">logit</span><span class="op">(</span><span class="fl">0.4</span><span class="op">)</span>,         <span class="co"># log odd ratio of group D</span></span>
-<span>                      <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu">logit</span><span class="op">(</span><span class="fl">0.7</span><span class="op">)</span><span class="op">-</span><span class="fu">logit</span><span class="op">(</span><span class="fl">0.4</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>, <span class="co"># log odd ratio of groups E and F       </span></span>
+<span>  beta            <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">logit</span><span class="op">(</span><span class="fl">0.4</span><span class="op">)</span>,                    <span class="co"># log odd of reference group</span></span>
+<span>                      <span class="fl">0</span>,<span class="fl">0</span>,                           <span class="co"># log odds ratio of groups B and C       </span></span>
+<span>                      <span class="fu">logit</span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span><span class="op">-</span><span class="fu">logit</span><span class="op">(</span><span class="fl">0.4</span><span class="op">)</span>,         <span class="co"># log odds ratio of group D</span></span>
+<span>                      <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu">logit</span><span class="op">(</span><span class="fl">0.7</span><span class="op">)</span><span class="op">-</span><span class="fu">logit</span><span class="op">(</span><span class="fl">0.4</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>, <span class="co"># log odds ratio of groups E and F       </span></span>
 <span>  which           <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span>,</span>
 <span>  R               <span class="op">=</span> <span class="va">R</span>,</span>
 <span>  alternative     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"greater"</span><span class="op">)</span>,</span>
