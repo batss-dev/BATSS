@@ -1,6 +1,6 @@
 #' @name batss.glm
 #' @title BATSS for generalised linear models
-#' @description Simulation of Bayesian adaptive trials with GLM endpoint using INtegrated Laplace Approximation (INLA).  
+#' @description Simulation of Bayesian adaptive trials with GLM endpoint using Integrated Nested Laplace Approximation (INLA).  
 #' @param model an object of class '\link[stats]{formula}' indicating a symbolic description of the model to be fitted (as in the \link[stats]{lm} and \link[stats]{glm} functions).
 #' @param var A list. Each entry corresponds to a variable described under '`model`' and indicates the name of a function allowing to generate variates (like \link[stats]{rnorm} and \link[stats]{rexp}, for example). The list names have to match the variable names unded in '`model`' and its first element should correspond to the model outcome. The grouping variable corresponding to the target parameters has to be of class '\link[base]{factor}' with levels corresponding to the names indicated in argument `prob0` (see below).
 #' @param var.control An optional list of control parameters for the functions indicated in '`var`'. The names of the list items need to correspond to the names used in '`var`'. Each element is another list with names of the elements corresponding to the parameter names of the functions specified in '`var`'. 
