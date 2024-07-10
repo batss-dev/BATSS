@@ -7,7 +7,7 @@
 eff.arm.simple(posterior, b)
 }
 \arguments{
-\item{posterior}{the BATSS ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument \code{'alternative'} of \link{batss.glm}) than '\code{delta.eff}'.}
+\item{posterior}{the 'BATSS' ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument \code{'alternative'} of \link{batss.glm}) than '\code{delta.eff}'.}
 
 \item{b}{the cut-off value used to declare efficacy (to be defined in \code{eff.arm.control}).}
 }

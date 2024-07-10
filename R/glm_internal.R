@@ -19,17 +19,20 @@ batss.res.tp = function(estimate,id.target){
     out = id.target[,c("pos","id","alternative","group")] 
     out$efficacy = apply(estimate[,"type",,drop=FALSE]==1,1,mean)
     out$futility = apply(estimate[,"type",,drop=FALSE]==2,1,mean)
+    out$both     = apply(estimate[,"type",,drop=FALSE]==3,1,mean) 
     colnames(out)[1] = ""    
     out
     }
 # target global   
 batss.res.tg = function(estimate,id.target){
     out = data.frame(pos=1:2,id=c("At least one","All"),
-                     alternative="",group="",efficacy=NA,futility=NA)
+                     alternative="",group="",efficacy=NA,futility=NA,both=NA)
     out$efficacy[1] = mean(apply(estimate[,"type",,drop=FALSE]==1,3,sum)>0)
     out$futility[1] = mean(apply(estimate[,"type",,drop=FALSE]==2,3,sum)>0)
+    out$both[1]     = mean(apply(estimate[,"type",,drop=FALSE]==3,3,sum)>0)
     out$efficacy[2] = mean(apply(estimate[,"type",,drop=FALSE]==1,3,all)>0)
     out$futility[2] = mean(apply(estimate[,"type",,drop=FALSE]==2,3,all)>0)
+    out$both[2]     = mean(apply(estimate[,"type",,drop=FALSE]==3,3,all)>0)
     colnames(out)[1] = ""    
     out
     }  

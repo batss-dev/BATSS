@@ -11,6 +11,9 @@
 
 \item{...}{Additional arguments affecting the print produced.}
 }
+\value{
+Prints information for objects of class 'batss'.
+}
 \description{
 Print method function for objects of class 'batss' (i.e., output of the function \link{batss.glm}).
 }

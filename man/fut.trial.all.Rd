@@ -7,7 +7,7 @@
 fut.trial.all(fut.target)
 }
 \arguments{
-\item{fut.target}{the BATSS ingredient '\code{fut.target}' corresponding to a \link[base]{logical} vector of the same length as argument \code{which} (i.e., the number of target parameters) indicating if futility was declared for each target parameter at that stage or at a previous stage.}
+\item{fut.target}{the 'BATSS' ingredient '\code{fut.target}' corresponding to a \link[base]{logical} vector of the same length as argument \code{which} (i.e., the number of target parameters) indicating if futility was declared for each target parameter at that stage or at a previous stage.}
 }
 \value{
 \link{fut.trial.all} returns a logical constant.

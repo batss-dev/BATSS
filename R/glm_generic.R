@@ -4,6 +4,7 @@
 #' @param x An object of class 'batss'.
 #' @param ... Additional arguments affecting the print produced.
 #' @seealso [batss.glm()], the function generating S3 objects of class 'batss'. 
+#' @returns Prints information for objects of class 'batss'.
 #' @export
 print.batss = function(x, ...){
     cat("\n Bayesian adaptive trial Monte Carlo simulation.\n")

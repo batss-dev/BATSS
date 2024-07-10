@@ -7,15 +7,15 @@
 RAR.trippa(posterior, n, N, ref, active, gamma, eta, nu)
 }
 \arguments{
-\item{posterior}{the BATSS ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability of the active target parameters being greater or smaller (depending on the argument \code{'alternative'} of \link{batss.glm}) than '\code{delta.RAR}'.}
+\item{posterior}{the 'BATSS' ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability of the active target parameters being greater or smaller (depending on the argument \code{'alternative'} of \link{batss.glm}) than '\code{delta.RAR}'.}
 
-\item{n}{the BATSS ingredient '\code{n}' corresponding to the vector of number of recruited participants per arm including the control group at the look of interest.}
+\item{n}{the 'BATSS' ingredient '\code{n}' corresponding to the vector of number of recruited participants per arm including the control group at the look of interest.}
 
-\item{N}{the BATSS ingredient '`N' corresponding to the maximum (planned) sample size.}
+\item{N}{the 'BATSS' ingredient '`N' corresponding to the maximum (planned) sample size.}
 
-\item{ref}{the BATSS ingredient '\code{ref}' corresponding to a \link[base]{logical} vector of the same length and order as \code{'prob0'} (i.e., number of arms initially included in the study including the reference group)) and indicating which group is the reference one.}
+\item{ref}{the 'BATSS' ingredient '\code{ref}' corresponding to a \link[base]{logical} vector of the same length and order as \code{'prob0'} (i.e., number of arms initially included in the study including the reference group)) and indicating which group is the reference one.}
 
-\item{active}{the BATSS ingredient '\code{active}' corresponding to a \link[base]{logical} vector of the same length and order as \code{'prob0'} (i.e., number of arms initially included in the study including the reference group)) and  indicating if each arm is active at the look of interest.}
+\item{active}{the 'BATSS' ingredient '\code{active}' corresponding to a \link[base]{logical} vector of the same length and order as \code{'prob0'} (i.e., number of arms initially included in the study including the reference group)) and  indicating if each arm is active at the look of interest.}
 
 \item{gamma}{a scaling factor (to be defined in \code{RAR.arm.control}).}
 

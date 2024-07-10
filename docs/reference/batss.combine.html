@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">BATSS</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.13</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.7.14</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,6 +70,12 @@
 <dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> with default <code>force=FALSE</code>. Among other checks, <a href="batss.glm.html">batss.glm</a> controls that the <a href="https://rdrr.io/r/base/call.html" class="external-link">call</a>s of the Monte Carlo trials to be combined are <a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a> and stops if they are not (Note that this check is not bullet proof: such a check, for example, would be able to note that two sets of Monte Carlo trials used a <code>eff.arm</code> function named the same way and considered the same optional parameters but would be blind to the fact that they could correspond to two <em>different</em> functions). <code>force=TRUE</code> forces <a href="batss.glm.html">batss.glm</a> to ignore this check. This could be useful if the calls differ due to the <code>batss</code> objects to be combined being generated using different versions of <a href="batss.glm.html">batss.glm</a>.</p></dd>
 
 </dl></div>
+    <div class="section level2">
+    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
+    
+
+<p>an object of class 'batss'. Refer to the section 'Value' in <a href="batss.glm.html">batss.glm</a> for details about this object structure.</p>
+    </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="batss.glm.html">batss.glm()</a></code>, the function allowing to simulate Bayesian adaptive trials with GLM endpoint for different seeds.</p></div>

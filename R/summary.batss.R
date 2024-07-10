@@ -1,9 +1,10 @@
 #' @name summary.batss
-#' @title Summary function for BATSS outputs
+#' @title Summary function for 'BATSS' outputs
 #' @description Summary method function for objects of class 'batss'.
 #' @param object An object of class 'batss' (i.e., output of the function [batss.glm]).
 #' @param full A logical indicating if a standard (full = FALSE, default) or extended output (full = TRUE) should be returned.
 #' @param ... Additional arguments affecting the summary produced.
+#' @returns Prints a summary for objects of class 'batss'.
 #' @seealso [batss.glm()], the function generating S3 objects of class 'batss'. 
 #' @export
 summary.batss = function(object, full=FALSE, ...){
@@ -48,20 +49,21 @@ summary.batss = function(object, full=FALSE, ...){
       cat("\n")
       cli_h3("Target parameters:\n")
       temp = rbind(object$H0$target$par,object$H0$target$global)
-      temp[,1][-(1:nrow(object$H0$target$pa))] = ""
+      if(all(temp$both==0)){temp = temp[,colnames(temp)!="both"]}       
+      temp[,1][-(1:nrow(object$H0$target$par))] = ""
       print(temp,row.names=FALSE)
       #
       if(full){
           cat("\n")
           cli_h3("Efficacy:\n")
           temp = rbind(object$H0$efficacy$par,object$H0$efficacy$global)
-          temp[,1][-(1:nrow(object$H0$efficacy$pa))] = ""
+          temp[,1][-(1:nrow(object$H0$efficacy$par))] = ""
           print(temp,row.names=FALSE)
           #
           cat("\n")
           cli_h3("Futility:\n")
           temp = rbind(object$H0$futility$par,object$H0$futility$global)
-          temp[,1][-(1:nrow(object$H0$futility$pa))] = ""
+          temp[,1][-(1:nrow(object$H0$futility$par))] = ""
           print(temp,row.names=FALSE)
           #
           cat("\n")
@@ -83,6 +85,9 @@ summary.batss = function(object, full=FALSE, ...){
           cli_h3("Scenarios:\n")
           print(object$H0$scenario,row.names=FALSE)
           cat(" where 0 = no stop, 1 = efficacy stop, 2 = futility stop\n")
+          if(any(object$H0$scenario[,object$H0$target$par$id]==3)){
+            cat(",\n       3 = simultaneous efficacy and futility stops")
+          }else{cat("\n")}
           }
     }
     # H1
@@ -95,20 +100,21 @@ summary.batss = function(object, full=FALSE, ...){
       cat("\n")
       cli_h3("Target parameters:\n")
       temp = rbind(object$H1$target$par,object$H1$target$global)
-      temp[,1][-(1:nrow(object$H1$target$pa))] = ""
+      if(all(temp$both==0)){temp = temp[,colnames(temp)!="both"]} 
+      temp[,1][-(1:nrow(object$H1$target$par))] = ""
       print(temp,row.names=FALSE)
       #
       if(full){
           cat("\n")
           cli_h3("Efficacy:\n")
           temp = rbind(object$H1$efficacy$par,object$H1$efficacy$global)
-          temp[,1][-(1:nrow(object$H1$efficacy$pa))] = ""
+          temp[,1][-(1:nrow(object$H1$efficacy$par))] = ""
           print(temp,row.names=FALSE)
           #
           cat("\n")
           cli_h3("Futility:\n")
           temp = rbind(object$H1$futility$par,object$H1$futility$global)
-          temp[,1][-(1:nrow(object$H1$futility$pa))] = ""
+          temp[,1][-(1:nrow(object$H1$futility$par))] = ""
           print(temp,row.names=FALSE)
           #
           cat("\n")
@@ -129,7 +135,10 @@ summary.batss = function(object, full=FALSE, ...){
           cat("\n")
           cli_h3("Scenarios:\n")
           print(object$H1$scenario,row.names=FALSE)
-          cat(" where 0 = no stop, 1 = efficacy stop, 2 = futility stop\n")
+          cat(" where 0 = no stop, 1 = efficacy stop, 2 = futility stop")
+          if(any(object$H1$scenario[,object$H1$target$par$id]==3)){
+            cat(",\n       3 = simultaneous efficacy and futility stops")
+          }else{cat("\n")}
           }
     }
     cli_h1("")#cat(paste0(rep("-",options()$width),collapse=""))

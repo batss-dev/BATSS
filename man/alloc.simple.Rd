@@ -7,9 +7,9 @@
 alloc.simple(m, prob)
 }
 \arguments{
-\item{m}{the BATSS ingredient '\code{m}', a scalar corresponding to the number of participants to be allocated.}
+\item{m}{the 'BATSS' ingredient '\code{m}', a scalar corresponding to the number of participants to be allocated.}
 
-\item{prob}{the BATSS ingredient '\code{prob}', a named vector of allocation ratios or probabilities.}
+\item{prob}{the 'BATSS' ingredient '\code{prob}', a named vector of allocation ratios or probabilities.}
 }
 \value{
 \link{alloc.simple} returns an object of class \link[base]{factor} of length '\code{m}' with levels matching the names of the vector '\code{prob}'.

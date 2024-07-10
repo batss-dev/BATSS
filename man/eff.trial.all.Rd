@@ -7,7 +7,7 @@
 eff.trial.all(eff.target)
 }
 \arguments{
-\item{eff.target}{the BATSS ingredient '\code{eff.target}' corresponding to a \link[base]{logical} vector of the same length as argument \code{which} (i.e., the number of target parameters) indicating if efficacy was reached for each target parameter at that stage or at a previous stage.}
+\item{eff.target}{the 'BATSS' ingredient '\code{eff.target}' corresponding to a \link[base]{logical} vector of the same length as argument \code{which} (i.e., the number of target parameters) indicating if efficacy was reached for each target parameter at that stage or at a previous stage.}
 }
 \value{
 \link{eff.trial.all} returns a logical constant.

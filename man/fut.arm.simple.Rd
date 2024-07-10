@@ -7,7 +7,7 @@
 fut.arm.simple(posterior, b)
 }
 \arguments{
-\item{posterior}{the BATSS ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument \code{'alternative'} of \link{batss.glm}) than '\code{delta.fut}'.}
+\item{posterior}{the 'BATSS' ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument \code{'alternative'} of \link{batss.glm}) than '\code{delta.fut}'.}
 
 \item{b}{the cut-off value used to declare futility (to be defined in \code{fut.arm.control}).}
 }

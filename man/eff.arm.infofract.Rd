@@ -7,13 +7,13 @@
 eff.arm.infofract(posterior, b, n, N, p)
 }
 \arguments{
-\item{posterior}{the BATSS ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument \code{'alternative'} of \link{batss.glm}) than '\code{delta.eff}'.}
+\item{posterior}{the 'BATSS' ingredient '\code{posterior}' corresponding, in this context, to the (posterior) probability of the target parameter being greater or smaller (depending on the argument \code{'alternative'} of \link{batss.glm}) than '\code{delta.eff}'.}
 
 \item{b}{a tuning parameter (to be defined in \code{eff.arm.control}).}
 
-\item{n}{the BATSS ingredient '\code{n}' corresponding to the vector of number of recruited participants per arm including the control group.}
+\item{n}{the 'BATSS' ingredient '\code{n}' corresponding to the vector of number of recruited participants per arm including the control group.}
 
-\item{N}{the BATSS ingredient '`N' corresponding to the maximum (planned) sample size.}
+\item{N}{the 'BATSS' ingredient '`N' corresponding to the maximum (planned) sample size.}
 
 \item{p}{a tuning parameter (to be defined in \code{eff.arm.control}).}
 }

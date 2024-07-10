@@ -1,5 +1,5 @@
 #' @name batss.glm
-#' @title BATSS for generalised linear models
+#' @title Bayesian adaptive trial simulations for generalised linear models
 #' @description Simulation of Bayesian adaptive trials with GLM endpoint using Integrated Nested Laplace Approximation (INLA).  
 #' @param model an object of class '\link[stats]{formula}' indicating a symbolic description of the model to be fitted (as in the \link[stats]{lm} and \link[stats]{glm} functions).
 #' @param var A list. Each entry corresponds to a variable described under '`model`' and indicates the name of a function allowing to generate variates (like \link[stats]{rnorm} and \link[stats]{rexp}, for example). The list names have to match the variable names unded in '`model`' and its first element should correspond to the model outcome. The grouping variable corresponding to the target parameters has to be of class '\link[base]{factor}' with levels corresponding to the names indicated in argument `prob0` (see below).
@@ -10,7 +10,7 @@
 #' @param which A numerical vector indicating the position of the target `beta` parameters.
 #' @param R a vector of natural numbers to be used as seeds (check \link[base]{set.seed}) for the different Monte Carlo trials (the vector length will thus correspond to the number of Monte Carlo trials). When `R` is a scalar, seeds `1` to `R` are used, where `R` corresponds to the number of Monte Carlo trials. 
 #' @param alternative A vector of strings providing the one-sided direction of the alternative hypothesis corresponding to each target parameter indicated under '`which`' (in the same order). Possibilities are 'greater' (default) or 'less'. If the vector is of length 1, the same direction will be used for all target parameter tests.
-#' @param RAR A function defining the response-adaptive randomisation probabilities of each group - reference group included - with the same group names and ordering as used in '`prob0`'. Arguments of this function will typically consider BATSS 'ingredients'. Check [RAR.trippa] and [RAR.optimal] for examples. If `RAR = NULL` (default), the probabilities/ratios indicated under `prob0` will be used throughout (fixed allocation probabilities).
+#' @param RAR A function defining the response-adaptive randomisation probabilities of each group - reference group included - with the same group names and ordering as used in '`prob0`'. Arguments of this function will typically consider 'BATSS' ingredients. Check [RAR.trippa] and [RAR.optimal] for examples. If `RAR = NULL` (default), the probabilities/ratios indicated under `prob0` will be used throughout (fixed allocation probabilities).
 #' @param RAR.control An optional list of control parameters for the function provided in '`RAR`'. 
 #' @param N A scalar indicating the maximum sample size.
 #' @param interim A list of parameters related to interim analyses. Currently, only '`recruited`' is available.  It consists in a vector of integers indicating the number of completed observations at each look, last excluded, in increasing order.
@@ -18,24 +18,33 @@
 #' @param delta.eff A vector (of length equal to the number of looks (i.e., number of interims + 1)) of clinically meaningful treatment effect values (on the linear predictor scale) to be used to define the efficacy-related posterior probabilities for each target parameter at each look. If a scalar is provided, the same value is used at each look. The default is `delta.eff = 0`. 
 #' @param delta.fut A vector (of length equal to the number of looks (i.e., number of interims + 1)) of clinically meaningful treatment effect values (on the linear predictor scale) to be used to define the futility-related posterior probabilities for each target parameter at each look. If a scalar is provided, the same value is used at each look. The default is `delta.fut = delta.eff`. 
 #' @param delta.RAR A vector (of length equal to the number of looks (i.e., number of interims + 1)) of clinically meaningful treatment effect values (on the linear predictor scale) to be used to define the RAR-related posterior probabilities for each target parameter at each look. If a scalar is provided, the same value is used at each interim analysis. The default is `delta.RAR = 0`. Note that, when a vector is provided, its last value is ignored as no randomisation is made at the last look.
-#' @param eff.arm A function defining if efficacy has been achieved at a given look given the information available at that stage a given target parameter. The output of this function must be a \link[base]{logical} (of length 1). Arguments of this function will typically consider BATSS 'ingredients'. Check [eff.arm.simple] and [eff.arm.infofract] for examples. 
+#' @param eff.arm A function defining if efficacy has been achieved at a given look given the information available at that stage a given target parameter. The output of this function must be a \link[base]{logical} (of length 1). Arguments of this function will typically consider 'BATSS' ingredients. Check [eff.arm.simple] and [eff.arm.infofract] for examples. 
 #' @param eff.arm.control An optional list of parameters for the function indicated in '`eff.arm`'.
-#' @param eff.trial A function defining if the trial can be stopped for efficacy given the output of the function indicated in '`eff.arm`'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the BATSS ingredient `eff.target`. Check [eff.trial.all] and [eff.trial.any] for examples. When `eff.trial = NULL` (default), the trial stops for efficacy when *all* target parameters are found to be effective (like in [eff.trial.all]). 
+#' @param eff.trial A function defining if the trial can be stopped for efficacy given the output of the function indicated in '`eff.arm`'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the 'BATSS' ingredient `eff.target`. Check [eff.trial.all] and [eff.trial.any] for examples. When `eff.trial = NULL` (default), the trial stops for efficacy when *all* target parameters are found to be effective (like in [eff.trial.all]). 
 #' @param eff.trial.control An optional list of parameters for the function indicated in '`eff.trial`'.
-#' @param fut.arm A function defining if futility has been achieved at a given look given the information available at that stage for each target parameter. The output of this function must be a \link[base]{logical} (of length 1). Arguments of this function will typically consider BATSS 'ingredients'. Check [fut.arm.simple] to see an example of such a function. 
+#' @param fut.arm A function defining if futility has been achieved at a given look given the information available at that stage for each target parameter. The output of this function must be a \link[base]{logical} (of length 1). Arguments of this function will typically consider 'BATSS' ingredients. Check [fut.arm.simple] to see an example of such a function. 
 #' @param fut.arm.control An optional list of parameters for the function indicated in '`fut.arm`'.
-#' @param fut.trial A function defining if the trial can be stopped for futility given the output of the function indicated in '`fut.arm`'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the BATSS ingredient `fut.target`. Check [fut.trial.all] for an example of such a function. When `fut.trial = NULL` (default), the trial stops for futility when *all* target parameters are found to be futile (like in [fut.trial.all]).
+#' @param fut.trial A function defining if the trial can be stopped for futility given the output of the function indicated in '`fut.arm`'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the 'BATSS' ingredient `fut.target`. Check [fut.trial.all] for an example of such a function. When `fut.trial = NULL` (default), the trial stops for futility when *all* target parameters are found to be futile (like in [fut.trial.all]).
 #' @param fut.trial.control An optional list of parameters for the function indicated in '`fut.trial`'.
 #' @param H0 A logical indicating whether the simulation should also consider the case with all target parameters set to 0 to check the probability of rejecting the hypothesis that the target parameter value is equal to 0 individually (pairwise type I error) or globally (family-wise error rate). Default set to `H0=TRUE`.
 #' @param computation A character string indicating how the computation should be performed. Possibilities are 'parallel' or 'sequential' with default `computation="parallel"` meaning that the computation is split between `mc.cores`. 
 #' @param mc.cores An integer indicating the number of CPUs to be used when `computation="parallel"` (Default to 3 if no global '`mc.cores`' global option is available via \link[base]{getOption}).
 #' @param extended an integer indicating the type of results to be returned. 0 (default) provides summary statistics, 1 adds the results of each Monte Carlo trial and 2 additionally returns each Monte Carlo dataset. [batss.combine] requires extended > 0 as the function needs to merge results of different sets of seeds.
 #' @param ... Additional arguments to control fitting in \link[INLA]{inla}.
-#' @returns The function [batss.glm] returns an S3 object of class 'batss' with available print/summary/plot functions.
+#' @returns The function [batss.glm] returns an S3 object of class 'batss' with available print/summary/plot functions
+#' \itemize{
+#'   \item beta - A data frame providing information related to the beta parameter vector, like parameter names and values, for example.
+#'   \item look - A data frame providing information related to looks, like sample size of a given interim (m) and cumulative sample size at a given interim (n), for example.
+#'   \item par - A list providing different information, like the used seeds (seed) and the groups (group), for example.
+#'   \item H1 - A list providing trial results under the alternative, like the estimates per target parameter when the corresponding arm was stopped (estimate), the efficacy and futility probabilites per target parameter and overall (target, efficacy and futility), the sample size per group and trial (sample), the probabilities associated to each combination of efficacy and futility per group (scenario), the detailed results per trial (trial), for example.
+#'   \item H0 - A list providing trial results under the global null hypothesis (same structure as H1).
+#'   \item call - The matched call.
+#'   \item type - The type of 'BATSS' analysis (only 'glm' is currently available).
+#' }
 #' @export
-#' @seealso [summary.batss()] and [plot.batss()] for detailed summaries and plots, and [batss.combine()] to combine different evaluations of [batss.glm] considering the same trial design but different sets of seeds (useful for cluster computation). 
+#' @seealso [summary.batss] and [plot.batss] for detailed summaries and plots, and [batss.combine] to combine different evaluations of [batss.glm] considering the same trial design but different sets of seeds (useful for cluster computation). 
 #' @examples
-#'\dontrun{
+#'\donttest{
 #' # Example: 
 #' # * Gaussian conditional distribution with sigma = 5
 #' # * 3 groups with group means 'C' = 1 (ref), 'T1' = 2, 'T2' = 3,
@@ -49,7 +58,7 @@
 #' #     being greater than 0 is smaller than 0.05 (?fut.arm.simple) 
 #' # * trial stop once all arms have stopped (?eff.trial.all and ?fut.trial.all)
 #' #     or the max sample size was reached 
-#' 
+#'
 #' sim = batss.glm(model            = y ~ group,   
 #'                 var              = list(y     = rnorm,
 #'                                         group = alloc.balanced),
@@ -57,7 +66,7 @@
 #'                 beta             = c(1, 1, 2),
 #'                 which            = c(2:3),
 #'                 alternative      = "greater",
-#'                 R                = 25,
+#'                 R                = 20,
 #'                 N                = 200,
 #'                 interim          = list(recruited = seq(100, 180, 20)),
 #'                 prob0            = c(C = 1/3, T1 = 1/3, T2 = 1/3),
@@ -67,7 +76,7 @@
 #'                 fut.arm.control  = list(b = 0.05),
 #'                 computation      = "parallel",
 #'                 H0               = TRUE,
-#'                 mc.cores         = parallel::detectCores()-1)
+#'                 mc.cores         = 2)# better: parallel::detectCores()-1
 #' }
 #' @export
 batss.glm = function(
@@ -93,12 +102,12 @@ model <- as.formula(model)                 # allow for string and formula input
 ## dataset structure and useful definitions 
 ##
 
-cat("\n\tInitialisation\n")    
+message("    Initialisation")    
 
 #some checks
 n = m = prob = NULL
 #error messages
-if (!is.character(model) && !is.formula(model)) 
+if (!is.character(model) && ! plyr::is.formula(model)) 
   stop("invalid 'model' argument")
 if (!is.list(var) || !all(sapply(var,is.function)))
   stop("'var' must be a list of functions")
@@ -321,7 +330,7 @@ if(length(R)==1){id.seed=1:R}else{id.seed=R}
 
 if(!all(beta[which]==0)){
 
-    cat("\tEvaluation of H1\n")           
+    message("    Evaluation of H1")           
     H1 = TRUE
     # sequential
     if(computation!="parallel"){
@@ -409,7 +418,7 @@ if(!all(beta[which]==0)){
 
 if(H0==TRUE | all(beta[which]==0)){
 
-    cat("\tEvaluation of H0\n")
+    message("    Evaluation of H0")
     H0 = TRUE
     beta0 = beta
     beta0[which] = 0
@@ -499,7 +508,7 @@ if(H0==TRUE | all(beta[which]==0)){
 ## output
 ##
 
-cat("\tResults 1\n")    
+message("    Results")    
 look        = id.look[,c("pos","id","n","m")]
 FE  = data.frame(pos=1:ncol(X),id=colnames(X),target=FALSE,
                  row.names = colnames(X))
@@ -507,12 +516,9 @@ FE[id.target$id,"target"] = TRUE
 if(H0){FE[,'Beta (H0)'] = beta0}
 if(H1){FE[,'Beta (H1)'] = beta}
 # 
-# browser("browser")
-cat("\tResults 2\n")    
-par = list(RAR=RAR,group=id.group[,c("pos","id","reference")],
-           seed=id.seed,H0=H0,H1=H1)
+par = list(RAR=RAR, group=id.group[,c("pos","id","reference")],
+           seed=id.seed, H0=H0, H1=H1, version=utils::packageVersion("BATSS"))
 out = list(beta = FE, look = look, par=par)    
-cat("\tResults 3\n")        
 if(H0){
     out$H0 = res_H0
     if(extended>0){out$H0$trial = trial_H0}
@@ -521,7 +527,6 @@ if(H1){
     out$H1 = res_H1
     if(extended>0){out$H1$trial = trial_H1}
     }
-cat("\tResults 4\n") 
 #---
 out$call <- call
 out$type <- "glm"

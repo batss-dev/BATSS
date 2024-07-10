@@ -2,7 +2,7 @@
 % Please edit documentation in R/glm.R
 \name{batss.glm}
 \alias{batss.glm}
-\title{BATSS for generalised linear models}
+\title{Bayesian adaptive trial simulations for generalised linear models}
 \usage{
 batss.glm(
   model,
@@ -68,23 +68,23 @@ batss.glm(
 
 \item{delta.RAR}{A vector (of length equal to the number of looks (i.e., number of interims + 1)) of clinically meaningful treatment effect values (on the linear predictor scale) to be used to define the RAR-related posterior probabilities for each target parameter at each look. If a scalar is provided, the same value is used at each interim analysis. The default is \code{delta.RAR = 0}. Note that, when a vector is provided, its last value is ignored as no randomisation is made at the last look.}
 
-\item{eff.arm}{A function defining if efficacy has been achieved at a given look given the information available at that stage a given target parameter. The output of this function must be a \link[base]{logical} (of length 1). Arguments of this function will typically consider BATSS 'ingredients'. Check \link{eff.arm.simple} and \link{eff.arm.infofract} for examples.}
+\item{eff.arm}{A function defining if efficacy has been achieved at a given look given the information available at that stage a given target parameter. The output of this function must be a \link[base]{logical} (of length 1). Arguments of this function will typically consider 'BATSS' ingredients. Check \link{eff.arm.simple} and \link{eff.arm.infofract} for examples.}
 
 \item{eff.arm.control}{An optional list of parameters for the function indicated in '\code{eff.arm}'.}
 
-\item{eff.trial}{A function defining if the trial can be stopped for efficacy given the output of the function indicated in '\code{eff.arm}'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the BATSS ingredient \code{eff.target}. Check \link{eff.trial.all} and \link{eff.trial.any} for examples. When \code{eff.trial = NULL} (default), the trial stops for efficacy when \emph{all} target parameters are found to be effective (like in \link{eff.trial.all}).}
+\item{eff.trial}{A function defining if the trial can be stopped for efficacy given the output of the function indicated in '\code{eff.arm}'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the 'BATSS' ingredient \code{eff.target}. Check \link{eff.trial.all} and \link{eff.trial.any} for examples. When \code{eff.trial = NULL} (default), the trial stops for efficacy when \emph{all} target parameters are found to be effective (like in \link{eff.trial.all}).}
 
 \item{eff.trial.control}{An optional list of parameters for the function indicated in '\code{eff.trial}'.}
 
-\item{fut.arm}{A function defining if futility has been achieved at a given look given the information available at that stage for each target parameter. The output of this function must be a \link[base]{logical} (of length 1). Arguments of this function will typically consider BATSS 'ingredients'. Check \link{fut.arm.simple} to see an example of such a function.}
+\item{fut.arm}{A function defining if futility has been achieved at a given look given the information available at that stage for each target parameter. The output of this function must be a \link[base]{logical} (of length 1). Arguments of this function will typically consider 'BATSS' ingredients. Check \link{fut.arm.simple} to see an example of such a function.}
 
 \item{fut.arm.control}{An optional list of parameters for the function indicated in '\code{fut.arm}'.}
 
-\item{fut.trial}{A function defining if the trial can be stopped for futility given the output of the function indicated in '\code{fut.arm}'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the BATSS ingredient \code{fut.target}. Check \link{fut.trial.all} for an example of such a function. When \code{fut.trial = NULL} (default), the trial stops for futility when \emph{all} target parameters are found to be futile (like in \link{fut.trial.all}).}
+\item{fut.trial}{A function defining if the trial can be stopped for futility given the output of the function indicated in '\code{fut.arm}'. The output of this function must be a \link[base]{logical} of length one. Arguments of this function will typically only consider the 'BATSS' ingredient \code{fut.target}. Check \link{fut.trial.all} for an example of such a function. When \code{fut.trial = NULL} (default), the trial stops for futility when \emph{all} target parameters are found to be futile (like in \link{fut.trial.all}).}
 
 \item{fut.trial.control}{An optional list of parameters for the function indicated in '\code{fut.trial}'.}
 
-\item{RAR}{A function defining the response-adaptive randomisation probabilities of each group - reference group included - with the same group names and ordering as used in '\code{prob0}'. Arguments of this function will typically consider BATSS 'ingredients'. Check \link{RAR.trippa} and \link{RAR.optimal} for examples. If \code{RAR = NULL} (default), the probabilities/ratios indicated under \code{prob0} will be used throughout (fixed allocation probabilities).}
+\item{RAR}{A function defining the response-adaptive randomisation probabilities of each group - reference group included - with the same group names and ordering as used in '\code{prob0}'. Arguments of this function will typically consider 'BATSS' ingredients. Check \link{RAR.trippa} and \link{RAR.optimal} for examples. If \code{RAR = NULL} (default), the probabilities/ratios indicated under \code{prob0} will be used throughout (fixed allocation probabilities).}
 
 \item{RAR.control}{An optional list of control parameters for the function provided in '\code{RAR}'.}
 
@@ -99,13 +99,22 @@ batss.glm(
 \item{...}{Additional arguments to control fitting in \link[INLA]{inla}.}
 }
 \value{
-The function \link{batss.glm} returns an S3 object of class 'batss' with available print/summary/plot functions.
+The function \link{batss.glm} returns an S3 object of class 'batss' with available print/summary/plot functions
+\itemize{
+\item beta - A data frame providing information related to the beta parameter vector, like parameter names and values, for example.
+\item look - A data frame providing information related to looks, like sample size of a given interim (m) and cumulative sample size at a given interim (n), for example.
+\item par - A list providing different information, like the used seeds (seed) and the groups (group), for example.
+\item H1 - A list providing trial results under the alternative, like the estimates per target parameter when the corresponding arm was stopped (estimate), the efficacy and futility probabilites per target parameter and overall (target, efficacy and futility), the sample size per group and trial (sample), the probabilities associated to each combination of efficacy and futility per group (scenario), the detailed results per trial (trial), for example.
+\item H0 - A list providing trial results under the global null hypothesis (same structure as H1).
+\item call - The matched call.
+\item type - The type of 'BATSS' analysis (only 'glm' is currently available).
+}
 }
 \description{
-Simulation of Bayesian adaptive trials with GLM endpoint using INtegrated Laplace Approximation (INLA).
+Simulation of Bayesian adaptive trials with GLM endpoint using Integrated Nested Laplace Approximation (INLA).
 }
 \examples{
-\dontrun{
+\donttest{
 # Example: 
 # * Gaussian conditional distribution with sigma = 5
 # * 3 groups with group means 'C' = 1 (ref), 'T1' = 2, 'T2' = 3,
@@ -127,7 +136,7 @@ sim = batss.glm(model            = y ~ group,
                 beta             = c(1, 1, 2),
                 which            = c(2:3),
                 alternative      = "greater",
-                R                = 25,
+                R                = 20,
                 N                = 200,
                 interim          = list(recruited = seq(100, 180, 20)),
                 prob0            = c(C = 1/3, T1 = 1/3, T2 = 1/3),
@@ -137,9 +146,9 @@ sim = batss.glm(model            = y ~ group,
                 fut.arm.control  = list(b = 0.05),
                 computation      = "parallel",
                 H0               = TRUE,
-                mc.cores         = parallel::detectCores()-1)
+                mc.cores         = 2)# better: parallel::detectCores()-1
 }
 }
 \seealso{
-\code{\link[=summary.batss]{summary.batss()}} and \code{\link[=plot.batss]{plot.batss()}} for detailed summaries and plots, and \code{\link[=batss.combine]{batss.combine()}} to combine different evaluations of \link{batss.glm} considering the same trial design but different sets of seeds (useful for cluster computation).
+\link{summary.batss} and \link{plot.batss} for detailed summaries and plots, and \link{batss.combine} to combine different evaluations of \link{batss.glm} considering the same trial design but different sets of seeds (useful for cluster computation).
 }

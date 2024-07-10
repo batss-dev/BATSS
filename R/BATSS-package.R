@@ -14,5 +14,7 @@
 #' @importFrom grDevices dev.new devAskNewPage gray
 #' @importFrom methods is
 #' @importFrom rlang dots_list
+#' @importFrom plyr is.formula
 #' @importFrom cli cli_h1 cli_h2 cli_h3
+#' @importFrom utils packageVersion
 NULL
