@@ -15,5 +15,6 @@ Suggests:
     INLA
 Imports:
     parallel, methods, stats, grDevices, abind, plyr, rlang, R.utils, cli
+Additional_repositories: https://inla.r-inla-download.org/R/testing
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
