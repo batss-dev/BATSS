@@ -14,7 +14,14 @@ Other important features of this highly modular package include: parallel proces
 
 INLA needs to be installed prior to installing BATSS. For instructions, visit https://www.r-inla.org/download-install
 
-To install the BATSS package from GitHub run
+To install the BATSS package from CRAN, run
+
+```r
+install.packages("BATSS")
+```
+
+
+To install the development version of the BATSS package from GitHub, run
 
 ```r
 install.packages("devtools")
