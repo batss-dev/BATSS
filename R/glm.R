@@ -400,7 +400,7 @@ if(!all(beta[which]==0)){
     fut.g    = batss.res.fg(estimate,id.target,n.look)
     sample   = batss.res.s1(trial_r,group=id.group$id,
                            type=c(apply(estimate[,"type",,drop=FALSE],2:3,paste0,collapse="")),
-                           early=apply(estimate[,"look",,drop=TRUE]<n.look,2,all))
+                           early=c(apply(estimate[,"look",,drop=FALSE]<n.look,2:3,all)))
     scenario = batss.res.s2(sample,target=id.target$id)
     res_H1   = list(estimate = estimate,
                     target   = list(par=tar.p,global=tar.g),
@@ -491,7 +491,7 @@ if(H0==TRUE | all(beta[which]==0)){
     fut.g    = batss.res.fg(estimate,id.target,n.look)
     sample   = batss.res.s1(trial_r,group=id.group$id,
                            type=c(apply(estimate[,"type",,drop=FALSE],2:3,paste0,collapse="")),
-                           early=apply(estimate[,"look",,drop=TRUE]<n.look,2,all))
+                           early=c(apply(estimate[,"look",,drop=FALSE]<n.look,2:3,all)))
     scenario = batss.res.s2(sample,target=id.target$id)
     res_H0   = list(estimate = estimate,
                     target   = list(par=tar.p,global=tar.g),

@@ -13,3 +13,8 @@
     related to cases in which efficacy and futility criteria 
     are simulatneously met for an arm
 -   Minor improvements (help pages, printed messages)
+
+## Version 0.7.15
+
+-   Resolution of a bug affecting designs with a single target parameter
+
