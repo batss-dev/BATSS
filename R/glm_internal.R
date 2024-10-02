@@ -325,13 +325,15 @@ batss.trial = function(int,data,model,link,family,beta,prob0,
             break
         # continue
         }else{
+          
             # prob per group
             if(!is.null(RAR)){
                 # prob per group
                 assign("posterior",mx.posterior_RAR.lt[lw,id.target$active], envir = env)
                 assign("active",id.group$active, envir = env)
                 #prob = .eval(RAR,envir=env) 
-                assign("n",id.look[lw, id.group$id],envir = env)                                                 #assign ingredients to environment 'env' 
+                assign("n",unlist(id.look[lw, id.group$id]),envir = env)  
+                #assign ingredients to environment 'env' 
                 assign("ref",id.group$ref,envir = env)
                 assign("N",id.look$n[n.look],envir = env)
                 assign("RAR.control", RAR.control, envir = env)

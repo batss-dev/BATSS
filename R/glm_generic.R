@@ -23,7 +23,7 @@ print.batss = function(x, ...){
         cat("  *",x$call$RAR,"\n")
     }
     cat("\n Model:\n")
-    cat("  *",format(x$call$model)," (with", ifelse(is.null(x$call$link),"identity",x$call$link), "link)\n")
+    cat("  *",format(x$call$model),if (x$type=="surv") "\n" else paste("(with",ifelse(is.null(x$call$link),"identity",x$call$link), "link)\n"))
     cat("\n Call:\n ")
     print(x$call)
 }

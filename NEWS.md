@@ -18,3 +18,8 @@
 
 -   Resolution of a bug affecting designs with a single target parameter
 
+## Version 1.0.0
+
+-   Checks
+-   Minor improvments to internal/generic functions
+

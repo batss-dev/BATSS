@@ -135,7 +135,7 @@ RAR.trippa = function(posterior,n,N,ref,active,gamma,eta,nu){
   # targets
   prob[2:g] = (posterior^h)/(sum(posterior^h))
   #
-  unlist(prob)
+  prob
 }
 
 #' @name RAR.optimal
