@@ -11,9 +11,11 @@ navbar:
     menu:
     - text: Main topics
     - text: BATSS Ingredients
-      href: articles/web_only/ingredients.html
+      href: articles/web_only/Ingredients.html
     - text: Prior distributions
-      href: articles/web_only/priors.html
+      href: articles/web_only/Priors.html
+    - text: Interim schedule
+      href: articles/web_only/interim.html  
     - text: Parallel and cluster computation
       href: articles/web_only/parallelisation.html
     - text: Examples

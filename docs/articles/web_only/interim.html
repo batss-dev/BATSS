@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Definition of the interim schedule in **`BATSS`** • BATSS</title>
+<title>Definition of the interim schedule • BATSS</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../../favicon-96x96.png">
 <link rel="icon" type="”image/svg+xml”" href="../../favicon.svg">
 <link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
@@ -15,7 +15,7 @@
 <link href="../../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../../deps/headroom-0.11.0/headroom.min.js"></script><script src="../../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../../deps/search-1.0.0/fuse.min.js"></script><script src="../../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Definition of the interim schedule in **`BATSS`**">
+<script src="../../deps/headroom-0.11.0/headroom.min.js"></script><script src="../../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../../deps/search-1.0.0/fuse.min.js"></script><script src="../../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Definition of the interim schedule">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../../index.html">BATSS</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9002</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,12 +35,13 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="../../reference/index.html">Reference</a></li>
-<li class="nav-item dropdown">
+<li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials">
 <li><h6 class="dropdown-header" data-toc-skip>Main topics</h6></li>
-    <li><a class="dropdown-item" href="../../articles/web_only/ingredients.html">BATSS Ingredients</a></li>
-    <li><a class="dropdown-item" href="../../articles/web_only/priors.html">Prior distributions</a></li>
+    <li><a class="dropdown-item" href="../../articles/web_only/Ingredients.html">BATSS Ingredients</a></li>
+    <li><a class="dropdown-item" href="../../articles/web_only/Priors.html">Prior distributions</a></li>
+    <li><a class="dropdown-item" href="../../articles/web_only/interim.html">Interim schedule</a></li>
     <li><a class="dropdown-item" href="../../articles/web_only/parallelisation.html">Parallel and cluster computation</a></li>
     <li><h6 class="dropdown-header" data-toc-skip>Examples</h6></li>
     <li><a class="dropdown-item" href="../../articles/web_only/ancova.html">ANCOVA</a></li>
@@ -67,7 +68,7 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../../logo.png" class="logo" alt=""><h1>Definition of the interim schedule in **`BATSS`**</h1>
+      <img src="../../logo.png" class="logo" alt=""><h1>Definition of the interim schedule</h1>
             
       
 
@@ -86,11 +87,11 @@
 </h2>
 <p>Setting a viable and effective interim schedule in multi-arm,
 multi-stage designs is paramount to an efficient trial design. With
-<code>BATSS</code> version 2.0 and the introduction of a time component
-to simulated trials, the scheduling of interim analyses has gained a lot
-of flexibility. (Note: this feature is currently only available in the
-<code><a href="../../reference/batss.surv.html">batss.surv()</a></code> function but will be extended to
-<code><a href="../../reference/batss.glm.html">batss.glm()</a></code> in the near future.)</p>
+<code>BATSS</code> version &gt;=2.0.0 and the introduction of a time
+component to simulated trials, the scheduling of interim analyses has
+gained a lot of flexibility. (Note: this feature is currently only
+available in the <code><a href="../../reference/batss.surv.html">batss.surv()</a></code> function but will be extended
+to <code><a href="../../reference/batss.glm.html">batss.glm()</a></code> in the near future.)</p>
 </div>
 <div class="section level2">
 <h2 id="available-options-for-the-scheduling-of-interim-analyses-in-batss">Available options for the scheduling of interim analyses in

@@ -5,6 +5,7 @@
     dediacted `print`, `summary` and `plots` methods. 
 -   Update of the website: 
     -   New 'Survival endpoint' example
+    -   New 'Interim schedule' page
     -   Improved 'Priors' page now including information specific
         to survival endpoints
 
