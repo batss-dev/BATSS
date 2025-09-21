@@ -43,7 +43,11 @@ plot.batss = function(x, type="size", hypothesis="H1", title=TRUE, legend=TRUE,
     }
     # sample size
     if(type=="size"){
-        mx.n.rg = x[[hypothesis]]$sample[,-(ncol(x[[hypothesis]]$sample)+(-1:0))]
+        if (x$type=="surv") {
+          mx.n.rg = x[[hypothesis]]$sample[,-(ncol(x[[hypothesis]]$sample)+(-10:0))]
+        } else {  
+          mx.n.rg = x[[hypothesis]]$sample[,-(ncol(x[[hypothesis]]$sample)+(-1:0))]
+        }
         n.g  = ncol(mx.n.rg)
         cex  = if(!any(names(mc)=="cex")){1}else{eval(mc$cex)}        
         ylim = if(!any(names(mc)=="ylim")){range(x$look$n)}else{eval(mc$ylim)}
@@ -71,12 +75,20 @@ plot.batss = function(x, type="size", hypothesis="H1", title=TRUE, legend=TRUE,
     if(type=="estimates"){
         id.targetw = x[[hypothesis]]$target$par
         n.targetw  = nrow(id.targetw)
-        id.targetw$beta = x$beta[id.targetw$id,grepl(hypothesis,colnames(x$beta))]
+        if (x$type=="surv") {
+          id.targetw$hr = x$hr[id.targetw$id,grepl(hypothesis,colnames(x$hr))]
+        } else {
+          id.targetw$beta = x$beta[id.targetw$id,grepl(hypothesis,colnames(x$beta))]
+        }
         ar.inf.rt4 = array(dim=c(dim(x[[hypothesis]]$sample)[1],n.targetw,4),
                            dimnames=list(1:dim(x[[hypothesis]]$sample)[1],
                                          x[[hypothesis]]$target$id,
                                          c("n","est","type","last")))
-        ar.inf.rt4[,,"n"]    = as.matrix(x[[hypothesis]]$sample[,x[[hypothesis]]$target$par$group]) 
+        if (x$type=="surv") {
+          ar.inf.rt4[,,"n"]    = as.matrix(x[[hypothesis]]$sample[,paste0("n(",x[[hypothesis]]$target$par$group,")")])
+        } else {
+          ar.inf.rt4[,,"n"]    = as.matrix(x[[hypothesis]]$sample[,x[[hypothesis]]$target$par$group])
+        }
         ar.inf.rt4[,,"est"]  = t(x[[hypothesis]]$estimate[,"mid",])
         ar.inf.rt4[,,"type"] = t(x[[hypothesis]]$estimate[,"type",])
         ar.inf.rt4[,,"last"] = t(x[[hypothesis]]$estimate[,"look",]==nrow( x$look))

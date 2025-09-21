@@ -4,17 +4,15 @@
 \alias{summary.batss}
 \title{Summary function for 'BATSS' outputs}
 \usage{
-\method{summary}{batss}(object, full = FALSE, ...)
+\method{summary}{batss}(object, ...)
 }
 \arguments{
 \item{object}{An object of class 'batss' (i.e., output of the function \link{batss.glm}).}
 
-\item{full}{A logical indicating if a standard (full = FALSE, default) or extended output (full = TRUE) should be returned.}
-
-\item{...}{Additional arguments affecting the summary produced.}
+\item{...}{For future use}
 }
 \value{
-Prints a summary for objects of class 'batss'.
+Object of class 'summary.batss'.
 }
 \description{
 Summary method function for objects of class 'batss'.

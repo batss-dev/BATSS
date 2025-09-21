@@ -5,70 +5,60 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="BATSS">
 <title>Prior distributions • BATSS</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../../favicon.ico">
+<link rel="manifest" href="../../site.webmanifest">
 <script src="../../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Prior distributions">
-<meta property="og:description" content="BATSS">
-<meta property="og:image" content="/logo.png">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../../deps/headroom-0.11.0/headroom.min.js"></script><script src="../../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../../deps/search-1.0.0/fuse.min.js"></script><script src="../../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><meta property="og:title" content="Prior distributions">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../../index.html">BATSS</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../../reference/index.html">Reference</a>
+<li class="nav-item"><a class="nav-link" href="../../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-tutorials" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Tutorials</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-tutorials">
+<li><h6 class="dropdown-header" data-toc-skip>Main topics</h6></li>
+    <li><a class="dropdown-item" href="../../articles/web_only/ingredients.html">BATSS Ingredients</a></li>
+    <li><a class="dropdown-item" href="../../articles/web_only/priors.html">Prior distributions</a></li>
+    <li><a class="dropdown-item" href="../../articles/web_only/parallelisation.html">Parallel and cluster computation</a></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Examples</h6></li>
+    <li><a class="dropdown-item" href="../../articles/web_only/ancova.html">ANCOVA</a></li>
+    <li><a class="dropdown-item" href="../../articles/web_only/negbin.html">Negative binomial endpoint</a></li>
+    <li><a class="dropdown-item" href="../../articles/web_only/binomial.html">Binomial endpoint</a></li>
+    <li><a class="dropdown-item" href="../../articles/web_only/exponential_cox.html">Survival endpoint</a></li>
+  </ul>
 </li>
-<li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-tutorials">Tutorials</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-tutorials">
-    <h6 class="dropdown-header" data-toc-skip>Main topics</h6>
-    <a class="dropdown-item" href="../../articles/web_only/Ingredients.html">BATSS Ingredients</a>
-    <a class="dropdown-item" href="../../articles/web_only/Priors.html">Prior distributions</a>
-    <a class="dropdown-item" href="../../articles/web_only/Cluster.html">Cluster computation</a>
-    <h6 class="dropdown-header" data-toc-skip>Examples</h6>
-    <a class="dropdown-item" href="../../articles/web_only/negbin.html">Negative binomial endpoint</a>
-    <a class="dropdown-item" href="../../articles/web_only/binomial.html">Binomial endpoint</a>
-  </div>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../../news/index.html">Changelog</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../../news/index.html">Changelog</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav"></ul>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../../search.json">
+</form></li>
+      </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -80,8 +70,8 @@
       <img src="../../logo.png" class="logo" alt=""><h1>Prior distributions</h1>
             
       
-      
-      <div class="d-none name"><code>Priors.Rmd</code></div>
+
+      <div class="d-none name"><code>priors.Rmd</code></div>
     </div>
 
     
@@ -106,66 +96,83 @@ packages, for example.</p>
 (INLA) and R-INLA, its implementation in R. INLA methodology focuses on
 models that can be expressed as latent Gaussian Markov random fields
 (GMRF). Consider the model</p>
-<p><span class="math display">\[\eta_i = g(\mu_i) = \alpha +
-\sum_{j=1}^p \beta_j z_{ij} + \sum_{k=1}^q f_{k}(u_{ik}) +
-\epsilon_i\]</span></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>η</mi><mi>i</mi></msub><mo>=</mo><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>μ</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>α</mi><mo>+</mo><munderover><mo>∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>p</mi></munderover><msub><mi>β</mi><mi>j</mi></msub><msub><mi>z</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>+</mo><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>q</mi></munderover><msub><mi>f</mi><mi>k</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>u</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>ϵ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">\eta_i = g(\mu_i) = \alpha + \sum_{j=1}^p \beta_j z_{ij} + \sum_{k=1}^q f_{k}(u_{ik}) + \epsilon_i</annotation></semantics></math></p>
 <p>where</p>
 <ul>
 <li>
-<span class="math inline">\(\eta\)</span> is the linear
-predictor,</li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>η</mi><annotation encoding="application/x-tex">\eta</annotation></semantics></math>
+is the linear predictor,</li>
 <li>
-<span class="math inline">\(g(.)\)</span> is the link function,</li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>.</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">g(.)</annotation></semantics></math>
+is the link function,</li>
 <li>
-<span class="math inline">\(\beta\)</span> are the <span class="math inline">\(p\)</span> coefficients for the linear effects of
-covariates <span class="math inline">\(z\)</span>,</li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>
+are the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>
+coefficients for the linear effects of covariates
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>,</li>
 <li>
-<span class="math inline">\(f_{k}(.)\)</span> are the <span class="math inline">\(q\)</span> unknown functions of the covariates
-<span class="math inline">\(u\)</span><br>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>f</mi><mi>k</mi></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>.</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f_{k}(.)</annotation></semantics></math>
+are the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>q</mi><annotation encoding="application/x-tex">q</annotation></semantics></math>
+unknown functions of the covariates
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>u</mi><annotation encoding="application/x-tex">u</annotation></semantics></math><br>
 </li>
 <li>
-<span class="math inline">\(\epsilon\)</span> are unstructured
-terms.</li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ϵ</mi><annotation encoding="application/x-tex">\epsilon</annotation></semantics></math>
+are unstructured terms.</li>
 </ul>
 <p>Latent Gaussian models are the subset of Bayesian additive models
-that assign a Gaussian prior to the latent field <span class="math inline">\(\mathcal{X}=\{\alpha, \beta, f(.)\}\)</span></p>
-<p><span class="math display">\[\mathcal{X}|\theta \sim
-N(0,\mathcal{Q}^{-1}(\theta))\]</span></p>
-<p>where <span class="math inline">\(\mathcal{Q}\)</span> denotes the
-precision matrix and <span class="math inline">\(\theta\)</span> a
-vector of hyperparameters. Then the joint density of the latent field,
+that assign a Gaussian prior to the latent field
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒳</mi><mo>=</mo><mo stretchy="false" form="prefix">{</mo><mi>α</mi><mo>,</mo><mi>β</mi><mo>,</mo><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>.</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\mathcal{X}=\{\alpha, \beta, f(.)\}</annotation></semantics></math></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝒳</mi><mo stretchy="false" form="prefix">|</mo><mi>θ</mi><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><msup><mi>𝒬</mi><mrow><mo>−</mo><mn>1</mn></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathcal{X}|\theta \sim N(0,\mathcal{Q}^{-1}(\theta))</annotation></semantics></math></p>
+<p>where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝒬</mi><annotation encoding="application/x-tex">\mathcal{Q}</annotation></semantics></math>
+denotes the precision matrix and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
+a vector of hyperparameters. Then the joint density of the latent field,
 hyperparameters and the data is</p>
-<p><span class="math display">\[ \pi(\mathcal{X},\theta|y) \propto
-\pi(\theta)\pi(\mathcal{X}|\theta)\prod_{i=1}^{n}\pi(y_i|(A\mathcal{X})_i,\theta)\]</span></p>
-<p>where <span class="math inline">\(\eta=A\mathcal{X}\)</span>. From
-here the posterior mariginals can be approximated. Refer to <span class="citation">Rue, Martino, and Chopin (2009)</span> and <span class="citation">Van Niekerk et al. (2023)</span> for details.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒳</mi><mo>,</mo><mi>θ</mi><mo stretchy="false" form="prefix">|</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>∝</mo><mi>π</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>π</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝒳</mi><mo stretchy="false" form="prefix">|</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mi>π</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo stretchy="false" form="prefix">|</mo><msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>A</mi><mi>𝒳</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>i</mi></msub><mo>,</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex"> \pi(\mathcal{X},\theta|y) \propto \pi(\theta)\pi(\mathcal{X}|\theta)\prod_{i=1}^{n}\pi(y_i|(A\mathcal{X})_i,\theta)</annotation></semantics></math></p>
+<p>where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>η</mi><mo>=</mo><mi>A</mi><mi>𝒳</mi></mrow><annotation encoding="application/x-tex">\eta=A\mathcal{X}</annotation></semantics></math>.
+From here the posterior mariginals can be approximated. Refer to <span class="citation">Rue, Martino, and Chopin (2009)</span> and <span class="citation">Van Niekerk et al. (2023)</span> for details.</p>
 </div>
 <div class="section level2">
 <h2 id="priors-for-fixed-effects">Priors for fixed effects<a class="anchor" aria-label="anchor" href="#priors-for-fixed-effects"></a>
 </h2>
 <p>Hence, priors for fixed effects in INLA are normally distributed
-(with a default mean <span class="math inline">\(\mu=0\)</span> and
-precision <span class="math inline">\(\tau=0.001\)</span>, and since
-<span class="math inline">\(\sigma^{2}=1/{\tau}\)</span>, <span class="math inline">\(N(0,\,1000)\)</span>).</p>
+(with a default mean
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\mu=0</annotation></semantics></math>
+and precision
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>τ</mi><mo>=</mo><mn>0.001</mn></mrow><annotation encoding="application/x-tex">\tau=0.001</annotation></semantics></math>,
+and since
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>σ</mi><mn>2</mn></msup><mo>=</mo><mn>1</mn><mi>/</mi><mi>τ</mi></mrow><annotation encoding="application/x-tex">\sigma^{2}=1/{\tau}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mspace width="0.167em"></mspace><mn>1000</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">N(0,\,1000)</annotation></semantics></math>).</p>
 <p>The <code>control.fixed</code> argument of the <code>inla()</code>
-function allows users to change <span class="math inline">\(\mu\)</span>
-or <span class="math inline">\(\tau\)</span>. The
-<code><a href="../../reference/batss.glm.html">batss.glm()</a></code> function allows control elements of the
+function allows users to change
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>
+or
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math>.
+The <code><a href="../../reference/batss.glm.html">batss.glm()</a></code> function allows control elements of the
 <code>inla()</code> function to be passed on to the embedded INLA
 routine via the <code>...</code> argument. <code>inla()</code>
 differentiates between the intercept, <code>mean.intercept</code> and
 <code>prec.intercept</code>, and all other fixed effects,
 <code>mean</code> and <code>prec</code>,
 e.g. <code>control.fixed = list(mean=1)</code> would assign a prior mean
-of <span class="math inline">\(1\)</span> to all fixed effects but the
-intercept.</p>
+of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+to all fixed effects but the intercept.</p>
 <p>Individual prior means or precision can be set with named lists in
 the <code>control.fixed</code> argument,
 e.g. <code>control.fixed = list(prec=list(A=1,B=2,default=0.1))</code>
-would set the prior precision to <span class="math inline">\(1\)</span>
-for fixed effect A, to <span class="math inline">\(2\)</span> for fixed
-effect B and to <span class="math inline">\(0.1\)</span> for all other
-fixed effects.</p>
+would set the prior precision to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+for fixed effect A, to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math>
+for fixed effect B and to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.1</mn><annotation encoding="application/x-tex">0.1</annotation></semantics></math>
+for all other fixed effects.</p>
 <p>Take note that in <code>BATSS</code> nomenclature of fixed effects is
 a combination of names in the right hand side of the <code>model</code>
 argument and factor levels from the allocation function in the
@@ -184,7 +191,9 @@ as reference level, e.g. </p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">mm</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "(Intercept)" "treatmentB"  "treatmentC"</span></span></code></pre>
 <p>The following example shows a <code><a href="../../reference/batss.glm.html">batss.glm()</a></code> call without
-and with changes to the default prior for the fixed effects:</p>
+and with changes to the default prior for the fixed effects (Note: For
+all examples, we are only running <code>R = 10</code> simulated trials
+each for demonstration purposes.):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">efficacy.fun</span> <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">posterior</span>,<span class="va">efficacy.bound</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">posterior</span> <span class="op">&gt;</span> <span class="va">efficacy.bound</span></span>
@@ -197,7 +206,7 @@ and with changes to the default prior for the fixed effects:</p>
 <span>         levels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">prob</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span> </span>
-<span><span class="co">#BATSS using INLA's default normal priors, N(0,1000)</span></span>
+<span><span class="co">#batss.glm() using INLA's default normal priors, N(0,1000)</span></span>
 <span><span class="va">sim1</span> <span class="op">=</span> <span class="fu"><a href="../../reference/batss.glm.html">batss.glm</a></span><span class="op">(</span>  </span>
 <span>          model             <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">trt</span>,   </span>
 <span>          var               <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y   <span class="op">=</span> <span class="va">rnorm</span>,</span>
@@ -219,8 +228,8 @@ and with changes to the default prior for the fixed effects:</p>
 <span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">sim1</span><span class="op">$</span><span class="va">H1</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span>,<span class="fl">3</span>,<span class="op">]</span>,<span class="fl">1</span>,<span class="va">summary</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">#BATSS using normal priors with N(1,4) for the fixed effect of intervention T1 and </span></span>
-<span><span class="co">#the intercept and N(0,4) for intervention T2 and all other fixed effects.</span></span>
+<span><span class="co">#batss.glm() using normal priors with N(1,4) for the fixed effect of intervention T1</span></span>
+<span><span class="co">#and the intercept and N(0,4) for intervention T2 and all other fixed effects.</span></span>
 <span><span class="va">sim2</span> <span class="op">=</span> <span class="fu"><a href="../../reference/batss.glm.html">batss.glm</a></span><span class="op">(</span>  </span>
 <span>          model             <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">trt</span>,   </span>
 <span>          var               <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y   <span class="op">=</span> <span class="va">rnorm</span>,</span>
@@ -246,13 +255,83 @@ and with changes to the default prior for the fixed effects:</p>
 <span>          <span class="op">)</span> </span>
 <span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">sim2</span><span class="op">$</span><span class="va">H1</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span>,<span class="fl">3</span>,<span class="op">]</span>,<span class="fl">1</span>,<span class="va">summary</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>And the same for a <code><a href="../../reference/batss.surv.html">batss.surv()</a></code> call:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#batss.surv() using INLA's default normal priors, N(0,1000)</span></span>
+<span><span class="va">sim1.surv</span> <span class="op">=</span> <span class="fu"><a href="../../reference/batss.surv.html">batss.surv</a></span><span class="op">(</span></span>
+<span>  model           <span class="op">=</span> <span class="fu">inla.surv</span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">trt</span>,</span>
+<span>  family          <span class="op">=</span> <span class="st">"coxph"</span>,</span>
+<span>  surv            <span class="op">=</span> <span class="va">simsurv</span>,</span>
+<span>  surv.control    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lambdas <span class="op">=</span> <span class="fl">2</span>, gammas <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                         maxt <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>  var             <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>trt <span class="op">=</span> <span class="va">alloc.balanced</span><span class="op">)</span>,</span>
+<span>  accr            <span class="op">=</span> <span class="va">rexp</span>,</span>
+<span>  accr.control    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>rate <span class="op">=</span> <span class="fl">300</span><span class="op">)</span>,</span>
+<span>  accr.type       <span class="op">=</span> <span class="st">"random"</span>,</span>
+<span>  prob0           <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>control <span class="op">=</span> <span class="fl">1</span>, A <span class="op">=</span> <span class="fl">1</span>, B <span class="op">=</span> <span class="fl">1</span>, C <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  hr              <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  which           <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,</span>
+<span>  alternative     <span class="op">=</span> <span class="st">"less"</span>,</span>
+<span>  interim         <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>,</span>
+<span>  eff.arm         <span class="op">=</span> <span class="va">eff.arm.simple</span>,</span>
+<span>  eff.arm.control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.98</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  eff.trial       <span class="op">=</span> <span class="va">eff.trial.any</span>,</span>
+<span>  delta.eff       <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  fut.arm         <span class="op">=</span> <span class="va">fut.arm.simple</span>,</span>
+<span>  fut.arm.control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>,</span>
+<span>  N               <span class="op">=</span> <span class="fl">600</span>,</span>
+<span>  R               <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  H0              <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  extended        <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  computation     <span class="op">=</span> <span class="st">"parallel"</span>,</span>
+<span>  mc.cores        <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">sim1.surv</span><span class="op">$</span><span class="va">H1</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span>,<span class="fl">3</span>,<span class="op">]</span>,<span class="fl">1</span>,<span class="va">summary</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#batss.surv() using normal priors with N(1,4) for the fixed effect of intervention A</span></span>
+<span><span class="co">#and N(0,4) for the intercept and all other fixed effects.</span></span>
+<span><span class="va">sim2.surv</span> <span class="op">=</span> <span class="fu"><a href="../../reference/batss.surv.html">batss.surv</a></span><span class="op">(</span></span>
+<span>  model           <span class="op">=</span> <span class="fu">inla.surv</span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">trt</span>,</span>
+<span>  family          <span class="op">=</span> <span class="st">"coxph"</span>,</span>
+<span>  surv            <span class="op">=</span> <span class="va">simsurv</span>,</span>
+<span>  surv.control    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lambdas <span class="op">=</span> <span class="fl">2</span>, gammas <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                         maxt <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>  var             <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>trt <span class="op">=</span> <span class="va">alloc.balanced</span><span class="op">)</span>,</span>
+<span>  accr            <span class="op">=</span> <span class="va">rexp</span>,</span>
+<span>  accr.control    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>rate <span class="op">=</span> <span class="fl">300</span><span class="op">)</span>,</span>
+<span>  accr.type       <span class="op">=</span> <span class="st">"random"</span>,</span>
+<span>  prob0           <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>control <span class="op">=</span> <span class="fl">1</span>, A <span class="op">=</span> <span class="fl">1</span>, B <span class="op">=</span> <span class="fl">1</span>, C <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  hr              <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  which           <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,</span>
+<span>  alternative     <span class="op">=</span> <span class="st">"less"</span>,</span>
+<span>  interim         <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>,</span>
+<span>  eff.arm         <span class="op">=</span> <span class="va">eff.arm.simple</span>,</span>
+<span>  eff.arm.control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.98</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  eff.trial       <span class="op">=</span> <span class="va">eff.trial.any</span>,</span>
+<span>  delta.eff       <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  fut.arm         <span class="op">=</span> <span class="va">fut.arm.simple</span>,</span>
+<span>  fut.arm.control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>,</span>
+<span>  N               <span class="op">=</span> <span class="fl">600</span>,</span>
+<span>  R               <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  H0              <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  extended        <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  computation     <span class="op">=</span> <span class="st">"parallel"</span>,</span>
+<span>  mc.cores        <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span>,</span>
+<span>  control.fixed   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean.intercept<span class="op">=</span><span class="fl">0</span>,</span>
+<span>                         prec.intercept<span class="op">=</span><span class="fl">0.25</span>,</span>
+<span>                         mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>treatmentA <span class="op">=</span> <span class="fl">1</span>, default <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, </span>
+<span>                         prec <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">sim2.surv</span><span class="op">$</span><span class="va">H1</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span>,<span class="fl">3</span>,<span class="op">]</span>,<span class="fl">1</span>,<span class="va">summary</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="priors-for-hyperparameters">Priors for hyperparameters<a class="anchor" aria-label="anchor" href="#priors-for-hyperparameters"></a>
 </h2>
 <table class="table">
 <caption>INLA hyperparameters and their default priors currently
-available in <code>BATSS</code>
+available in <code>batss.glm</code>
 </caption>
 <colgroup>
 <col width="29%">
@@ -287,13 +366,70 @@ available in <code>BATSS</code>
 </tr>
 </tbody>
 </table>
+<table class="table">
+<caption>INLA hyperparameters and their default priors currently
+available in <code>batss.surv</code>
+</caption>
+<colgroup>
+<col width="29%">
+<col width="25%">
+<col width="44%">
+</colgroup>
+<thead><tr class="header">
+<th><strong>Distribution</strong></th>
+<th><strong>Hyperparameter</strong></th>
+<th><strong>Hyperparameter default prior</strong></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>exponentialsurv</td>
+<td>none</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>weibullsurv</td>
+<td>log alpha</td>
+<td>penalised complexity alpha</td>
+</tr>
+<tr class="odd">
+<td>gompertzsurv</td>
+<td>shape</td>
+<td>normal</td>
+</tr>
+<tr class="even">
+<td>loglogisticsurv</td>
+<td>log alpha</td>
+<td>log-gamma</td>
+</tr>
+<tr class="odd">
+<td>lognormalsurv</td>
+<td>log precision</td>
+<td>log-gamma</td>
+</tr>
+<tr class="even">
+<td>coxph</td>
+<td>log precision for</td>
+<td>log-gamma</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>the piecewise</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td>constant hazard</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <p>Based on INLA’s defaults, family, hyperparameter and the associated
-default prior used in <code>BATSS</code> are listed in Table 1 (see
-<span class="citation">Simpson et al. (2017)</span> for an in depth
+default prior used in <code>BATSS</code> are listed in Table 1 and 2
+(see <span class="citation">Simpson et al. (2017)</span> for an in depth
 description of complexity priors). Detailed information can be viewed by
 typing <code>inla.models()$likelihood$[FAMILYNAME]</code> including
 default parameters, e.g. for the normal distribution:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">INLA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/INLA/man/models.html" class="external-link">inla.models</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">likelihood</span><span class="op">$</span><span class="va">gaussian</span></span></code></pre></div>
 <pre><code><span><span class="co">## $doc</span></span>
 <span><span class="co">## [1] "The Gaussian likelihoood"</span></span>
@@ -348,16 +484,16 @@ default parameters, e.g. for the normal distribution:</p>
 <span><span class="co">## $hyper$theta1$to.theta</span></span>
 <span><span class="co">## function (x) </span></span>
 <span><span class="co">## log(x)</span></span>
-<span><span class="co">## &lt;bytecode: 0x132850940&gt;</span></span>
-<span><span class="co">## &lt;environment: 0x13284cda0&gt;</span></span>
+<span><span class="co">## &lt;bytecode: 0x131b6a4a8&gt;</span></span>
+<span><span class="co">## &lt;environment: 0x131b66898&gt;</span></span>
 <span><span class="co">## attr(,"inla.read.only")</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $hyper$theta1$from.theta</span></span>
 <span><span class="co">## function (x) </span></span>
 <span><span class="co">## exp(x)</span></span>
-<span><span class="co">## &lt;bytecode: 0x132850a58&gt;</span></span>
-<span><span class="co">## &lt;environment: 0x13284cda0&gt;</span></span>
+<span><span class="co">## &lt;bytecode: 0x131b6a5c0&gt;</span></span>
+<span><span class="co">## &lt;environment: 0x131b66898&gt;</span></span>
 <span><span class="co">## attr(,"inla.read.only")</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## </span></span>
@@ -411,16 +547,16 @@ default parameters, e.g. for the normal distribution:</p>
 <span><span class="co">## $hyper$theta2$to.theta</span></span>
 <span><span class="co">## function (x) </span></span>
 <span><span class="co">## log(x)</span></span>
-<span><span class="co">## &lt;bytecode: 0x132850940&gt;</span></span>
-<span><span class="co">## &lt;environment: 0x13284cda0&gt;</span></span>
+<span><span class="co">## &lt;bytecode: 0x131b6a4a8&gt;</span></span>
+<span><span class="co">## &lt;environment: 0x131b66898&gt;</span></span>
 <span><span class="co">## attr(,"inla.read.only")</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $hyper$theta2$from.theta</span></span>
 <span><span class="co">## function (x) </span></span>
 <span><span class="co">## exp(x)</span></span>
-<span><span class="co">## &lt;bytecode: 0x132850a58&gt;</span></span>
-<span><span class="co">## &lt;environment: 0x13284cda0&gt;</span></span>
+<span><span class="co">## &lt;bytecode: 0x131b6a5c0&gt;</span></span>
+<span><span class="co">## &lt;environment: 0x131b66898&gt;</span></span>
 <span><span class="co">## attr(,"inla.read.only")</span></span>
 <span><span class="co">## [1] TRUE</span></span>
 <span><span class="co">## </span></span>
@@ -439,13 +575,18 @@ default parameters, e.g. for the normal distribution:</p>
 <span><span class="co">## $pdf</span></span>
 <span><span class="co">## [1] "gaussian"</span></span></code></pre>
 <p>In case of the normal distribution the default prior for the
-hyperparameter <span class="math inline">\(\theta=log(\tau)\)</span> is
-a log-gamma distribution with parameters <span class="math inline">\(a=1\)</span> and <span class="math inline">\(b=0.00005\)</span>. To change the prior
-distribution or its parameters use the <code>control.family</code>
-argument of the <code>inla()</code> function.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#BATSS using normal priors with N(1,4) for the fixed effect of intervention T1 and </span></span>
-<span><span class="co">#the intercept and N(0,4) for intervention T2 and all other fixed effects and a </span></span>
+hyperparameter
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>=</mo><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>τ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\theta=log(\tau)</annotation></semantics></math>
+is a log-gamma distribution with parameters
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">a=1</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>=</mo><mn>0.00005</mn></mrow><annotation encoding="application/x-tex">b=0.00005</annotation></semantics></math>.
+To change the prior distribution or its parameters use the
+<code>control.family</code> argument of the <code>inla()</code>
+function.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#batss.glm() using normal priors with N(1,4) for the fixed effect of intervention T1  </span></span>
+<span><span class="co">#and the intercept and N(0,4) for intervention T2 and all other fixed effects and a </span></span>
 <span><span class="co">#log-gamma(0.5,0.01) prior for the log precision hyperparameter.</span></span>
 <span><span class="va">sim3</span> <span class="op">=</span> <span class="fu"><a href="../../reference/batss.glm.html">batss.glm</a></span><span class="op">(</span>  </span>
 <span>          model             <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">trt</span>,   </span>
@@ -473,9 +614,52 @@ argument of the <code>inla()</code> function.</p>
 <span>          <span class="op">)</span> </span>
 <span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">sim3</span><span class="op">$</span><span class="va">H1</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span>,<span class="fl">3</span>,<span class="op">]</span>,<span class="fl">1</span>,<span class="va">summary</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>And for a <code><a href="../../reference/batss.surv.html">batss.surv()</a></code> call:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#batss.surv() using normal priors with N(1,4) for the fixed effect of intervention A</span></span>
+<span><span class="co">#and N(0,4) for the intercept and all other fixed effects. The hyperparameter for the</span></span>
+<span><span class="co">#Cox PH model refers to the baseline hazard, in this case a random walk of order 1 with </span></span>
+<span><span class="co">#20 intervals and a log-gamma(0.001,0.001) prior for the log precision therein. </span></span>
+<span><span class="va">sim3.surv</span> <span class="op">=</span> <span class="fu"><a href="../../reference/batss.surv.html">batss.surv</a></span><span class="op">(</span></span>
+<span>  model           <span class="op">=</span> <span class="fu">inla.surv</span><span class="op">(</span><span class="va">time</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">trt</span>,</span>
+<span>  family          <span class="op">=</span> <span class="st">"coxph"</span>,</span>
+<span>  surv            <span class="op">=</span> <span class="va">simsurv</span>,</span>
+<span>  surv.control    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>lambdas <span class="op">=</span> <span class="fl">2</span>, gammas <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                         maxt <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>  var             <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>trt <span class="op">=</span> <span class="va">alloc.balanced</span><span class="op">)</span>,</span>
+<span>  accr            <span class="op">=</span> <span class="va">rexp</span>,</span>
+<span>  accr.control    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>rate <span class="op">=</span> <span class="fl">300</span><span class="op">)</span>,</span>
+<span>  accr.type       <span class="op">=</span> <span class="st">"random"</span>,</span>
+<span>  prob0           <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>control <span class="op">=</span> <span class="fl">1</span>, A <span class="op">=</span> <span class="fl">1</span>, B <span class="op">=</span> <span class="fl">1</span>, C <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  hr              <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  which           <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,</span>
+<span>  alternative     <span class="op">=</span> <span class="st">"less"</span>,</span>
+<span>  interim         <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>,</span>
+<span>  eff.arm         <span class="op">=</span> <span class="va">eff.arm.simple</span>,</span>
+<span>  eff.arm.control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.98</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  eff.trial       <span class="op">=</span> <span class="va">eff.trial.any</span>,</span>
+<span>  delta.eff       <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  fut.arm         <span class="op">=</span> <span class="va">fut.arm.simple</span>,</span>
+<span>  fut.arm.control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>b <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>,</span>
+<span>  N               <span class="op">=</span> <span class="fl">600</span>,</span>
+<span>  R               <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  H0              <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  extended        <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  computation     <span class="op">=</span> <span class="st">"parallel"</span>,</span>
+<span>  mc.cores        <span class="op">=</span> <span class="fu">parallel</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/parallel/detectCores.html" class="external-link">detectCores</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span>,</span>
+<span>  control.fixed   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>mean.intercept<span class="op">=</span><span class="fl">0</span>,</span>
+<span>                         prec.intercept<span class="op">=</span><span class="fl">0.25</span>,</span>
+<span>                         mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>treatmentA <span class="op">=</span> <span class="fl">1</span>, default <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, </span>
+<span>                         prec <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span>,</span>
+<span>  control.hazard  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>model<span class="op">=</span><span class="st">"rw1"</span>, </span>
+<span>                         n.intervals<span class="op">=</span><span class="fl">20</span>,</span>
+<span>                         hyper <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.001</span>, <span class="fl">0.001</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">sim3.surv</span><span class="op">$</span><span class="va">H1</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span>,<span class="fl">3</span>,<span class="op">]</span>,<span class="fl">1</span>,<span class="va">summary</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Priors for hyperparameters can either be a built-in prior or a
 user-defined function. Available predefined priors in INLA:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">INLA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/INLA/man/list-models.html" class="external-link">inla.list.models</a></span><span class="op">(</span><span class="st">"prior"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Section [prior]</span></span>
 <span><span class="co">##      betacorrelation               Beta prior for the correlation          </span></span>
@@ -504,6 +688,7 @@ user-defined function. Available predefined priors in INLA:</p>
 <span><span class="co">##      pc.cor0                       PC prior correlation, basemodel cor=0   </span></span>
 <span><span class="co">##      pc.cor1                       PC prior correlation, basemodel cor=1   </span></span>
 <span><span class="co">##      pc.dof                        PC prior for log(dof-2)                 </span></span>
+<span><span class="co">##      pc.egptail                    PC prior for the tail in the EGP likelihood</span></span>
 <span><span class="co">##      pc.fgnh                       PC prior for the Hurst parameter in FGN </span></span>
 <span><span class="co">##      pc.gamma                      PC prior for a Gamma parameter          </span></span>
 <span><span class="co">##      pc.gammacount                 PC prior for the GammaCount likelihood  </span></span>
@@ -531,9 +716,9 @@ function. For example,
 will change the prior distribution of the precision to a truncated
 normal prior. (Note that the name will depend on the hyperparameter,
 here <code>prec</code>.)</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#BATSS with default normal priors for the fixed effects and a truncated normal prior</span></span>
-<span><span class="co">#for the precision hyperparameter</span></span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#batss.glm() with default normal priors for the fixed effects and a truncated normal </span></span>
+<span><span class="co">#prior for the precision hyperparameter</span></span>
 <span><span class="va">sim4</span> <span class="op">=</span> <span class="fu"><a href="../../reference/batss.glm.html">batss.glm</a></span><span class="op">(</span>  </span>
 <span>          model             <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">trt</span>,   </span>
 <span>          var               <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y   <span class="op">=</span> <span class="va">rnorm</span>,</span>
@@ -558,7 +743,7 @@ here <code>prec</code>.)</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">sim4</span><span class="op">$</span><span class="va">H1</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span>,<span class="fl">3</span>,<span class="op">]</span>,<span class="fl">1</span>,<span class="va">summary</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>There are two options to define priors that are not predefined in
 INLA: 1. Providing a tabulated distribution via <code>table:</code></p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#manually define the log-gamma prior</span></span>
 <span><span class="co"># either as a 'table'</span></span>
 <span><span class="va">loggamma.function</span> <span class="op">&lt;-</span>  <span class="kw">function</span><span class="op">(</span><span class="va">log_precision</span><span class="op">)</span> <span class="op">{</span></span>
@@ -574,8 +759,8 @@ INLA: 1. Providing a tabulated distribution via <code>table:</code></p>
 <span>                      sep <span class="op">=</span> <span class="st">""</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span></span>
 <span><span class="va">loggamma.table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>prior <span class="op">=</span> <span class="va">loggamma.tab</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">#BATSS using normal priors with N(1,4) for the fixed effect of intervention T1 and </span></span>
-<span><span class="co">#the intercept and N(0,4) for intervention T2 and all other fixed effects and a </span></span>
+<span><span class="co">#batss.glm() using normal priors with N(1,4) for the fixed effect of intervention T1 </span></span>
+<span><span class="co">#and the intercept and N(0,4) for intervention T2 and all other fixed effects and a </span></span>
 <span><span class="co">#tabulated log-gamma(0.5,0.01) prior for the log precision hyperparameter.</span></span>
 <span><span class="va">sim5</span> <span class="op">=</span> <span class="fu"><a href="../../reference/batss.glm.html">batss.glm</a></span><span class="op">(</span>  </span>
 <span>          model             <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">trt</span>,   </span>
@@ -605,7 +790,7 @@ INLA: 1. Providing a tabulated distribution via <code>table:</code></p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">sim5</span><span class="op">$</span><span class="va">H1</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span>,<span class="fl">3</span>,<span class="op">]</span>,<span class="fl">1</span>,<span class="va">summary</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>or 2. providing the function via the <code>expression:</code>
 statement.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#or 'expression'</span></span>
 <span><span class="va">loggamma</span> <span class="op">=</span> <span class="st">"expression:</span></span>
 <span><span class="st">              a = 0.5;</span></span>
@@ -616,8 +801,8 @@ statement.</p>
 <span><span class="st">              return(logdens + log_jacobian);"</span></span>
 <span><span class="va">loggamma.expression</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>prior <span class="op">=</span> <span class="va">loggamma</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co">#BATSS using normal priors with N(1,4) for the fixed effect of intervention T1 and </span></span>
-<span><span class="co">#the intercept and N(0,4) for intervention T2 and all other fixed effects and a </span></span>
+<span><span class="co">#batss.glm() using normal priors with N(1,4) for the fixed effect of intervention T1 </span></span>
+<span><span class="co">#and the intercept and N(0,4) for intervention T2 and all other fixed effects and a </span></span>
 <span><span class="co">#user-defined log-gamma(0.5,0.01) prior for the log precision hyperparameter.</span></span>
 <span><span class="va">sim6</span> <span class="op">=</span> <span class="fu"><a href="../../reference/batss.glm.html">batss.glm</a></span><span class="op">(</span>  </span>
 <span>          model             <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">trt</span>,   </span>
@@ -680,7 +865,7 @@ Van Niekerk, Janet, Elias Krainski, Denis Rustand, and Håvard Rue. 2023.
 </div>
 </div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
@@ -691,15 +876,15 @@ Van Niekerk, Janet, Elias Krainski, Denis Rustand, and Håvard Rue. 2023.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>

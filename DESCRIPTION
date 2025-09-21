@@ -1,20 +1,20 @@
 Package: BATSS
 Title: Bayesian Adaptive Trial Simulator Software (BATSS) for Generalised Linear Models
-Version: 1.0.0
+Version: 2.0.0
 Authors@R: c(
   person("Dominique-Laurent", "Couturier", role = c("aut", "cre"), email = "dominique.couturier@mrc-bsu.cam.ac.uk", comment = c(ORCID = "0000-0001-5774-5036")),
   person("Liz", "Ryan", role = "aut", comment = c(ORCID = "0000-0001-9367-4204")),
   person("Rainer", "Puhr", role = "aut"),
   person("Thomas", "Jaki", role = "aut", comment = c(ORCID = "0000-0002-1096-188X")),
   person("Stephane", "Heritier", role = "aut", comment = c(ORCID = "0000-0002-3640-079X")))
-Description: Defines operating characteristics of Bayesian Adaptive Trials considering a generalised linear model response via Monte Carlo simulations of Bayesian GLM fitted via integrated Laplace approximations (INLA). 
+Description: Defines operating characteristics of Bayesian Adaptive Trials considering a generalised linear model or time-to-event response via Monte Carlo simulations of Bayesian models fitted via integrated Laplace approximations (INLA). 
 URL: https://batss-dev.github.io/BATSS/
 License: GPL-2
 Encoding: UTF-8
 Suggests:
     INLA
 Imports:
-    parallel, methods, stats, grDevices, abind, plyr, rlang, R.utils, cli
+    parallel, methods, stats, grDevices, abind, plyr, rlang, R.utils, cli, simsurv, purrr
 Additional_repositories: https://inla.r-inla-download.org/R/testing
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.3

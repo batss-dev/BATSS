@@ -60,6 +60,8 @@ batss.combine = function(paths, force=FALSE){# paths
         id.target = objlist[[1]][[Hw[hw]]]$trial[[1]]$target
         estimate  = objlist[[1]][[Hw[hw]]]$estimate
         trial_r   = objlist[[1]][[Hw[hw]]]$trial
+        
+        if (objlist[[1]]$type!="surv") {
         if(length(objlist)>1){
             for(ow in 2:n.obj){
                 if(is.null(objlist[[ow]]$call$extended)|(objlist[[ow]]$call$extended<1)){
@@ -89,6 +91,44 @@ batss.combine = function(paths, force=FALSE){# paths
                 out[[Hw[hw]]]$trial = trial_r
             }       
         }
+      } else {
+        
+        #survival - changes needed 
+        
+        if(length(objlist)>1){
+          for(ow in 2:n.obj){
+            if(is.null(objlist[[ow]]$call$extended)|(objlist[[ow]]$call$extended<1)){
+              stop("argument 'extended' of the loaded object is NULL or equal to 0")
+            }            
+            estimate = abind::abind(estimate,objlist[[ow]][[Hw[hw]]]$estimate,along=3)
+            trial_r  = c(trial_r,objlist[[ow]][[Hw[hw]]]$trial)
+          }
+        }
+        
+        tar.p    = batss.res.tp(estimate,id.target)
+        tar.g    = batss.res.tg(estimate,id.target)
+        eff.p    = batss.res.ep(estimate,id.target,n.look)
+        eff.g    = batss.res.eg(estimate,id.target,n.look)
+        fut.p    = batss.res.fp(estimate,id.target,n.look)
+        fut.g    = batss.res.fg(estimate,id.target,n.look)
+        sample   = batss.surv.res.s1(trial_r,group=out$par$group$id,
+                                     type=c(apply(estimate[,"type",,drop=FALSE],2:3,paste0,collapse="")),
+                                     early=apply(estimate[,"look",,drop=TRUE]<n.look,2,all))
+        scenario = batss.res.s2(sample,target=id.target$id)
+        out[[Hw[hw]]]   = list(estimate = estimate,
+                        target   = list(par=tar.p,global=tar.g),
+                        efficacy = list(par=eff.p,global=eff.g),
+                        futility = list(par=fut.p,global=fut.g),
+                        sample   = sample,
+                        scenario = scenario)
+        if(!is.null(out$call$extended)){
+          if(out$call$extended>0){
+            out[[Hw[hw]]]$trial = trial_r
+          }       
+        
+        #end survival
+        }
+      }
     }
     out
 }

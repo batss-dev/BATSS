@@ -1,11 +1,13 @@
 pandoc: 3.1.2
-pkgdown: 2.0.9
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
-  binomial: web_only/binomial.html
-  Cluster: web_only/Cluster.html
-  Ingredients: web_only/Ingredients.html
-  negbin: web_only/negbin.html
-  Priors: web_only/Priors.html
-last_built: 2024-10-02T15:13Z
-
+  web_only/ancova: web_only/ancova.html
+  web_only/binomial: web_only/binomial.html
+  web_only/exponential_cox: web_only/exponential_cox.html
+  web_only/Ingredients: web_only/Ingredients.html
+  web_only/interim: web_only/interim.html
+  web_only/negbin: web_only/negbin.html
+  web_only/parallelisation: web_only/parallelisation.html
+  web_only/priors: web_only/priors.html
+last_built: 2025-09-21T18:13Z

@@ -19,8 +19,13 @@ print.batss = function(x, ...){
         cat("  *",names(x$call$var)[i],":",as.character(x$call$var)[i],"\n")
     }
     if(!is.null(x$par$RAR)){
-        cat("\nGroup randomisation:\n")
+        cat("\n Group randomisation:\n")
         cat("  *",x$call$RAR,"\n")
+    }
+    if(!(is.null(x$par$eff.arm) && is.null(x$par$fut.arm))){
+      cat("\n Decision rules:\n")
+      if(!is.null(x$par$eff.arm)) cat("  * Efficacy: ",format(x$call$eff.arm),"\n")
+      if(!is.null(x$par$fut.arm)) cat("  * Futility: ",format(x$call$fut.arm),"\n")
     }
     cat("\n Model:\n")
     cat("  *",format(x$call$model),if (x$type=="surv") "\n" else paste("(with",ifelse(is.null(x$call$link),"identity",x$call$link), "link)\n"))

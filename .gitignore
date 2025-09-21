@@ -8,6 +8,10 @@ update-package.R
 dlc/
 vignettes/
 .com.greenworldsoft.syncfolderspro
+_DelSyncFiles/
+.github
+
+
 
 ############################################
 # OSX generated files 

@@ -21,11 +21,11 @@ install.packages("BATSS")
 ```
 
 
-To install the development version of the BATSS package from GitHub, run
+To install the stable version of the BATSS package from GitHub, run
 
 ```r
 install.packages("devtools")
-devtools::install_github("batss-dev/BATSS")
+devtools::install_github("batss-stable/BATSS")
 ```
 
-
+(When to a CRAN install leading to a package version consisting in a sequence of 3 integers, a developement interger (equal to or larger than 9000) is added to the sequence when BATSS is intalled via GitHub so that the package version breaks down into <major>.<minor>.<patch>.<dev>) 
