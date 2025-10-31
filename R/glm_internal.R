@@ -124,7 +124,7 @@ batss.trial = function(int,data,model,link,family,beta,prob0,
                      extended,...){
 # int=2
                      
-    cat(paste0("\t start:",int,"\n"))
+    #cat(paste0("\t start:",int,"\n"))
     set.seed((n.look+1)*int)  
 
     # generate data for initial panel
@@ -423,4 +423,5 @@ batss.trial = function(int,data,model,link,family,beta,prob0,
     list(target = id.target, look = cbind(id.look,mx.posterior_eff.lt,mx.posterior_fut.lt,mx.rprob.lt),
          data   = if(extended==2){data}else{NULL})
 }
+
 

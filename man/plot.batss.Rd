@@ -6,26 +6,41 @@
 \usage{
 \method{plot}{batss}(
   x,
-  type = "size",
-  hypothesis = "H1",
+  which = if (x$type != "surv") 1:4 else 1:5,
+  ask = TRUE,
+  hypothesis = ifelse(is.null(x$H1), "H0", "H1"),
   title = TRUE,
   legend = TRUE,
-  col = c("#008B0040", "#8B3A3A40", "#8B897040", "#FF990075", "blue"),
+  ess = TRUE,
+  percentage = TRUE,
+  beta = TRUE,
+  col = c("#008B0040", "#8B3A3A40", "#8B897040", "#FF990075"),
+  smooth = 1,
   ...
 )
 }
 \arguments{
 \item{x}{An object of class 'batss' (i.e., output of the function \link{batss.glm}).}
 
-\item{type}{A character string indicating the type of plot with options 'size' (default) to display the total and per group sample size observed in the Monte Carlo trials, and 'estimates' to display the Monte Carlo trial target estimates as a function of the sample size.}
+\item{which}{An integer vector indicating the list of desired plots. If a subset of the plots is required, specify a subset of the numbers \code{1:4}. By default, all plots are provided, i.e., \code{which=1:4}. Plot \code{1} displays the boxplot of the total sample size as well as the boxplot of the sample sizes per group, Plot \code{2} displays a barplot of the probability of stopping at each look, plot \code{3} displays the violin plot of the sample size per group, and plot \code{4} displays the Monte Carlo trial target estimates as a function of the sample size.}
+
+\item{ask}{A logical. If \code{TRUE}, the user is prompted to hit the \kbd{Enter} key before each plot. See \code{\link{par}(ask=.)}. The default is \code{ask=TRUE}.}
 
 \item{hypothesis}{A character string indicating which alternative hypothesis to use for analyses considering both "H0" and "H1", with options "H1" (default) and "H0".}
 
 \item{title}{Either a \link[base]{logical} indicating if a title should be added or a string (of class \link[base]{character}) indicating the title to be added. If \code{title} equals \code{TRUE} (default), the title 'Under 'H1' or 'Under 'H0' (depending on the argument \code{hypothesis}) is added to the outer margin of the plot. No outer margin space is added if \code{title = FALSE}.}
 
-\item{legend}{a \link[base]{logical} (with default set to \code{TRUE}) indicating if, when '\code{type = estimates}', a legend should be added at the bottom of the plot.}
+\item{legend}{A \link[base]{logical} (with default set to \code{TRUE}) if a legend should be added at the bottom of plots 3 and 4, or a list with names \code{height}, \code{cex} and \code{pt} respectively indicating i/ the fraction of the plot to be used for the legend as a numeric (default is \code{.15}), ii/ the character expansion factor relative to current \code{par("cex")} as a numeric (default to \code{1.25}), and iii/ the expansion factor(s) for the points as a numeric (default to \code{2}). The input \code{legend = TRUE} is equivalent to \code{legend = c(height=.15, cex=1, pt=2)}.}
 
-\item{col}{a vector of length 5 specifiying the colour respectively assigned to i/ efficacy, ii/ futility, iii/ neither or iv/ both when color-coding trials when \code{type = "estimates"}. The 5th colour is used for lines. Default to c("#8B897040","#008B0040","#8B3A3A40","#FF990075","blue") where the 2 last digits of the long hexadecimal strings of colours 1 to 4 specify the level of transluency. Refer to the Section 'colour specification' in \link[graphics]{par} for details. If the length of \code{col} equals 1, the same colour is used for all cases. When \code{type = "size"}, the 3rd and 5th colours of the vector \code{col} are used to display boxplots and lines.}
+\item{ess}{A \link[base]{logical} (with default set to \code{TRUE}) indicating if the expected sample size should be displayed in plots 2, 3 and 4, or a list with names \code{col}, \code{cex} and \code{bg} respectively indicating i/ the colour of the label as a character (plots 2, 3, and 4), ii/ the text expension level as a numerical value (plots 2, 3 and 4) and iii/ the background colour as a character (plot 3). The input \code{ess = TRUE} is equivalent to \code{ess = list(col="blue", cex=1, bg="#FFD70070")}.}
+
+\item{percentage}{A \link[base]{logical} (with default set to \code{TRUE}) indicating if the probability of stopping at each look should be displayed in plots 2 (as a percentage), or a list with names \code{col}, and \code{cex} indicating i/ the colour of the label as a character, ii/ the text expension level as a numerical value. The input \code{percentage = TRUE} is equivalent to \code{percentage = list(col="violet", cex=1)}.}
+
+\item{beta}{A \link[base]{logical} (with default set to \code{TRUE}) indicating if the assumed target parameter value(s) should be displayed in plot 4, or a list with names \code{col}, \code{lwd}, and \code{lty} respectively indicating i/ the colour of the target parameter value horizontal line(s) as a character, ii/ the thickness of the line(s) as a numerical value  and iii/ the type of line as an integer (see \link[graphics]{par} for details). The input \code{beta = TRUE} is equivalent to \code{beta = list(col="blue", lwd=1.5, lty=1)}.}
+
+\item{col}{A vector of length 4 specifying the colours to be used. Default to \code{c("#8B897040","#008B0040","#8B3A3A40","#FF990075")} where the last two digits of the hexadecimal strings specify the level of transparency. Refer to the Section 'colour specification' in \link[graphics]{par} for details. If the length of \code{col} equals 1, the same colour is used for all cases. For plots \code{1} and \code{2}, the 3rd colour of the vector \code{col} is used to display the barplot and boxplots.}
+
+\item{smooth}{A numerical (>0) indictating the level of smoothing of the violin plots (for plot \code{3}). Default to \code{1}. When \code{smooth=NULL}, the smoothing value is optimised in the \link[sm]{sm.density} function.}
 
 \item{...}{Additional arguments affecting the plot produced, like ylim and ylab.}
 }
@@ -36,5 +51,5 @@ Generates graphical displays of results for objects of class 'batss'.
 Plot for objects of class 'batss'
 }
 \seealso{
-\code{\link[=batss.glm]{batss.glm()}}, the function generating S3 objects of class 'batss'.
+\code{\link[=batss.glm]{batss.glm()}}, \code{\link[=batss.surv]{batss.surv()}}, the function generating S3 objects of class 'batss'.
 }

@@ -1,3 +1,7 @@
+## Version 2.0.1
+
+-   Minor improvements to internal/generic functions
+
 ## Version 2.0.0
 
 -   New `batss.surv` function for time-to-event endpoints: 

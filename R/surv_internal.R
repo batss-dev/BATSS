@@ -1,25 +1,3 @@
-# ## useful functions (organise results)
-# res1.fun = function(trial_r,id.target){
-#   out = array(unlist(lapply(trial_r,function(x){
-#     type = rep(NA,nrow(x$target))
-#     for(i in 1:length(type)){
-#       eff = x$target$efficacy[i]&!is.na(x$target$efficacy[i])
-#       fut = x$target$futility[i]&!is.na(x$target$futility[i])
-#       type[i] = ifelse(eff&fut,3,ifelse(eff,1,ifelse(fut,2,0)))
-#     }
-#     c(x$target$look,type,x$target$mid)
-#   })),
-#   dim=c(nrow(id.target),3,length(trial_r)),
-#   dimnames=list(id.target$id,c("look","type","mid")))
-#   out[,"type",][is.na(out[,"type",])] = 0
-#   out
-# }
-# res2.fun = function(estimate,id.target){
-#   out = id.target[,c("pos","id","alternative","group")]
-#   out$efficacy = apply(estimate[,"type",,drop=FALSE]==1,1,mean)
-#   out$futility = apply(estimate[,"type",,drop=FALSE]==2,1,mean)
-#   out
-# }
 batss.surv.res.s1 = function(trial_r,group,type,early){
   size = as.data.frame(matrix(unlist(lapply(trial_r,function(x,group){
     x$look[max(x$target$look,na.rm=TRUE),c(paste0("n(",group,")"),paste0("t(",group,")"),paste0("ev(",group,")"))]
@@ -28,28 +6,7 @@ batss.surv.res.s1 = function(trial_r,group,type,early){
   t=sapply(trial_r,function(x) x$tot.time)
   cbind(size,t,type,early)
 }
-# res4.fun = function(sample,target){
-#   tablew = table(sample$type)
-#   tablew = tablew[order(tablew,decreasing=TRUE)]
-#   out    = data.frame(pos=1:length(tablew),id=names(tablew),
-#                       pi=c(tablew)/sum(tablew))
-#   for(i in 1:length(target)){
-#     out = cbind(out,as.numeric(substr(out$id,i,i)))
-#     colnames(out)[ncol(out)] = target[i]
-#   }
-#   out
-# }
-# 
-# res5.fun = function(estimate,id.target){
-#   out = data.frame(pos=1:2,id=c("At least one","All"),
-#                    alternative="",group="",efficacy=NA,futility=NA)
-#   out$efficacy[1] = mean(apply(estimate[,"type",,drop=FALSE]==1,3,sum)>0)
-#   out$futility[1] = mean(apply(estimate[,"type",,drop=FALSE]==2,3,sum)>0)
-#   out$efficacy[2] = mean(apply(estimate[,"type",,drop=FALSE]==1,3,all)>0)
-#   out$futility[2] = mean(apply(estimate[,"type",,drop=FALSE]==2,3,all)>0)
-#   out
-# }
-## useful functions (other)
+
 batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
                      RAR,RAR.control,
                      eff.arm,eff.trial,
@@ -65,9 +22,7 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
                      accr,accr.control,accr.type,
                      fup,interim,
                      id.var,n.var,extended,...){
-  # int=2
-  
-  #cat(paste0("\t start:",int,"\n"))
+
   set.seed((n.look+1)*int)
   
   #generate vector of entry times
@@ -118,7 +73,6 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
   }
   
   #cat("A")
-  
   # model matrix (ignored response side of formula object)
   X_tmp <- model.matrix(model[-2], data = data)
   X <- as.matrix(X_tmp[,-1])                         # remove intercept in surv mode
@@ -265,20 +219,8 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
         maxed.out <- c(maxed.out,id.cutoff)
         n.tot <- table(data[,names(var)[1]])
       }
-    
-      #rownames(data) <- paste0(1, "-", 1:dim(data)[1])
     }
   }
-  
-  # #event-based interims
-  # if (!is.null(event)) {
-  #   data_tmp <- data[order(data$time+data$entry),]
-  #   data_tmp$cumev <- cumsum(data_tmp$status)
-  #   time_tmp <- (data_tmp$time+data_tmp$entry)[data_tmp$cumev==event[1]]
-  #   data <- data_tmp[data_tmp$entry<=time_tmp,]
-  #   id.look$n[1] <- id.look$m[1] <- nrow(data)
-  #   id.look$m[2] <- id.look$n[2]-id.look$n[1]
-  # }
   
   if (!is.null(interim$time) && !is.null(interim$event)) {
     data_tmp <- data[order(data$time+data$entry),]
@@ -305,7 +247,6 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
     
     id.look$n[1] <- nrow(data)
     
-    #id.look$n[2:(n.look-1)] <- unlist(foreach::foreach(ub=interim$time[-1]+time_tmp) %do% {sum(entry<ub)})
     id.look$n[2:(n.look - 1)] <- unlist(purrr::map(interim$time[-1] + time_tmp, ~sum(entry < .x)))
     id.look$m <- with(id.look,c(n[1],diff(n)))
     
@@ -332,22 +273,16 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
                                            dimnames=list(id.look$id,id.target$id))
   mx.rprob.lt = matrix(NA,nrow=n.look,ncol=n.group,
                        dimnames=list(id.look$id,id.group$id))
-  #cat("C")
   
+  #cat("C")
   dots <- rlang::dots_list(...,.named=TRUE)
   
-  # # loop
-  # if(INLA:::inla.os.type()=="linux"&!is.na(linux.os)){
-  #   INLA:::inla.binary.install(os=linux.os,verbose=TRUE,md5.check=FALSE)
-  # }
   #cat("A")
   # errorcounter <- rep(FALSE,n.look)
   
   for(lw in 1:n.look){# lw=0; lw=lw+1
     
     # size
-    #cat("look:",lw,"\n")
-    
     if (!is.null(interim$event) & is.null(interim$time) & !(lw==n.look)) {
       data_tmp <- data[order(data$time+data$entry),]
       data_tmp$cumev <- cumsum(data_tmp$status)
@@ -407,7 +342,6 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
               }
             }
           }
-          
         }
       }
       if (interim$event.type!="cplusone") {
@@ -418,8 +352,6 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
       id.look$n[lw] <- nrow(data)
       id.look$m[lw]  <-  id.look$n[lw]- ifelse(lw==1,0,id.look$n[lw-1])
       id.look$m[lw+1] <- id.look$n[lw+1]-id.look$n[lw]
-      
-      
     }
     
     if (!is.null(n.max)){
@@ -438,6 +370,7 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
     assign("ref",id.group$ref[id.group$active], envir = env)
     assign("interim$time",interim$time, envir = env)
     assign("interim$event",interim$event, envir = env)
+    
     #cat("D")
     # fit
     if (!(lw==n.look)) {  # change times for looks prior to final
@@ -464,7 +397,7 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
         }
       }
       #}
-      
+
       #calculate observed times
       id.look[lw,"t(n)"] <- sum(data_calc$time)
       id.look[lw,paste0("t(",names(temp),")")] <- aggregate(reformulate(names(var)[1],response="time"),FUN=sum,data=data_calc)[,2]
@@ -478,8 +411,6 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
                                 ifelse(!is.null(interim$event),time_tmp,entry[id.look$n[lw]]))
       
       #fit model
-      
-      #fit <- inla(model, family = family, data=data_calc, dots, verbose=FALSE)
       fit <- do.call(INLA::inla,c(list(formula = model, family = family, data=data_calc, verbose=FALSE),dots))
       
       # tryCatch(
@@ -510,7 +441,6 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
       id.look[lw,"t"] <- max(data$entry+data$time)
       
       #fit model
-      #fit <- inla(model, family = family, data=data, dots, verbose=FALSE)
       fit <- do.call(INLA::inla,c(list(formula = model, family = family, data=data, verbose=FALSE),dots))
       
       # tryCatch(
@@ -525,7 +455,6 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
     
     #cat("E")
     # posteriors, efficacy and futility
-    # print(del_event)
     aw = id.target$active
     if (!is.null(interim$event)) {if (interim$event.type=="cplusone" && lw!=n.look) aw[which(names(prob0[-1])!=tmp_names)] = FALSE}       #in case of the 'control plus treatment i'-method, change the vector of evaluation accordingly
     if (all(aw==FALSE)) next                                                                         #for empty rows
@@ -552,7 +481,6 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
     }
     
     #cat("F")
-    
     # update mx.futility.lt and mx.efficacy.lt
     for(tw in 1:n.target){
       if(aw[tw]){
@@ -581,6 +509,7 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
         mx.futility.lt[lw,tw] = FALSE
       }
     }
+    
     #cat("G")
     eff.target = apply(mx.efficacy.lt[1:lw,,drop=FALSE],2,any)
     fut.target = apply(mx.futility.lt[1:lw,,drop=FALSE],2,any)
@@ -659,6 +588,7 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
         mx.rprob.lt[lw,names(prob)] = prob
           
         if (sum(prob,na.rm=TRUE)!=0) {
+          
           # predictors
           assign("n", id.look[lw + 1, "n"], envir = env)
           assign("m", id.look[lw + 1, "m"], envir = env)
@@ -760,7 +690,6 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
                 
                 #drop rest and change prob
                 data <- data_ordered[1:cutoff,1:(dim(data_ordered)[2]-2)]
-                #rownames(data) <- paste0(lw+1, "-", 1:cutoff)
   
                 prob_[names(prob_)==id.cutoff] <- 0
                 if (sum(prob_)!=0) {
@@ -845,31 +774,16 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
                 }
                 
                 maxed.out <- c(maxed.out,id.cutoff)
-                
                 n.tot <- table(data[,names(var)[1]])
               }
-              
-              #rownames(data)[sub("-.*", "", rownames(data))==as.char(lw+1)] <- paste0(lw + 1, "-", 1:length(rownames(data)[sub("-.*", "", rownames(data))==as.char(lw+1)]))
-              
             }
           }
         }
-          
+
         
       }
     }# end continue
-    #cat(".")
   }# end loop
-  
-  # output
-  #cat(paste0("\t end:",int,"\n"))
-  #if(any(!is.na(match(seq(0,1e+5,50),int)))){
-  #cat(paste0("\t end:",int,"\n"))
-  #}else{
-  #    cat(paste0("."))
-  #}
-  
-  #t.trial <- ifelse(is.null(interim.time),ifelse(lw==n.look,max(data$entry+data$time),max(data$entry)), ifelse(lw==n.look,max(data$entry+data$time),interim.time[lw]))
   
   t.trial <- max(id.look[,"t"],na.rm=TRUE)
   
@@ -894,5 +808,6 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
   
   list(target = id.target, look = tmp_look, tot.time = t.trial, last.rec = max(data$entry), data = if(extended==2){data}else{NULL})
 }
+
 
 utils::globalVariables(c("m", "posterior", "n", "N", "target", "ref", "curr.look", "n.ev", "active"))

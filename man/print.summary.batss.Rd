@@ -4,12 +4,10 @@
 \alias{print.summary.batss}
 \title{Print the summary function for 'BATSS' outputs}
 \usage{
-\method{print}{summary.batss}(x, full = FALSE, ...)
+\method{print}{summary.batss}(x, ...)
 }
 \arguments{
 \item{x}{An object of class 'summary.batss' (i.e., output of the function \link{batss.glm}).}
-
-\item{full}{set to 'TRUE' the function prints a long version of the summary}
 
 \item{...}{For future use}
 }
@@ -17,5 +15,5 @@
 Print method function for objects of class 'summary.batss'.
 }
 \seealso{
-\code{\link[=batss.glm]{batss.glm()}}, the function generating S3 objects of class 'batss'.
+\code{\link[=batss.glm]{batss.glm()}}, \code{\link[=batss.surv]{batss.surv()}}, the functions generating S3 objects of class 'batss'.
 }

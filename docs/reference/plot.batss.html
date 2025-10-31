@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">BATSS</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0.9003</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,11 +53,16 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for class 'batss'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"size"</span>,</span>
-<span>  hypothesis <span class="op">=</span> <span class="st">"H1"</span>,</span>
+<span>  which <span class="op">=</span> <span class="kw">if</span> <span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">type</span> <span class="op">!=</span> <span class="st">"surv"</span><span class="op">)</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span> <span class="kw">else</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,</span>
+<span>  ask <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  hypothesis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">H1</span><span class="op">)</span>, <span class="st">"H0"</span>, <span class="st">"H1"</span><span class="op">)</span>,</span>
 <span>  title <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  legend <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#008B0040"</span>, <span class="st">"#8B3A3A40"</span>, <span class="st">"#8B897040"</span>, <span class="st">"#FF990075"</span>, <span class="st">"blue"</span><span class="op">)</span>,</span>
+<span>  ess <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  percentage <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  beta <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#008B0040"</span>, <span class="st">"#8B3A3A40"</span>, <span class="st">"#8B897040"</span>, <span class="st">"#FF990075"</span><span class="op">)</span>,</span>
+<span>  smooth <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -70,8 +75,12 @@
 <dd><p>An object of class 'batss' (i.e., output of the function <a href="batss.glm.html">batss.glm</a>).</p></dd>
 
 
-<dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
-<dd><p>A character string indicating the type of plot with options 'size' (default) to display the total and per group sample size observed in the Monte Carlo trials, and 'estimates' to display the Monte Carlo trial target estimates as a function of the sample size.</p></dd>
+<dt id="arg-which">which<a class="anchor" aria-label="anchor" href="#arg-which"></a></dt>
+<dd><p>An integer vector indicating the list of desired plots. If a subset of the plots is required, specify a subset of the numbers <code>1:4</code>. By default, all plots are provided, i.e., <code>which=1:4</code>. Plot <code>1</code> displays the boxplot of the total sample size as well as the boxplot of the sample sizes per group, Plot <code>2</code> displays a barplot of the probability of stopping at each look, plot <code>3</code> displays the violin plot of the sample size per group, and plot <code>4</code> displays the Monte Carlo trial target estimates as a function of the sample size.</p></dd>
+
+
+<dt id="arg-ask">ask<a class="anchor" aria-label="anchor" href="#arg-ask"></a></dt>
+<dd><p>A logical. If <code>TRUE</code>, the user is prompted to hit the <kbd>Enter</kbd> key before each plot. See <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a>(ask=.)</code>. The default is <code>ask=TRUE</code>.</p></dd>
 
 
 <dt id="arg-hypothesis">hypothesis<a class="anchor" aria-label="anchor" href="#arg-hypothesis"></a></dt>
@@ -83,11 +92,27 @@
 
 
 <dt id="arg-legend">legend<a class="anchor" aria-label="anchor" href="#arg-legend"></a></dt>
-<dd><p>a <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> (with default set to <code>TRUE</code>) indicating if, when '<code>type = estimates</code>', a legend should be added at the bottom of the plot.</p></dd>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> (with default set to <code>TRUE</code>) if a legend should be added at the bottom of plots 3 and 4, or a list with names <code>height</code>, <code>cex</code> and <code>pt</code> respectively indicating i/ the fraction of the plot to be used for the legend as a numeric (default is <code>.15</code>), ii/ the character expansion factor relative to current <code>par("cex")</code> as a numeric (default to <code>1.25</code>), and iii/ the expansion factor(s) for the points as a numeric (default to <code>2</code>). The input <code>legend = TRUE</code> is equivalent to <code>legend = c(height=.15, cex=1, pt=2)</code>.</p></dd>
+
+
+<dt id="arg-ess">ess<a class="anchor" aria-label="anchor" href="#arg-ess"></a></dt>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> (with default set to <code>TRUE</code>) indicating if the expected sample size should be displayed in plots 2, 3 and 4, or a list with names <code>col</code>, <code>cex</code> and <code>bg</code> respectively indicating i/ the colour of the label as a character (plots 2, 3, and 4), ii/ the text expension level as a numerical value (plots 2, 3 and 4) and iii/ the background colour as a character (plot 3). The input <code>ess = TRUE</code> is equivalent to <code>ess = list(col="blue", cex=1, bg="#FFD70070")</code>.</p></dd>
+
+
+<dt id="arg-percentage">percentage<a class="anchor" aria-label="anchor" href="#arg-percentage"></a></dt>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> (with default set to <code>TRUE</code>) indicating if the probability of stopping at each look should be displayed in plots 2 (as a percentage), or a list with names <code>col</code>, and <code>cex</code> indicating i/ the colour of the label as a character, ii/ the text expension level as a numerical value. The input <code>percentage = TRUE</code> is equivalent to <code>percentage = list(col="violet", cex=1)</code>.</p></dd>
+
+
+<dt id="arg-beta">beta<a class="anchor" aria-label="anchor" href="#arg-beta"></a></dt>
+<dd><p>A <a href="https://rdrr.io/r/base/logical.html" class="external-link">logical</a> (with default set to <code>TRUE</code>) indicating if the assumed target parameter value(s) should be displayed in plot 4, or a list with names <code>col</code>, <code>lwd</code>, and <code>lty</code> respectively indicating i/ the colour of the target parameter value horizontal line(s) as a character, ii/ the thickness of the line(s) as a numerical value  and iii/ the type of line as an integer (see <a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a> for details). The input <code>beta = TRUE</code> is equivalent to <code>beta = list(col="blue", lwd=1.5, lty=1)</code>.</p></dd>
 
 
 <dt id="arg-col">col<a class="anchor" aria-label="anchor" href="#arg-col"></a></dt>
-<dd><p>a vector of length 5 specifiying the colour respectively assigned to i/ efficacy, ii/ futility, iii/ neither or iv/ both when color-coding trials when <code>type = "estimates"</code>. The 5th colour is used for lines. Default to c("#8B897040","#008B0040","#8B3A3A40","#FF990075","blue") where the 2 last digits of the long hexadecimal strings of colours 1 to 4 specify the level of transluency. Refer to the Section 'colour specification' in <a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a> for details. If the length of <code>col</code> equals 1, the same colour is used for all cases. When <code>type = "size"</code>, the 3rd and 5th colours of the vector <code>col</code> are used to display boxplots and lines.</p></dd>
+<dd><p>A vector of length 4 specifying the colours to be used. Default to <code>c("#8B897040","#008B0040","#8B3A3A40","#FF990075")</code> where the last two digits of the hexadecimal strings specify the level of transparency. Refer to the Section 'colour specification' in <a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a> for details. If the length of <code>col</code> equals 1, the same colour is used for all cases. For plots <code>1</code> and <code>2</code>, the 3rd colour of the vector <code>col</code> is used to display the barplot and boxplots.</p></dd>
+
+
+<dt id="arg-smooth">smooth<a class="anchor" aria-label="anchor" href="#arg-smooth"></a></dt>
+<dd><p>A numerical (&gt;0) indictating the level of smoothing of the violin plots (for plot <code>3</code>). Default to <code>1</code>. When <code>smooth=NULL</code>, the smoothing value is optimised in the <a href="https://rdrr.io/pkg/sm/man/sm.density.html" class="external-link">sm.density</a> function.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -100,7 +125,7 @@
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="batss.glm.html">batss.glm()</a></code>, the function generating S3 objects of class 'batss'.</p></div>
+    <div class="dont-index"><p><code><a href="batss.glm.html">batss.glm()</a></code>, <code><a href="batss.surv.html">batss.surv()</a></code>, the function generating S3 objects of class 'batss'.</p></div>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

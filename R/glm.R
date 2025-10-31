@@ -516,8 +516,17 @@ FE[id.target$id,"target"] = TRUE
 if(H0){FE[,'Beta (H0)'] = beta0}
 if(H1){FE[,'Beta (H1)'] = beta}
 # 
-par = list(RAR=RAR, group=id.group[,c("pos","id","reference")],
-           seed=id.seed, H0=H0, H1=H1, version=utils::packageVersion("BATSS"))
+par = list(model=model,family=family,var=var,
+           var.control=var.control,
+           eff.arm=eff.arm,eff.trial=eff.trial,
+           eff.arm.control=eff.arm.control,eff.trial.control=eff.trial.control,
+           fut.arm=fut.arm,fut.trial=fut.trial,
+           fut.arm.control=fut.arm.control,fut.trial.control=fut.trial.control,
+           RAR=RAR, RAR.control=RAR.control,
+           group=id.group[,c("pos","id","reference")],
+           interim=interim,which=which,
+           seed=id.seed,H0=H0,H1=H1,prob0=prob0,
+           version=utils::packageVersion("BATSS"))
 out = list(beta = FE, look = look, par=par)    
 if(H0){
     out$H0 = res_H0

@@ -561,7 +561,7 @@ batss.surv = function(
              surv=surv,surv.control=surv.control,
              cens=cens,cens.control=cens.control,
              accr=accr,accr.control=accr.control,accr.type=accr.type,
-             fup=fup,interim=interim,
+             fup=fup,interim=interim,which=which,
              seed=id.seed,H0=H0,H1=H1,prob0=prob0, 
              group=id.group[,c("pos","id","reference")], version=utils::packageVersion("BATSS"))
   out = list(hr = FE, look = look, par = par)
