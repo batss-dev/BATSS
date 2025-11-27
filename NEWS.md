@@ -1,3 +1,7 @@
+## Version 2.0.2
+
+-   Add LICENCE.txt and README.md files
+
 ## Version 2.0.1
 
 -   Minor improvements to internal/generic functions
