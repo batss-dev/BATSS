@@ -95,9 +95,9 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
   #add censoring
   if (!is.null(cens)){
     assign("cens.control", cens.control, envir = env)
-    cens <-  R.utils::doCall(cens, args = c(plyr::.(n=m), cens.control), envir = env)
-    data$status[data$time>cens] <- 0
-    data$time[data$time>cens] <- cens[data$time>cens]
+    cens.t <-  R.utils::doCall(cens, args = c(plyr::.(n=m), cens.control), envir = env)
+    data$status[data$time>cens.t] <- 0
+    data$time[data$time>cens.t] <- cens.t[data$time>cens.t]
   }
   
   #add entry times from vector 'entry'
@@ -201,9 +201,9 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
           #apply censoring
           if (!is.null(cens)) {
             assign("cens.control", cens.control, envir = env)
-            cens <- R.utils::doCall(cens, args = c(plyr::.(n = m), cens.control), envir = env)
-            new$status[new$time > cens] <- 0
-            new$time[new$time > cens] <- cens[new$time > cens]
+            cens.t <- R.utils::doCall(cens, args = c(plyr::.(n = m), cens.control), envir = env)
+            new$status[new$time > cens.t] <- 0
+            new$time[new$time > cens.t] <- cens.t[new$time > cens.t]
           }
           
           #add delayed entry data
@@ -423,7 +423,7 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
       # )
     } else {    #final look
       
-      if (exists("maxt",where=surv.control) && is.null(surv.control$maxt)) {
+      if (!is.null(fup)) {
         data_final <- data
         data$time <- ifelse(data_final$time+data_final$entry <= max(data_final$entry)+fup,data_final$time,max(data_final$entry)+fup-data_final$entry)
         data$status <- ifelse(data_final$time+data_final$entry <= max(data_final$entry)+fup,data_final$status,0)
@@ -488,11 +488,12 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
                envir = env)
         assign("curr.look",lw,envir = env)
         assign("n.look",n.look,envir = env)
+        assign("n.ev",id.look[lw,paste0("ev(",id.group$id,")")],envir = env)
         assign("posterior",mx.posterior_eff.lt[lw,tw], envir = env)
         if (is.null(eff.arm) || is.na(delta.eff[lw])) {
           mx.efficacy.lt[lw,tw] = FALSE
         } else {
-          mx.efficacy.lt[lw, tw] = R.utils::doCall(eff.arm, args = c(plyr::.(posterior=posterior,n=n,N=N,target=target,ref=ref,curr.look=curr.look,n.look=n.look),eff.arm.control), envir = env)        #call function instead of parsing and evaluating string
+          mx.efficacy.lt[lw, tw] = R.utils::doCall(eff.arm, args = c(plyr::.(posterior=posterior,n=n,N=N,target=target,ref=ref,curr.look=curr.look,n.look=n.look,n.ev=n.ev),eff.arm.control), envir = env)        #call function instead of parsing and evaluating string
         }
         #---
         if (twodelta || (is.null(eff.arm) && !is.null(fut.arm))){
@@ -501,7 +502,7 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
         if (is.null(fut.arm) || is.na(delta.fut[lw])) {
           mx.futility.lt[lw,tw] = FALSE
         } else {
-          mx.futility.lt[lw, tw] = R.utils::doCall(fut.arm, args = c(plyr::.(posterior=posterior,n=n,N=N,target=target,ref=ref,curr.look=curr.look,n.look=n.look),fut.arm.control), envir = env)        #call function instead of parsing and evaluating string
+          mx.futility.lt[lw, tw] = R.utils::doCall(fut.arm, args = c(plyr::.(posterior=posterior,n=n,N=N,target=target,ref=ref,curr.look=curr.look,n.look=n.look,n.ev=n.ev),fut.arm.control), envir = env)        #call function instead of parsing and evaluating string
         }
         #---
       }else{
@@ -638,7 +639,18 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
           assign("tmp_betas", tmp_betas, envir = env)
           
           args_ <- plyr::.(x = tmp_dat, betas = tmp_betas)
-          args_ <- c(args_, surv.control)
+          surv.control_ <- surv.control
+          if(is.element("tde",names(surv.control))){
+            if (any(!is.element(names(surv.control$tde),names(tmp_betas)))) {
+              if (all(!is.element(names(surv.control$tde),names(tmp_betas)))) {
+                surv.control_$tde <- NULL
+                surv.control_$tdefunction <- NULL
+              } else {
+                surv.control_$tde[which(!is.element(names(surv.control_$tde),names(tmp_betas)))] <- NULL
+              }
+            }
+          }
+          args_ <- c(args_, surv.control_)
           
           #generate time to event data
           new[, 1:2] <- R.utils::doCall(surv, alwaysArgs = args_, envir = env)[,2:3]
@@ -646,9 +658,9 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
           #apply censoring
           if (!is.null(cens)) {
             assign("cens.control", cens.control, envir = env)
-            cens <- R.utils::doCall(cens, args = c(plyr::.(n = m), cens.control), envir = env)
-            new$status[new$time > cens] <- 0
-            new$time[new$time > cens] <- cens[new$time > cens]
+            cens.t <- R.utils::doCall(cens, args = c(plyr::.(n = m), cens.control), envir = env)
+            new$status[new$time > cens.t] <- 0
+            new$time[new$time > cens.t] <- cens.t[new$time > cens.t]
           }
           
           #add delayed entry data
@@ -758,9 +770,9 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
                   #apply censoring
                   if (!is.null(cens)) {
                     assign("cens.control", cens.control, envir = env)
-                    cens <- R.utils::doCall(cens, args = c(plyr::.(n = m), cens.control), envir = env)
-                    new$status[new$time > cens] <- 0
-                    new$time[new$time > cens] <- cens[new$time > cens]
+                    cens.t <- R.utils::doCall(cens, args = c(plyr::.(n = m), cens.control), envir = env)
+                    new$status[new$time > cens.t] <- 0
+                    new$time[new$time > cens.t] <- cens.t[new$time > cens.t]
                   }
                   
                   #add delayed entry data
@@ -811,3 +823,4 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
 
 
 utils::globalVariables(c("m", "posterior", "n", "N", "target", "ref", "curr.look", "n.ev", "active"))
+
