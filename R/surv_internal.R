@@ -20,7 +20,7 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
                      surv,surv.control,var,var.control,
                      cens,cens.control,
                      accr,accr.control,accr.type,
-                     fup,interim,
+                     fup,interim, t.max, event.max,
                      id.var,n.var,extended,...){
 
   set.seed((n.look+1)*int)
@@ -109,19 +109,19 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
   
   if (!is.null(n.max)) {
     n.tot <- table(data[,names(var)[1]])
-    
     maxed.out <- id.reached <- NULL
+
     if (any(n.max<n.tot)) {
       count <- 1
       prob_ <- prob0
-      
+
       while (any(n.max<n.tot) && sum(prob_)!=0) {
         
         #identify groups that reached n.max 
         which.ind <- which(n.max<n.tot)
         which.group <- names(prob0)[which.ind]
         which.n <- n.max[which.ind]
-        
+
         #identify the observation first reaching any n.max
         data_ordered <- cbind(data[order(data$entry),],count)
         n.count <- ave(data_ordered$count, data_ordered[,names(var)[1]], FUN=cumsum)
@@ -137,7 +137,10 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
         data <- data_ordered[1:cutoff,1:(dim(data_ordered)[2]-2)]
         rownames(data) <- paste0(1, "-", 1:cutoff)
         
-        prob_[names(prob_)==id.cutoff] <- 0
+        #identify groups that reached the max (more than cut of possible)
+        reached.after.cutting <- names(prob0)[table(data[,names(var)[1]])==n.max]
+        
+        prob_[is.element(names(prob_),reached.after.cutting)] <- 0
         if (sum(prob_)!=0) {
           #recalc probabilities
           prob_ <- prob_/sum(prob_)
@@ -216,7 +219,7 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
           data = rbind(data, new)
         }
         
-        maxed.out <- c(maxed.out,id.cutoff)
+        maxed.out <- unique(c(maxed.out,reached.after.cutting))
         n.tot <- table(data[,names(var)[1]])
       }
     }
@@ -253,6 +256,10 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
     interim$time_tmp <- c(time_tmp,interim$time[-1]+time_tmp)
   }
   
+  #check, delete later
+  #cat("Checking data generation after interim set up:\n")
+  #print(head(data))
+  
   if (!is.null(interim$event)){
     if (interim$event.type=="cplusone") {
       skipcounter <- 0
@@ -281,7 +288,6 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
   # errorcounter <- rep(FALSE,n.look)
   
   for(lw in 1:n.look){# lw=0; lw=lw+1
-    
     # size
     if (!is.null(interim$event) & is.null(interim$time) & !(lw==n.look)) {
       data_tmp <- data[order(data$time+data$entry),]
@@ -349,11 +355,12 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
       }
       
       data <- data_tmp[data_tmp$entry<=time_tmp,-ncol(data_tmp)]
+      
       id.look$n[lw] <- nrow(data)
       id.look$m[lw]  <-  id.look$n[lw]- ifelse(lw==1,0,id.look$n[lw-1])
       id.look$m[lw+1] <- id.look$n[lw+1]-id.look$n[lw]
     }
-    
+ 
     if (!is.null(n.max)){
     #calculate cut groups
       n.tot <- table(data[,names(var)[1]])
@@ -372,10 +379,11 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
     assign("interim$event",interim$event, envir = env)
     
     #cat("D")
+    
+    data_calc <- data
+
     # fit
     if (!(lw==n.look)) {  # change times for looks prior to final
-      
-      data_calc <- data
       
       #update times and events
       #if (!is.null(accr)) {
@@ -397,62 +405,194 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
         }
       }
       #}
-
-      #calculate observed times
-      id.look[lw,"t(n)"] <- sum(data_calc$time)
-      id.look[lw,paste0("t(",names(temp),")")] <- aggregate(reformulate(names(var)[1],response="time"),FUN=sum,data=data_calc)[,2]
-      
-      #calculate observed event
-      id.look[lw,"ev(n)"] <- sum(data_calc$status)
-      id.look[lw,paste0("ev(",names(temp),")")] <- aggregate(reformulate(names(var)[1],response="status"),FUN=sum,data=data_calc)[,2]
       
       #calculate study duration
       id.look[lw,"t"] <- ifelse(!is.null(interim$time),ifelse(!is.null(interim$event),interim$time_tmp[lw],interim$time[lw]),
                                 ifelse(!is.null(interim$event),time_tmp,entry[id.look$n[lw]]))
       
-      #fit model
-      fit <- do.call(INLA::inla,c(list(formula = model, family = family, data=data_calc, verbose=FALSE),dots))
+      #if event.max is set
+      if (!is.null(event.max)) {
+        #check if event.max reached
+        #get the number of events per arm
+        tmp.events.per.arm <- aggregate(reformulate(names(var)[1],response="status"),FUN=sum,data=data_calc)[,2]
+        comb.events <- tmp.events.per.arm[1]+tmp.events.per.arm[-1]
+        #check if all events are equal or greater then event.max for both control and (active) treatment arms
+
+        if (all(event.max<=comb.events[id.group$active[-1]])) {
+          #if yes, create an evaluation dataset to truncate accordingly
+          data_event.max <- data_calc[order(data_calc$time+data_calc$entry),]
+          #find events & their respective times
+          time_event.max_vec <- vector()
+          for (i in 2:sum(id.group$active)) {
+            event_event.max <- cumsum(ifelse(data_event.max[labels(terms(model))[1]]==names(prob0[id.group$active])[1] | data_event.max[labels(terms(model))[1]]==names(prob0[id.group$active])[i],data_event.max$status,0))
+            time_event.max_vec[i-1] <- min((data_event.max$time+data_event.max$entry)[event_event.max==event.max])
+          }
+          time_event.max <- max(time_event.max_vec,na.rm=TRUE) 
+          #truncate data
+          if (max(data_event.max$time+data_event.max$entry)>time_event.max){
+            data_calc <- data_event.max[data_event.max$entry<=time_event.max,]
+            time_tmp <- time_event.max
+          }
+          #truncate times
+          data_final <- data_calc
+          data_calc$time <- ifelse(data_final$time+data_final$entry <= time_event.max,data_final$time,time_event.max-data_final$entry)
+          data_calc$status <- ifelse(data_final$time+data_final$entry <= time_event.max,data_final$status,0)
+          
+          data <- data_calc
+
+          if (nrow(data_final)!=nrow(data_calc)) {
+            id.look$n[lw] <- nrow(data)
+            id.look$m[lw]  <-  id.look$n[lw]- ifelse(lw==1,0,id.look$n[lw-1])
+          }
+          #names.fix <- id.look$id
+          id.look[n.look,] <- id.look[lw,]
+          id.look[lw:(n.look-1),] <- NA
+          id.look$id <- rownames(id.look)
+          lw <- n.look
+          
+          #update study duration
+          id.look[lw,"t"] <- time_event.max
+        }
+      }
       
-      # tryCatch(
-      #   {
-      #     fit <- inla(model, family = family, data=data_calc, ...,verbose=FALSE)
-      #   },
-      #   error = function(e) {
-      #     errorcounter[lw] <- TRUE
-      #   }
-      # )
+
+      
+      #t.max is set 
+      if (!is.null(t.max)) {
+        
+        ##check, delete later
+        #cat("Starts here:\n")
+        #print(t.max)
+        #print(head(data))
+        #print(head(data_calc$time))
+        #print(head(data_calc$entry))
+        #print(max(data_calc$time+data_calc$entry))
+        #--
+        
+        #check if t.max reached
+        if (max(data_calc$time+data_calc$entry)>t.max){
+
+          #truncate data
+          data_calc <- data_calc[data_calc$entry<=t.max,]
+          
+          #truncate times
+          data_final <- data_calc
+          data_calc$time <- ifelse(data_final$time+data_final$entry <= t.max,data_final$time,t.max-data_final$entry)
+          data_calc$status <- ifelse(data_final$time+data_final$entry <= t.max,data_final$status,0)
+          
+          data <- data_calc
+          
+          if (dim(data_final)[1]!=dim(data_calc)[1]) {
+            id.look[lw,"n"] <- dim(data_calc)[1]
+            id.look[lw,"m"] <- id.look[lw,"n"]-id.look[lw-1,"n"]
+          }
+          
+          #names.fix <- id.look$id
+          id.look[n.look,] <- id.look[lw,]
+          id.look[lw:(n.look-1),] <- NA
+          id.look$id <- rownames(id.look)
+          lw <- n.look
+          
+          #update study duration
+          id.look[lw,"t"] <- t.max
+        }
+      }
+
     } else {    #final look
       
       if (!is.null(fup)) {
-        data_final <- data
-        data$time <- ifelse(data_final$time+data_final$entry <= max(data_final$entry)+fup,data_final$time,max(data_final$entry)+fup-data_final$entry)
-        data$status <- ifelse(data_final$time+data_final$entry <= max(data_final$entry)+fup,data_final$status,0)
+        data_final <- data_calc
+        data_calc$time <- ifelse(data_final$time+data_final$entry <= max(data_final$entry)+fup,data_final$time,max(data_final$entry)+fup-data_final$entry)
+        data_calc$status <- ifelse(data_final$time+data_final$entry <= max(data_final$entry)+fup,data_final$status,0)
+      }
+
+      if (!is.null(event.max)) {
+        #check if event.max reached
+        #get the number of events per arm
+        tmp.events.per.arm <- aggregate(reformulate(names(var)[1],response="status"),FUN=sum,data=data_calc)[,2]
+        comb.events <- tmp.events.per.arm[1]+tmp.events.per.arm[-1]
+        
+        #check if all events are equal or greater then event.max for both control and (active) treatment arms
+        if (all(event.max<=comb.events[id.group$active[-1]])) {
+          #if yes, create an evaluation dataset to truncate accordingly
+          data_event.max <- data_calc[order(data_calc$time+data_calc$entry),]
+          #find events & their respective times
+          time_event.max_vec <- vector()
+          for (i in 2:sum(id.group$active)) {
+            event_event.max <- cumsum(ifelse(data_event.max[labels(terms(model))[1]]==names(prob0[id.group$active])[1] | data_event.max[labels(terms(model))[1]]==names(prob0[id.group$active])[i],data_event.max$status,0))
+            time_event.max_vec[i-1] <- min((data_event.max$time+data_event.max$entry)[event_event.max==event.max])
+          }
+          time_event.max <- max(time_event.max_vec,na.rm=TRUE) 
+
+          #truncate data
+          if (max(data_event.max$time+data_event.max$entry)>time_event.max){
+            data_calc <- data_event.max[data_event.max$entry<=time_event.max,]
+          }
+          #truncate times
+          data_final <- data_calc
+          data_calc$time <- ifelse(data_final$time+data_final$entry <= time_event.max,data_final$time,time_event.max-data_final$entry)
+          data_calc$status <- ifelse(data_final$time+data_final$entry <= time_event.max,data_final$status,0)
+          
+          if (dim(data_final)[1]!=dim(data_calc)[1]) {
+            id.look[lw,"n"] <- dim(data_calc)[1]
+            id.look[lw,"m"] <- id.look[lw,"n"]-id.look[lw-1,"n"]
+          }
+        }
       }
       
-      #calculate observed times
-      id.look[lw,"t(n)"] <- sum(data$time)
-      id.look[lw,paste0("t(",names(temp),")")] <- aggregate(reformulate(names(var)[1],response="time"),FUN=sum,data=data)[,2]
+      if (!is.null(t.max)) {
+        
+        #check if t.max reached
+        if (max(data_calc$time+data_calc$entry)>t.max){
+          #truncate data
+          data_calc <- data_calc[data_calc$entry<=t.max,]
+          #truncate times
+          data_final <- data_calc
+          data_calc$time <- ifelse(data_final$time+data_final$entry <= t.max,data_final$time,t.max-data_final$entry)
+          data_calc$status <- ifelse(data_final$time+data_final$entry <= t.max,data_final$status,0)
+          
+          if (dim(data_final)[1]!=dim(data_calc)[1]) {
+            id.look[lw,"n"] <- dim(data_calc)[1]
+            id.look[lw,"m"] <- id.look[lw,"n"]-id.look[lw-1,"n"]
+          }
+        }
+      }
       
-      #calculate observed events
-      id.look[lw,"ev(n)"] <- sum(data$status)
-      id.look[lw,paste0("ev(",names(temp),")")] <- aggregate(reformulate(names(var)[1],response="status"),FUN=sum,data=data)[,2]
+      # #calculate observed times
+      # id.look[lw,"t(n)"] <- sum(data$time)
+      # id.look[lw,paste0("t(",names(temp),")")] <- aggregate(reformulate(names(var)[1],response="time"),FUN=sum,data=data)[,2]
+      # 
+      # #calculate observed events
+      # id.look[lw,"ev(n)"] <- sum(data$status)
+      # id.look[lw,paste0("ev(",names(temp),")")] <- aggregate(reformulate(names(var)[1],response="status"),FUN=sum,data=data)[,2]
+      
+      data <- data_calc
       
       #calculate study duration
       id.look[lw,"t"] <- max(data$entry+data$time)
-      
-      #fit model
-      fit <- do.call(INLA::inla,c(list(formula = model, family = family, data=data, verbose=FALSE),dots))
-      
-      # tryCatch(
-      #   {
-      #     fit <- inla(model, family = family, data=data, ...,verbose=FALSE)
-      #   },
-      #   error = function(e) {
-      #     errorcounter[lw] <- TRUE
-      #   }
-      # )
+
     }
     
+    #calculate observed times
+    id.look[lw,"t(n)"] <- sum(data_calc$time)
+    id.look[lw,paste0("t(",names(temp),")")] <- aggregate(reformulate(names(var)[1],response="time"),FUN=sum,data=data_calc)[,2]
+    
+    #calculate observed event
+    id.look[lw,"ev(n)"] <- sum(data_calc$status)
+    id.look[lw,paste0("ev(",names(temp),")")] <- aggregate(reformulate(names(var)[1],response="status"),FUN=sum,data=data_calc)[,2]
+
+    #fit model
+    fit <- do.call(INLA::inla,c(list(formula = model, family = family, data=data_calc, verbose=FALSE),dots))
+    
+    # tryCatch(
+    #   {
+    #     fit <- inla(model, family = family, data=data_calc, ...,verbose=FALSE)
+    #   },
+    #   error = function(e) {
+    #     errorcounter[lw] <- TRUE
+    #   }
+    # )
+ 
     #cat("E")
     # posteriors, efficacy and futility
     aw = id.target$active
@@ -484,16 +624,16 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
     # update mx.futility.lt and mx.efficacy.lt
     for(tw in 1:n.target){
       if(aw[tw]){
-        assign("target",names(id.look[lw,names(temp)])==id.target[tw,"group"],
-               envir = env)
+        assign("target",names(id.look[lw,names(temp)])==id.target[tw,"group"],envir = env)
         assign("curr.look",lw,envir = env)
         assign("n.look",n.look,envir = env)
-        assign("n.ev",id.look[lw,paste0("ev(",id.group$id,")")],envir = env)
+        assign("n.ev",unlist(id.look[lw,paste0("ev(",id.group$id,")")]),envir = env)
+        assign("event.max",event.max,envir = env)
         assign("posterior",mx.posterior_eff.lt[lw,tw], envir = env)
         if (is.null(eff.arm) || is.na(delta.eff[lw])) {
           mx.efficacy.lt[lw,tw] = FALSE
         } else {
-          mx.efficacy.lt[lw, tw] = R.utils::doCall(eff.arm, args = c(plyr::.(posterior=posterior,n=n,N=N,target=target,ref=ref,curr.look=curr.look,n.look=n.look,n.ev=n.ev),eff.arm.control), envir = env)        #call function instead of parsing and evaluating string
+          mx.efficacy.lt[lw, tw] = R.utils::doCall(eff.arm, args = c(plyr::.(posterior=posterior,n=n,N=N,target=target,ref=ref,curr.look=curr.look,n.look=n.look,n.ev=n.ev,event.max=event.max),eff.arm.control), envir = env)        #call function instead of parsing and evaluating string
         }
         #---
         if (twodelta || (is.null(eff.arm) && !is.null(fut.arm))){
@@ -502,7 +642,7 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
         if (is.null(fut.arm) || is.na(delta.fut[lw])) {
           mx.futility.lt[lw,tw] = FALSE
         } else {
-          mx.futility.lt[lw, tw] = R.utils::doCall(fut.arm, args = c(plyr::.(posterior=posterior,n=n,N=N,target=target,ref=ref,curr.look=curr.look,n.look=n.look,n.ev=n.ev),fut.arm.control), envir = env)        #call function instead of parsing and evaluating string
+          mx.futility.lt[lw, tw] = R.utils::doCall(fut.arm, args = c(plyr::.(posterior=posterior,n=n,N=N,target=target,ref=ref,curr.look=curr.look,n.look=n.look,n.ev=n.ev,event.max=event.max),fut.arm.control), envir = env)        #call function instead of parsing and evaluating string
         }
         #---
       }else{
@@ -565,7 +705,7 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
       break
       # continue
     }else{
-      if (id.look$m[lw+1]!=0) {  #if not last look
+      if (id.look$m[lw+1]!=0) {  #if not last look or all of N spent
         # prob per group
         if(!is.null(RAR)){
           # prob per group
@@ -627,7 +767,7 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
           X_tmp <- model.matrix(model[-2], data = new)
           X <- matrix(X_tmp[, -1], ncol = ncol(X_tmp) - 1)
           colnames(X) <- colnames(X_tmp)[-1]
-          
+                    
           #preparing call tom 'simsurv'
           X.rows <- nrow(X)
           tmp_dat <- data.frame(id = 1:X.rows, X)
@@ -672,16 +812,15 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
           # data
           data = rbind(data, new)
           
-          
           #control for max n's
           if (!is.null(n.max)) {
             n.tot <- table(data[,names(var)[1]])
             prob_ <- prob
-            
+
             if (any(n.max<n.tot)) {
               while (any(n.max<n.tot) && sum(prob_)!=0) {
                 count <- 1
-                
+
                 #identify groups that reached n.max 
                 which.ind <- which(n.max<n.tot)
                 which.group <- names(prob0)[which.ind]
@@ -702,8 +841,11 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
                 
                 #drop rest and change prob
                 data <- data_ordered[1:cutoff,1:(dim(data_ordered)[2]-2)]
-  
-                prob_[names(prob_)==id.cutoff] <- 0
+                
+                #identify groups that reached the max (more than cut of possible)
+                reached.after.cutting <- names(prob0)[table(data[,names(var)[1]])==n.max]
+                
+                prob_[is.element(names(prob_),reached.after.cutting)] <- 0
                 if (sum(prob_)!=0) {
                   prob_ <- prob_/sum(prob_)
                 
@@ -762,7 +904,18 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
                   assign("tmp_betas", tmp_betas, envir = env)
                   
                   args_ <- plyr::.(x = tmp_dat, betas = tmp_betas)
-                  args_ <- c(args_, surv.control)
+                  surv.control_ <- surv.control
+                  if(is.element("tde",names(surv.control))){
+                    if (any(!is.element(names(surv.control$tde),names(tmp_betas)))) {
+                      if (all(!is.element(names(surv.control$tde),names(tmp_betas)))) {
+                        surv.control_$tde <- NULL
+                        surv.control_$tdefunction <- NULL
+                      } else {
+                        surv.control_$tde[which(!is.element(names(surv.control_$tde),names(tmp_betas)))] <- NULL
+                      }
+                    }
+                  }
+                  args_ <- c(args_, surv.control_)
                   
                   #generate time to event data
                   new[, 1:2] <- R.utils::doCall(surv, alwaysArgs = args_, envir = env)[,2:3]
@@ -785,7 +938,7 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
                   data = rbind(data, new) 
                 }
                 
-                maxed.out <- c(maxed.out,id.cutoff)
+                maxed.out <- unique(c(maxed.out,reached.after.cutting))
                 n.tot <- table(data[,names(var)[1]])
               }
             }

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">BATSS</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,6 +72,8 @@
 <span>  RAR <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  RAR.control <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">interim</span>,</span>
+<span>  t.max <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  event.max <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">prob0</span>,</span>
 <span>  delta.eff <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  delta.fut <span class="op">=</span> <span class="va">delta.eff</span>,</span>
@@ -178,6 +180,14 @@
 
 <dt id="arg-interim">interim<a class="anchor" aria-label="anchor" href="#arg-interim"></a></dt>
 <dd><p>A list of parameters related to interim analyses. Possible list items include, '<code>recruited</code>' a vector of integers indicating the number of recruited participants at each look, last excluded, in increasing order, '<code>time</code>' a vector of integers indicating the time points of interim analyses, and '<code>event</code>' a vector of integers indicating the number of events. '<code>event.type</code>' is a character string describing the groups that are counted towards the numbers in '<code>event</code>' with options options '<code>all</code>', counting all events,'<code>control</code>', counting events in the control group only, '<code>cplusone</code>', counting the control plus treatments individually (this will result in different time points for the interims of the treatment groups), and '<code>min</code>', counting the last group to reach the threshold. See details for explanations and combinations.</p></dd>
+
+
+<dt id="arg-t-max">t.max<a class="anchor" aria-label="anchor" href="#arg-t-max"></a></dt>
+<dd><p>A scalar of the maximum trial duration, safeguard if 'events' takes too long to reach</p></dd>
+
+
+<dt id="arg-event-max">event.max<a class="anchor" aria-label="anchor" href="#arg-event-max"></a></dt>
+<dd><p>A scalar indicating the maximum number of event.max in the control group, once reached the trial will stop recruiting</p></dd>
 
 
 <dt id="arg-prob-">prob0<a class="anchor" aria-label="anchor" href="#arg-prob-"></a></dt>

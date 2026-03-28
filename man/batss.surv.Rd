@@ -26,6 +26,8 @@ batss.surv(
   RAR = NULL,
   RAR.control = NULL,
   interim,
+  t.max = NULL,
+  event.max = NULL,
   prob0,
   delta.eff = 0,
   delta.fut = delta.eff,
@@ -87,6 +89,10 @@ batss.surv(
 \item{RAR.control}{An optional list of control parameters the function in 'RAR'.}
 
 \item{interim}{A list of parameters related to interim analyses. Possible list items include, '\code{recruited}' a vector of integers indicating the number of recruited participants at each look, last excluded, in increasing order, '\code{time}' a vector of integers indicating the time points of interim analyses, and '\code{event}' a vector of integers indicating the number of events. '\code{event.type}' is a character string describing the groups that are counted towards the numbers in '\code{event}' with options options '\code{all}', counting all events,'\code{control}', counting events in the control group only, '\code{cplusone}', counting the control plus treatments individually (this will result in different time points for the interims of the treatment groups), and '\code{min}', counting the last group to reach the threshold. See details for explanations and combinations.}
+
+\item{t.max}{A scalar of the maximum trial duration, safeguard if 'events' takes too long to reach}
+
+\item{event.max}{A scalar indicating the maximum number of event.max in the control group, once reached the trial will stop recruiting}
 
 \item{prob0}{A named vector with initial allocation probabilities. Names need to correspond to the levels of the grouping variable. If \code{RAR = NULL}, these probabilities/ratios will be used throughout (fixed allocation probabilities).}
 

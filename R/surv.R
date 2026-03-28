@@ -20,6 +20,8 @@
 #' @param RAR.control An optional list of control parameters the function in 'RAR'.
 #' @param N A scalar indicating the total sample size.
 #' @param n.max A vector indicating the maximum sample size per arm, if a scalar is given the same size will be used for all arms.
+#' @param event.max A scalar indicating the maximum number of event.max in the control group, once reached the trial will stop recruiting
+#' @param t.max A scalar of the maximum trial duration, safeguard if 'events' takes too long to reach
 #' @param interim A list of parameters related to interim analyses. Possible list items include, '`recruited`' a vector of integers indicating the number of recruited participants at each look, last excluded, in increasing order, '`time`' a vector of integers indicating the time points of interim analyses, and '`event`' a vector of integers indicating the number of events. '`event.type`' is a character string describing the groups that are counted towards the numbers in '`event`' with options options '`all`', counting all events,'`control`', counting events in the control group only, '`cplusone`', counting the control plus treatments individually (this will result in different time points for the interims of the treatment groups), and '`min`', counting the last group to reach the threshold. See details for explanations and combinations.
 #' @param fup A scalar specifying the follow-up time of the last patient recruited and hence the final analysis, this only applies if 'maxt=NULL' in 'surv.control'.
 #' @param prob0 A named vector with initial allocation probabilities. Names need to correspond to the levels of the grouping variable. If `RAR = NULL`, these probabilities/ratios will be used throughout (fixed allocation probabilities).
@@ -59,7 +61,7 @@ batss.surv = function(
     cens=NULL,cens.control=NULL,accr=runif,accr.control=list(min = 0, max = 3), accr.type="fixed",
     hr,which,R=1e+4,N,n.max=NULL,
     alternative = "less",RAR=NULL,RAR.control=NULL,
-    interim,
+    interim, t.max = NULL, event.max = NULL,
     prob0,delta.eff=0,delta.fut=delta.eff,delta.RAR=0,
     eff.arm,eff.trial=NULL,
     eff.arm.control=NULL,eff.trial.control=NULL,
@@ -70,7 +72,7 @@ batss.surv = function(
     extended = 0,...){
   
   #---
-#  require(plyr); require(rlang); require(R.utils); require(simsurv); require(foreach); require(INLA)
+  #require(plyr); require(rlang); require(R.utils); require(simsurv); require(foreach); require(INLA);require(Matrix)
   
   call <- match.call()                       #save call
   model <- as.formula(model)                 #allow for string and formula input
@@ -353,7 +355,7 @@ batss.surv = function(
                        surv=surv,surv.control=surv.control,
                        cens=cens,cens.control=cens.control,
                        accr=accr,accr.control=accr.control,accr.type=accr.type,
-                       fup=fup,interim=interim,
+                       fup=fup,interim=interim, t.max=t.max, event.max=event.max,
                        var=var,var.control=var.control,id.var=id.var,n.var=n.var,
                        #linux.os=linux.os,
                        extended=extended,...)
@@ -374,7 +376,7 @@ batss.surv = function(
                                      surv=surv,surv.control=surv.control,
                                      cens=cens,cens.control=cens.control,
                                      accr=accr,accr.control=accr.control,accr.type=accr.type,
-                                     fup=fup,interim=interim,
+                                     fup=fup,interim=interim, t.max=t.max, event.max=event.max,
                                      var=var,var.control=var.control,id.var=id.var,n.var=n.var,
                                      #linux.os=linux.os,
                                      extended=extended,
@@ -398,7 +400,7 @@ batss.surv = function(
                                       surv=surv,surv.control=surv.control,
                                       cens=cens,cens.control=cens.control,
                                       accr=accr,accr.control=accr.control,accr.type=accr.type,
-                                      fup=fup,interim=interim,
+                                      fup=fup,interim=interim, t.max=t.max, event.max=event.max,
                                       var=var,var.control=var.control,id.var=id.var,n.var=n.var,
                                       #linux.os=linux.os,
                                       extended=extended,...)
@@ -459,7 +461,7 @@ batss.surv = function(
                        surv=surv,surv.control=surv.control,
                        cens=cens,cens.control=cens.control,
                        accr=accr,accr.control=accr.control,accr.type=accr.type,
-                       fup=fup,interim=interim,
+                       fup=fup,interim=interim, t.max=t.max, event.max=event.max,
                        var=var,var.control=var.control,id.var=id.var,n.var=n.var,
                        #linux.os=linux.os,
                        extended=extended,...)
@@ -480,7 +482,7 @@ batss.surv = function(
                                      surv=surv,surv.control=surv.control,
                                      cens=cens,cens.control=cens.control,
                                      accr=accr,accr.control=accr.control,accr.type=accr.type,
-                                     fup=fup,interim=interim,
+                                     fup=fup,interim=interim, t.max=t.max, event.max=event.max,
                                      var=var,var.control=var.control,id.var=id.var,n.var=n.var,
                                      #linux.os=linux.os,
                                      extended=extended,
@@ -504,7 +506,7 @@ batss.surv = function(
                                       surv=surv,surv.control=surv.control,
                                       cens=cens,cens.control=cens.control,
                                       accr=accr,accr.control=accr.control,accr.type=accr.type,
-                                      fup=fup,interim=interim,
+                                      fup=fup,interim=interim, t.max=t.max, event.max=event.max,
                                       var=var,var.control=var.control,id.var=id.var,n.var=n.var,
                                       #linux.os=linux.os,
                                       extended=extended,...)

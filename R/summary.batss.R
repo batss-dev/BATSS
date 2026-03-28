@@ -65,7 +65,7 @@ summary.batss = function(object, extended=NULL, ...){
     res$H0$futility <- temp
     
     #cumulative
-    tmp.length <- dim(object$H0$estimate[,,1])[1]
+    tmp.length <- ifelse(is.null(dim(object$H0$estimate[,,1])),1,dim(object$H0$estimate[,,1])[1])
     cum.eff <- cum.fut <- matrix(NA,nrow=tmp.length+2,ncol=dim(object$look)[1])
     for (i in 1:dim(object$look)[1]){
       #arms
@@ -149,9 +149,17 @@ summary.batss = function(object, extended=NULL, ...){
     
     # estimation error
     if (object$type=="surv") {
-      res$H0$est.error <- t(sweep(exp(object$H0$estimate[,3,]),1,object$hr[object$hr$target,4]))
+      if (!is.null(dim(object$H0$estimate[,3,]))) {
+        res$H0$est.error <- t(sweep(exp(object$H0$estimate[,3,]),1,object$hr[object$hr$target,4]))
+      } else {
+        res$H0$est.error <- exp(object$H0$estimate[,3,]) - object$hr[object$hr$target,4]
+      }
     } else {
-      res$H0$est.error <- t(sweep(object$H0$estimate[,3,],1,object$beta[object$beta$target,4]))
+      if (!is.null(dim(object$H0$estimate[,3,]))) {
+        res$H0$est.error <- t(sweep(object$H0$estimate[,3,],1,object$beta[object$beta$target,4]))
+      } else {
+        res$H0$est.error <- object$H0$estimate[,3,] - object$beta[object$beta$target,4]
+      }
     }
     
   } else {
@@ -188,7 +196,7 @@ summary.batss = function(object, extended=NULL, ...){
     res$H1$futility <- temp
     
     #cumulative
-    tmp.length <- dim(object$H1$estimate[,,1])[1]
+    tmp.length <- ifelse(is.null(dim(object$H1$estimate[,,1])),1,dim(object$H1$estimate[,,1])[1])
     cum.eff <- cum.fut <- matrix(NA,nrow=tmp.length+2,ncol=dim(object$look)[1])
     for (i in 1:dim(object$look)[1]){
       #arms
@@ -258,9 +266,10 @@ summary.batss = function(object, extended=NULL, ...){
       if (object$type=="surv") {
         # average sample size at interims
         if (is.null(object$par$interim$event) || (!is.null(object$par$interim$event.type) && object$par$interim$event.type!="cplusone"))  {
-          objectw = rowMeans(sapply(object$H1$trial,function(x) as.matrix(cbind(x$look[,c("n","m","t","t(n)","ev(n)")],!is.na(x$look[,c("t")]))),simplify="array"),dims=2,na.rm=TRUE)
-          objectw = cbind(objectw[,-6],abs(diff(c(objectw[,6]*length(object$par$seed),0))),objectw[,6]*length(object$par$seed),objectw[,6])
-          colnames(objectw)[6:8] <- c("stops","n.trial","prcnt.trial")
+          objectw = rowMeans(sapply(object$H1$trial,function(x) as.matrix(cbind(x$look[,c("n","m","t","t(n)","ev(n)")],1-(is.na(x$look[,c("t")])&!is.na(x$look[,c("pos")])),is.na(x$look[,c("pos")]))),
+                                    simplify="array"),dims=2,na.rm=TRUE)
+          objectw = cbind(objectw[,-(6:7)],abs(diff(c(objectw[,6]*length(object$par$seed),0))),objectw[,6]*length(object$par$seed),objectw[,6],objectw[,7]*length(object$par$seed),objectw[,7])
+          colnames(objectw)[6:10] <- c("stops","n.trial","prcnt.trial","n.skipped","prcnt.skipped")
         } else {
           objectw <- NULL
         }
@@ -270,9 +279,17 @@ summary.batss = function(object, extended=NULL, ...){
     
     # estimation error
     if (object$type=="surv") {
-      res$H1$est.error <- if (object$par$H0 && object$par$H1) t(sweep(exp(object$H1$estimate[,3,]),1,object$hr[object$hr$target,5])) else t(sweep(exp(object$H1$estimate[,3,]),1,object$hr[object$hr$target,4]))
+      if (!is.null(dim(object$H1$estimate[,3,]))) {
+        res$H1$est.error <- if (object$par$H0 && object$par$H1) t(sweep(exp(object$H1$estimate[,3,]),1,object$hr[object$hr$target,5])) else t(sweep(exp(object$H1$estimate[,3,]),1,object$hr[object$hr$target,4]))
+      } else {
+        res$H1$est.error <- if (object$par$H0 && object$par$H1) exp(object$H1$estimate[,3,]) - object$hr[object$hr$target,5] else object$H1$estimate[,3,] - object$hr[object$hr$target,4]
+      }
     } else {
-      res$H1$est.error <- if (object$par$H0 && object$par$H1) t(sweep(object$H1$estimate[,3,],1,object$beta[object$beta$target,5])) else t(sweep(object$H1$estimate[,3,],1,object$beta[object$beta$target,4]))
+      if (!is.null(dim(object$H1$estimate[,3,]))) {
+        res$H1$est.error <- if (object$par$H0 && object$par$H1) t(sweep(object$H1$estimate[,3,],1,object$beta[object$beta$target,5])) else t(sweep(object$H1$estimate[,3,],1,object$beta[object$beta$target,4]))
+      } else {
+        res$H1$est.error <- if (object$par$H0 && object$par$H1) object$H1$estimate[,3,] - object$beta[object$beta$target,5] else object$H1$estimate[,3,] - object$beta[object$beta$target,4]
+      }
     }
     
   } else {

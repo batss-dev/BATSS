@@ -1,3 +1,13 @@
+## Version 2.0.4
+
+-   Minor improvement to `summary.batss` to handles case 
+    with only one treatment arm (thanks to Trinh, N.-D. 
+    for the feedback)
+
+## Version 2.0.3
+
+-   Resolution bugs affecting censoring in some scenarios. 
+
 ## Version 2.0.2
 
 -   Add LICENCE.txt and README.md files
