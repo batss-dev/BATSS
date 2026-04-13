@@ -575,11 +575,11 @@ batss.surv.trial = function(int,data,model,family,hr,prob0,n.max,
     
     #calculate observed times
     id.look[lw,"t(n)"] <- sum(data_calc$time)
-    id.look[lw,paste0("t(",names(temp),")")] <- aggregate(reformulate(names(var)[1],response="time"),FUN=sum,data=data_calc)[,2]
+    id.look[lw,paste0("t(",names(temp),")")] <- aggregate(reformulate(names(var)[1],response="time"),FUN=sum,data=data_calc,drop=FALSE)[,2]
     
     #calculate observed event
     id.look[lw,"ev(n)"] <- sum(data_calc$status)
-    id.look[lw,paste0("ev(",names(temp),")")] <- aggregate(reformulate(names(var)[1],response="status"),FUN=sum,data=data_calc)[,2]
+    id.look[lw,paste0("ev(",names(temp),")")] <- aggregate(reformulate(names(var)[1],response="status"),FUN=sum,data=data_calc,drop=FALSE)[,2]
 
     #fit model
     fit <- do.call(INLA::inla,c(list(formula = model, family = family, data=data_calc, verbose=FALSE),dots))

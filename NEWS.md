@@ -1,3 +1,7 @@
+## Version 2.0.5
+
+-   Resolution of bugs affecting censoring in some scenarios. 
+
 ## Version 2.0.4
 
 -   Minor improvement to `summary.batss` to handles case 
@@ -6,7 +10,7 @@
 
 ## Version 2.0.3
 
--   Resolution bugs affecting censoring in some scenarios. 
+-   Resolution of bugs affecting censoring in some scenarios. 
 
 ## Version 2.0.2
 
