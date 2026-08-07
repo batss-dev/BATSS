@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">BATSS</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,6 +44,10 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.0.6" id="version-206">Version 2.0.6<a class="anchor" aria-label="anchor" href="#version-206"></a></h2>
+<ul><li>Fixes a bug in <code>batss.surv</code> (reported by Stina Zetterstrom) that required intervention groups to be listed in alphabetical order in <code>prob0</code> for the corresponding allocation probabilities to be correctly assigned when using RAR.</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.0.5" id="version-205">Version 2.0.5<a class="anchor" aria-label="anchor" href="#version-205"></a></h2>
 <ul><li>Resolution of bugs affecting censoring in some scenarios.</li>
 </ul></div>
@@ -71,6 +75,20 @@
 <li>New ‘Interim schedule’ page</li>
 <li>Improved ‘Priors’ page now including information specific to survival endpoints</li>
 </ul></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.2.1" id="version-121">Version 1.2.1<a class="anchor" aria-label="anchor" href="#version-121"></a></h2>
+<ul><li>Fixes a bug in <code>batss.glm</code> (reported by Stina Zetterstrom) that required intervention groups to be listed in alphabetical order in <code>prob0</code> for the corresponding allocation probabilities to be correctly assigned when using RAR.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.2.0" id="version-120">Version 1.2.0<a class="anchor" aria-label="anchor" href="#version-120"></a></h2><p class="text-muted">CRAN release: 2026-05-28</p>
+<ul><li>Improvements to <code>batss.glm</code>:
+<ul><li>
+<code>interim = NA</code> now specifies a fixed (non-adaptive) design with a single look at the maximum sample size <code>N</code>
+</li>
+<li>better warnings</li>
+</ul></li>
+<li>Fixes to minor bugs detected by Claude (Opus 4.6) in version 1.1.1 of <code>batss.glm</code>, <code>batss.combine</code>, <code>summary.batss</code>, <code>plot.batss</code> and internal functions, including a fix to <code>eff.trial.control</code> and <code>fut.trial.control</code> being ignored in trial-level stopping decisions</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.0" id="version-110">Version 1.1.0<a class="anchor" aria-label="anchor" href="#version-110"></a></h2><p class="text-muted">CRAN release: 2025-09-21</p>

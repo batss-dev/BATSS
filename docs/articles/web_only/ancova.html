@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../../index.html">BATSS</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -363,7 +363,7 @@ information fraction,</li>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>p</mi><mi>ϵ</mi></msub><annotation encoding="application/x-tex">p_{\epsilon}</annotation></semantics></math>
 that we will respectively name <code>b.eff</code> and <code>p.eff</code>
-(and that needs to be added to <code>eff.arm.control</code> in
+(and that need to be added to <code>eff.arm.control</code> in
 <code>batss.glm</code>).</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -388,7 +388,7 @@ package.</p>
 <ul>
 <li>the ingredient <code>posterior</code> for the posterior probability
 of the target parameter being greater than
-<code>delta.fut = log(1.5)</code>,</li>
+<code>delta.fut = 3</code>,</li>
 <li>the additional parameter
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>b</mi><mi>f</mi></msub><annotation encoding="application/x-tex">b_{f}</annotation></semantics></math>
 that we will name <code>b.fut</code> (and that needs to be added to
@@ -455,7 +455,7 @@ is the centered ‘R-HAM-D scores’ at baseline.</li>
 <p>For the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>th
 participant, our assumed model is:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mi>i</mi></msub><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mi>ι</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><mo>=</mo><mi>′</mi><mi>D</mi><mn>1</mn><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><mi>ι</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><mo>=</mo><mi>′</mi><mi>D</mi><mn>2</mn><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mi>ι</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><mo>=</mo><mi>′</mi><mi>D</mi><mn>3</mn><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>4</mn></msub><mrow><mo stretchy="true" form="prefix">[</mo><msub><mi>x</mi><mrow><mi>i</mi><mn>2</mn></mrow></msub><mo>−</mo><mover><mi>_</mi><mo accent="true">‾</mo></mover><msub><mi>x</mi><mn>2</mn></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>+</mo><msub><mi>ϵ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i = \beta_0 + \beta_1 \iota(x_{i1}='D1') + \beta_2 \iota(x_{i1}='D2') + \beta_3 \iota(x_{i1}='D3') + \beta_4 [x_{i2} - \bar_{x_{2}}] + \epsilon_i</annotation></semantics></math>,</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>y</mi><mi>i</mi></msub><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mn>1</mn></msub><mi>ι</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><mo>=</mo><mi>′</mi><mi>D</mi><mn>1</mn><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>2</mn></msub><mi>ι</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><mo>=</mo><mi>′</mi><mi>D</mi><mn>2</mn><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>3</mn></msub><mi>ι</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><mo>=</mo><mi>′</mi><mi>D</mi><mn>3</mn><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><msub><mi>β</mi><mn>4</mn></msub><mrow><mo stretchy="true" form="prefix">[</mo><msub><mi>x</mi><mrow><mi>i</mi><mn>2</mn></mrow></msub><mo>−</mo><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mn>2</mn></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>+</mo><msub><mi>ϵ</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">y_i = \beta_0 + \beta_1 \iota(x_{i1}='D1') + \beta_2 \iota(x_{i1}='D2') + \beta_3 \iota(x_{i1}='D3') + \beta_4 [x_{i2} - \bar{x}_{2}] + \epsilon_i</annotation></semantics></math>,</p>
 <p>where</p>
 <ul>
 <li>
@@ -469,7 +469,7 @@ for participant
 denotes the indicator function that equals to 1 if the condition is
 satisfied and 0 otherwise,</li>
 <li>
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>_</mi><mo accent="true">‾</mo></mover><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\bar_{x_{2}}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mn>2</mn></msub><annotation encoding="application/x-tex">\bar{x}_{2}</annotation></semantics></math>
 denotes the average ‘R-HAM-D scores’ at baseline.</li>
 </ul>
 <p>This parameterisation leads to the following parameter
@@ -504,9 +504,11 @@ of 5 in each intervention so that
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>σ</mi><mi>y</mi></msub><mo>=</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">\sigma_y=7</annotation></semantics></math>.</li>
 </ul>
 <p>When controlling for the (centered) ‘R-HAM-D scores’ at baseline, we
-further need to define * the value of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mn>4</mn></msub><annotation encoding="application/x-tex">\beta_4</annotation></semantics></math>,
-* the values of
+further need to define</p>
+<ul>
+<li>the value of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mn>4</mn></msub><annotation encoding="application/x-tex">\beta_4</annotation></semantics></math>,</li>
+<li>the values of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>σ</mi><msub><mi>x</mi><mn>4</mn></msub></msub><annotation encoding="application/x-tex">\sigma_{x_4}</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>σ</mi><mi>ϵ</mi></msub><annotation encoding="application/x-tex">\sigma_{\epsilon}</annotation></semantics></math>,
@@ -517,13 +519,20 @@ the Pearson’s correlation level between the centered ‘baseline R-HAM-D
 scores’ and ‘R-HAM-D scores at one month’ <em>given</em> the 4-level
 ‘treatment’ predictor, equals the target correlation level. This is
 achieved, in the ANCOVA setting, by choosing values respecting the
-following equalities: *
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ρ</mi><mo>=</mo><msub><mi>β</mi><mn>4</mn></msub><mfrac><msub><mi>σ</mi><msub><mi>x</mi><mn>4</mn></msub></msub><msub><mi>σ</mi><mi>y</mi></msub></mfrac></mrow><annotation encoding="application/x-tex">\rho = \beta_4 \frac{\sigma_{x_{4}}}{\sigma_y}</annotation></semantics></math>,
-*
+following equalities:</li>
+<li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ρ</mi><mo>=</mo><msub><mi>β</mi><mn>4</mn></msub><mfrac><msub><mi>σ</mi><msub><mi>x</mi><mn>4</mn></msub></msub><msub><mi>σ</mi><mi>y</mi></msub></mfrac></mrow><annotation encoding="application/x-tex">\rho = \beta_4 \frac{\sigma_{x_{4}}}{\sigma_y}</annotation></semantics></math>,</li>
+<li>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>σ</mi><mi>y</mi><mn>2</mn></msubsup><mo>=</mo><msubsup><mi>β</mi><mn>4</mn><mn>2</mn></msubsup><msubsup><mi>σ</mi><msub><mi>x</mi><mn>4</mn></msub><mn>2</mn></msubsup><mo>+</mo><msubsup><mi>σ</mi><mi>ϵ</mi><mn>2</mn></msubsup></mrow><annotation encoding="application/x-tex">\sigma_y^2 = \beta_4^2\sigma_{x_{4}}^2+\sigma_{\epsilon}^2</annotation></semantics></math>,
 where the former comes from the relationship between (simple) linear
 regression and Pearson’s correlation coefficient and the later comes
-from the law of total variance.</p>
+from the law of total variance.</li>
+</ul>
+<div class="section level3">
+<h3 id="adaptive-designs">Adaptive designs<a class="anchor" aria-label="anchor" href="#adaptive-designs"></a>
+</h3>
+<p>We first show the code corresponding to the planned adaptive design
+for each Scenario:</p>
 <div class="section level4">
 <h4 id="scenario-0">Scenario 0<a class="anchor" aria-label="anchor" href="#scenario-0"></a>
 </h4>
@@ -619,7 +628,7 @@ baseline and after one month so that</p>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>σ</mi><mi>ϵ</mi></msub><mo>=</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">\sigma_{\epsilon} = 7</annotation></semantics></math>.
 This corresponds to a very unlikely scenario allowing us to see the drop
 in power induced by adding to the model a predictor unrelated to the
-response</li>
+response.</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://batss-dev.github.io/BATSS/" class="external-link">BATSS</a></span><span class="op">)</span></span>
@@ -656,7 +665,7 @@ response</li>
 <span>  mc.cores        <span class="op">=</span> <span class="fl">9</span>,</span>
 <span>  H0              <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  extended        <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>   </span></code></pre></div>
-<p>Compared to scenario 0, you can note that</p>
+<p>Compared to Scenario 0, you can note that</p>
 <ul>
 <li>
 <code>y</code>, the outcome vector, now depends on the R-HAM-D
@@ -687,7 +696,7 @@ so that</p>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>β</mi><mn>4</mn></msub><annotation encoding="application/x-tex">\beta_4</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>σ</mi><mi>ϵ</mi></msub><annotation encoding="application/x-tex">\sigma_{\epsilon}</annotation></semantics></math>,
-the checks this values by simulation and finally defines the operating
+then checks these values by simulation and finally defines the operating
 characteristics of the design.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">##</span></span>
@@ -722,7 +731,6 @@ characteristics of the design.</p>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://future.apply.futureverse.org" class="external-link">future.apply</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://future.futureverse.org/reference/plan.html" class="external-link">plan</a></span><span class="op">(</span><span class="va">multisession</span><span class="op">)</span></span>
-<span><span class="fu">.idf</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span>,<span class="st">"seed"</span><span class="op">)</span></span>
 <span><span class="va">toto</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://future.apply.futureverse.org/reference/future_lapply.html" class="external-link">future_sapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span>, <span class="va">sim.fun</span>, Xmat<span class="op">=</span><span class="va">X</span>, BETA<span class="op">=</span><span class="va">BETA</span>, </span>
 <span>         SIGMA.x<span class="op">=</span><span class="va">SIGMA.x</span>,SIGMA.e<span class="op">=</span><span class="va">SIGMA.e</span>, future.seed<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html" class="external-link">boxplot</a></span><span class="op">(</span><span class="va">toto</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">BETA</span>,<span class="va">RHO</span>,<span class="cn">NA</span>,<span class="va">SIGMA.y</span>,<span class="va">SIGMA.e</span><span class="op">)</span>,<span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">toto</span><span class="op">)</span><span class="op">)</span>,nrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">toto</span><span class="op">)</span>,byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
@@ -764,12 +772,12 @@ characteristics of the design.</p>
 <span>  computation     <span class="op">=</span> <span class="st">"parallel"</span>,</span>
 <span>  mc.cores        <span class="op">=</span> <span class="fl">9</span>,</span>
 <span>  H0              <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  extended        <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="co"># 2  </span></span></code></pre></div>
+<span>  extended        <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>  </span></code></pre></div>
 <p>Compared to ‘Scenario 1’, we can note the following differences:</p>
 <ul>
 <li>
-<code>beta</code>, now a taking <code>1.2</code> as last value
-instead of <code>0</code>,</li>
+<code>beta</code>, now taking <code>1.2</code> as last value instead
+of <code>0</code>,</li>
 <li>
 <code>var.control</code>, now indicating
 <ul>
@@ -778,6 +786,145 @@ instead of <code>0</code>,</li>
 </ul>
 </li>
 </ul>
+</div>
+</div>
+<div class="section level3">
+<h3 id="fixed-designs">Fixed designs<a class="anchor" aria-label="anchor" href="#fixed-designs"></a>
+</h3>
+<p>We now show how to use <code>batss.glm</code> to obtain the operating
+characteristics of the corresponding fixed designs, considering the same
+efficacy and futility parameters as well as the same maximum sample size
+of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>=</mo><mn>130</mn></mrow><annotation encoding="application/x-tex">N=130</annotation></semantics></math>
+patients. The easiest way to fit a fixed design with
+<strong>BATSS</strong> is to plan a single interim analysis defined so
+that no adaptations are allowed. This is ensured by setting the
+<code>delta.eff</code> and <code>delta.fut</code> values to
+<code>NA</code> for the interim, as well as by setting the
+<code>RAR</code> argument to <code>NULL</code> (as treatment allocation
+after the interim analysis would otherwise be based on posterior
+probabilities estimated on interim data). Note that the sample size at
+the dummy interim should ideally be a multiple of the number of arms in
+the trial.</p>
+<div class="section level4">
+<h4 id="scenario-0-fixed">Scenario 0 (fixed)<a class="anchor" aria-label="anchor" href="#scenario-0-fixed"></a>
+</h4>
+<p>Same as the adaptive Scenario 0 above, except <code>interim</code> is
+reduced to a single dummy interim at 52 participants,
+<code>delta.eff</code> and <code>delta.fut</code> are set to
+<code>c(NA, 0)</code> and <code>c(NA, 3)</code> respectively so that no
+decisions are made at the interim, and <code>RAR</code> is set to
+<code>NULL</code> (with <code>RAR.control</code> and
+<code>delta.RAR</code> removed) so that equal group allocation is used
+throughout.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://batss-dev.github.io/BATSS/" class="external-link">BATSS</a></span><span class="op">)</span></span>
+<span><span class="co"># number of trials</span></span>
+<span><span class="va">R</span> <span class="op">=</span> <span class="fl">100</span></span>
+<span></span>
+<span><span class="co"># simulation</span></span>
+<span><span class="va">scenario0_fixed</span> <span class="op">=</span> <span class="fu"><a href="../../reference/batss.glm.html">batss.glm</a></span><span class="op">(</span>   </span>
+<span>  model           <span class="op">=</span> <span class="va">y</span><span class="op">~</span><span class="va">group</span>,</span>
+<span>  var             <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">rnorm</span>,</span>
+<span>                         group <span class="op">=</span> <span class="va">treatalloc.fun</span><span class="op">)</span>,</span>
+<span>  var.control     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">7</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>  family          <span class="op">=</span> <span class="st">"gaussian"</span>,</span>
+<span>  link            <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>  beta            <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">5</span>,<span class="fl">5</span>,<span class="fl">5</span><span class="op">)</span>,</span>
+<span>  which           <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>,</span>
+<span>  R               <span class="op">=</span> <span class="va">R</span>,</span>
+<span>  alternative     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"greater"</span><span class="op">)</span>,</span>
+<span>  RAR             <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  prob0           <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Ctrl<span class="op">=</span><span class="fl">1</span>,D1<span class="op">=</span><span class="fl">1</span>,D2<span class="op">=</span><span class="fl">1</span>,D3<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,</span>
+<span>  N               <span class="op">=</span> <span class="fl">130</span>, </span>
+<span>  interim         <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>recruited<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">52</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  eff.arm         <span class="op">=</span> <span class="va">efficacy.arm.fun</span>,</span>
+<span>  delta.eff       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">0</span><span class="op">)</span>, </span>
+<span>  eff.arm.control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>b.eff <span class="op">=</span> <span class="fl">0.0115</span>, p.eff<span class="op">=</span><span class="fl">1.575</span><span class="op">)</span>,</span>
+<span>  delta.fut       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">3</span><span class="op">)</span>, </span>
+<span>  fut.arm         <span class="op">=</span> <span class="va">futility.arm.fun</span>,</span>
+<span>  fut.arm.control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>b.fut <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>,</span>
+<span>  computation     <span class="op">=</span> <span class="st">"parallel"</span>,</span>
+<span>  mc.cores        <span class="op">=</span> <span class="fl">9</span>,</span>
+<span>  H0              <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  extended        <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>   </span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="scenario-1-fixed">Scenario 1 (fixed)<a class="anchor" aria-label="anchor" href="#scenario-1-fixed"></a>
+</h4>
+<p>Same as the fixed Scenario 0 above, but now including
+<code>baseline</code> as in the adaptive Scenario 1 (with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>β</mi><mn>4</mn></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\beta_4 = 0</annotation></semantics></math>).</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># number of trials</span></span>
+<span><span class="va">R</span> <span class="op">=</span> <span class="fl">100</span></span>
+<span></span>
+<span><span class="co"># simulation</span></span>
+<span><span class="va">scenario1_fixed</span> <span class="op">=</span> <span class="fu"><a href="../../reference/batss.glm.html">batss.glm</a></span><span class="op">(</span>   </span>
+<span>  model           <span class="op">=</span> <span class="va">y</span><span class="op">~</span><span class="va">group</span><span class="op">+</span><span class="va">baseline</span>,</span>
+<span>  var             <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">rnorm</span>,</span>
+<span>                         group <span class="op">=</span> <span class="va">treatalloc.fun</span>,</span>
+<span>                         baseline <span class="op">=</span> <span class="va">rnorm</span><span class="op">)</span>,</span>
+<span>  var.control     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fl">7</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>  family          <span class="op">=</span> <span class="st">"gaussian"</span>,</span>
+<span>  link            <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>  beta            <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">5</span>,<span class="fl">5</span>,<span class="fl">5</span>,<span class="fl">0</span><span class="op">)</span>,</span>
+<span>  which           <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>,</span>
+<span>  R               <span class="op">=</span> <span class="va">R</span>,</span>
+<span>  alternative     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"greater"</span><span class="op">)</span>,</span>
+<span>  RAR             <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  prob0           <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Ctrl<span class="op">=</span><span class="fl">1</span>,D1<span class="op">=</span><span class="fl">1</span>,D2<span class="op">=</span><span class="fl">1</span>,D3<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,</span>
+<span>  N               <span class="op">=</span> <span class="fl">130</span>, </span>
+<span>  interim         <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>recruited<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">52</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  eff.arm         <span class="op">=</span> <span class="va">efficacy.arm.fun</span>,</span>
+<span>  delta.eff       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">0</span><span class="op">)</span>, </span>
+<span>  eff.arm.control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>b.eff <span class="op">=</span> <span class="fl">0.0115</span>, p.eff<span class="op">=</span><span class="fl">1.575</span><span class="op">)</span>,</span>
+<span>  delta.fut       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">3</span><span class="op">)</span>, </span>
+<span>  fut.arm         <span class="op">=</span> <span class="va">futility.arm.fun</span>,</span>
+<span>  fut.arm.control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>b.fut <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>,</span>
+<span>  computation     <span class="op">=</span> <span class="st">"parallel"</span>,</span>
+<span>  mc.cores        <span class="op">=</span> <span class="fl">9</span>,</span>
+<span>  H0              <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  extended        <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>   </span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="scenario-2-fixed">Scenario 2 (fixed)<a class="anchor" aria-label="anchor" href="#scenario-2-fixed"></a>
+</h4>
+<p>Same as the fixed Scenario 1 above, but with <code>beta</code>,
+<code>var.control</code> and <code>SIGMA.e</code>/<code>SIGMA.x</code>
+values as defined in the adaptive Scenario 2
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ρ</mi><mo>=</mo><mn>0.6</mn></mrow><annotation encoding="application/x-tex">\rho = 0.6</annotation></semantics></math>).</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># number of trials</span></span>
+<span><span class="va">R</span> <span class="op">=</span> <span class="fl">100</span></span>
+<span></span>
+<span><span class="co"># simulation</span></span>
+<span><span class="va">scenario2_fixed</span> <span class="op">=</span> <span class="fu"><a href="../../reference/batss.glm.html">batss.glm</a></span><span class="op">(</span>   </span>
+<span>  model           <span class="op">=</span> <span class="va">y</span><span class="op">~</span><span class="va">group</span><span class="op">+</span><span class="va">baseline</span>,</span>
+<span>  var             <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">rnorm</span>,</span>
+<span>                         group <span class="op">=</span> <span class="va">treatalloc.fun</span>,</span>
+<span>                         baseline <span class="op">=</span> <span class="va">rnorm</span><span class="op">)</span>,</span>
+<span>  var.control     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="va">SIGMA.e</span><span class="op">)</span>, baseline <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="va">SIGMA.x</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>  family          <span class="op">=</span> <span class="st">"gaussian"</span>,</span>
+<span>  link            <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>  beta            <span class="op">=</span> <span class="va">BETA</span>,</span>
+<span>  which           <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>,</span>
+<span>  R               <span class="op">=</span> <span class="va">R</span>,</span>
+<span>  alternative     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"greater"</span><span class="op">)</span>,</span>
+<span>  RAR             <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  prob0           <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>Ctrl<span class="op">=</span><span class="fl">1</span>,D1<span class="op">=</span><span class="fl">1</span>,D2<span class="op">=</span><span class="fl">1</span>,D3<span class="op">=</span><span class="fl">1</span><span class="op">)</span>,</span>
+<span>  N               <span class="op">=</span> <span class="fl">130</span>, </span>
+<span>  interim         <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>recruited<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">52</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  eff.arm         <span class="op">=</span> <span class="va">efficacy.arm.fun</span>,</span>
+<span>  delta.eff       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">0</span><span class="op">)</span>, </span>
+<span>  eff.arm.control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>b.eff <span class="op">=</span> <span class="fl">0.0115</span>, p.eff<span class="op">=</span><span class="fl">1.575</span><span class="op">)</span>,</span>
+<span>  delta.fut       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">3</span><span class="op">)</span>, </span>
+<span>  fut.arm         <span class="op">=</span> <span class="va">futility.arm.fun</span>,</span>
+<span>  fut.arm.control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>b.fut <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span>,</span>
+<span>  computation     <span class="op">=</span> <span class="st">"parallel"</span>,</span>
+<span>  mc.cores        <span class="op">=</span> <span class="fl">9</span>,</span>
+<span>  H0              <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  extended        <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>   </span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="scenario-comparison">Scenario comparison<a class="anchor" aria-label="anchor" href="#scenario-comparison"></a>
@@ -799,6 +946,12 @@ increases to 0.0550 and the power per arm jumps to 0.9424.</li>
 predictor are not associated, * it strongly increases the power when the
 endpoint and new predictor are associated, whilst maintaining very
 reasonable FWER control.</p>
+</div>
+</div>
+</div>
+<div class="section level2 unnumbered">
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Cellamare2017" class="csl-entry">
 Cellamare, Matteo, Steffen Ventz, Elisabeth Baudin, Carole D. Mitnick,
@@ -824,7 +977,6 @@ Timothy Cloughesy, Giovanni Parmigiani, and Brian M. Alexander. 2012.
 <span>“Bayesian Adaptive Randomized Trial Design for Patients with
 Recurrent Glioblastoma.”</span> <em>Journal of Clinical Oncology</em> 30
 (26): 3258–63. <a href="https://doi.org/10.1200/JCO.2011.39.8420" class="external-link">https://doi.org/10.1200/JCO.2011.39.8420</a>.
-</div>
 </div>
 </div>
 </div>

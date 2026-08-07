@@ -1,3 +1,10 @@
+## Version 2.0.6
+
+-   Fixes a bug in `batss.surv` (reported by Stina Zetterstrom) that
+    required intervention groups to be listed in alphabetical order
+    in `prob0` for the corresponding allocation probabilities to be
+    correctly assigned when using RAR.  
+
 ## Version 2.0.5
 
 -   Resolution of bugs affecting censoring in some scenarios. 
@@ -30,6 +37,24 @@
     -   New 'Interim schedule' page
     -   Improved 'Priors' page now including information specific
         to survival endpoints
+
+## Version 1.2.1
+
+-   Fixes a bug in `batss.glm` (reported by Stina Zetterstrom) that
+    required intervention groups to be listed in alphabetical order
+    in `prob0` for the corresponding allocation probabilities to be
+    correctly assigned when using RAR. 
+
+## Version 1.2.0
+
+-   Improvements to `batss.glm`:
+    -   `interim = NA` now specifies a fixed (non-adaptive) design
+        with a single look at the maximum sample size `N`
+    -   better warnings
+-   Fixes to minor bugs detected by Claude (Opus 4.6) in version 1.1.1 of
+    `batss.glm`, `batss.combine`, `summary.batss`, `plot.batss` and 
+    internal functions, including a fix to `eff.trial.control` and 
+    `fut.trial.control` being ignored in trial-level stopping decisions 
 
 ## Version 1.1.0
 

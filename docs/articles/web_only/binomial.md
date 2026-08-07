@@ -237,8 +237,13 @@ We consider two scenarios:
 - **Scenario 1**: each arm has an ORR of 0.4 (global null),
 - **Scenario 2**:
   - arms “A”, “B” and “C” have an ORR of 0.4,
-  - arms “D” has an ORR of 0.5,
+  - arm “D” has an ORR of 0.5,
   - arms “E” and “F” have an ORR of 0.7.
+
+### Adaptive designs
+
+We first show the code corresponding to the planned adaptive design for
+each Scenario:
 
 #### Scenario 1
 
@@ -358,6 +363,109 @@ scenario1 = batss.glm(
 ```
 
 Same as above except for `beta`.
+
+### Fixed designs
+
+We now show how to use `batss.glm` to define the operating
+characteristics of the fixed design when considering the same efficacy
+and futility parameters as well as the same total maximum sample size of
+$N = 216$ patients. The easiest way to fit a fixed design with **BATSS**
+is to plan a single interim analysis defined so that no adaptations are
+allowed. This is ensured by setting the `delta.eff` and `delta.fut`
+values to `NA` for the interim (as well as by setting the `RAR` argument
+to `NULL` as treatment allocation after the interim analysis would be
+based on posterior probabilities estimated on interim data otherwise).
+Note that the sample size at the dummy interim should be a multiple of
+the number of arms in the trial.
+
+#### Scenario 1
+
+Same as the adaptive Scenario 1 above, except `interim` is reduced to a
+single dummy interim at 60 participants, and `delta.eff` and `delta.fut`
+are set to `c(NA, 0)` and `c(NA, log(1.5))` respectively, and `RAR` is
+set to `NULL` (and `RAR.control` and `delta.RAR` deleted), so that no
+decisions are made at the interim and equal group allocation is used.
+
+``` r
+# number of trials
+R = 25
+
+# logit function
+logit = function(p){log(p/(1 - p))}
+
+# simulation
+scenario1_fixed = batss.glm(   
+  model           = y~group,
+  var             = list(y = rbinom,
+                         group = treatalloc.fun),
+  var.control     = list(y = list(size = 1)), 
+  family          = "binomial",
+  link            = "logit",
+  beta            = c(logit(0.4), rep(0,5)),
+  which           = c(2:6),
+  R               = R,
+  alternative     = c("greater"),
+  RAR             = NULL,
+  prob0           = c(A=1,B=1,C=1,D=1,E=1,F=1),
+  N               = 216, 
+  interim         = list(recruited=list(60)),
+  eff.arm         = efficacy.arm.fun,
+  delta.eff       = c(NA, 0), 
+  eff.arm.control = list(b.eff = 0.045),
+  delta.fut       = c(NA,log(1.5)), 
+  fut.arm         = futility.arm.fun,
+  fut.arm.control = list(b.fut = 0.1),
+  computation     = "parallel",
+  mc.cores        = 12,
+  H0              = FALSE,
+  extended        = 1)   
+```
+
+#### Scenario 2
+
+Same as the adaptive Scenario 2 above, except `interim` is reduced to a
+single dummy interim at 60 participants, and `delta.eff` and `delta.fut`
+are set to `c(NA, 0)` and `c(NA, log(1.5))` respectively, and `RAR` is
+set to `NULL` (and `RAR.control` and `delta.RAR` deleted), so that no
+decisions are made at the interim and equal group allocation is used.
+
+``` r
+# number of trials
+R = 25
+
+# logit function
+logit = function(p){log(p/(1 - p))}
+
+# simulation
+scenario2_fixed = batss.glm(   
+  model           = y~group,
+  var             = list(y = rbinom,
+                         group = treatalloc.fun),
+  var.control     = list(y = list(size = 1)), 
+  family          = "binomial",
+  link            = "logit",
+  beta            = c(logit(0.4),                    # log odd of reference group
+                      0,0,                           # log odds ratio of groups B and C       
+                      logit(0.5)-logit(0.4),         # log odds ratio of group D
+                      rep(logit(0.7)-logit(0.4),2)), # log odds ratio of groups E and F       
+  which           = c(2:6),
+  R               = R,
+  alternative     = c("greater"),
+  RAR             = NULL,
+  prob0           = c(A=1,B=1,C=1,D=1,E=1,F=1),
+  N               = 216, 
+  interim         = list(recruited=list(60)),
+  eff.arm         = efficacy.arm.fun,
+  delta.eff       = c(NA, 0), 
+  eff.arm.control = list(b.eff = 0.045),
+  delta.fut       = c(NA,log(1.5)), 
+  fut.arm         = futility.arm.fun,
+  fut.arm.control = list(b.fut = 0.1),
+  computation     = "parallel",
+  mc.cores        = 9,
+  H0              = FALSE,
+  extended        = 1)  
+```
 
 ## References
 

@@ -18,12 +18,12 @@
 
 Couturier D, Ryan L, Puhr R, Jaki T, Heritier S (2026). *BATSS: Bayesian
 Adaptive Trial Simulator Software (BATSS) for Generalised Linear
-Models*. R package version 2.0.5, <https://batss-dev.github.io/BATSS/>.
+Models*. R package version 2.0.6, <https://batss-dev.github.io/BATSS/>.
 
     @Manual{,
       title = {BATSS: Bayesian Adaptive Trial Simulator Software (BATSS) for Generalised Linear Models},
       author = {Dominique-Laurent Couturier and Liz Ryan and Rainer Puhr and Thomas Jaki and Stephane Heritier},
       year = {2026},
-      note = {R package version 2.0.5},
+      note = {R package version 2.0.6},
       url = {https://batss-dev.github.io/BATSS/},
     }

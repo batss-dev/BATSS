@@ -264,7 +264,7 @@ id.target = data.frame(pos = NA,
 id.target$group = sapply(id.target$id,function(x){
     levels(data[,groupvar])[which(sapply(split(X[,x]!=0,data[,groupvar]),any))]
     })
-id.target = id.target[order(id.target$group),]
+id.target = id.target[order(match(id.target$group, id.group$id)),]
 id.target$pos = 1:n.target
 
 

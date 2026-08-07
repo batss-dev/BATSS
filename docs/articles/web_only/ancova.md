@@ -189,7 +189,7 @@ takes as input
 - `n` and `N`, respectively the sample size per arm at the look of
   interest and the max sample size to define the information fraction,
 - the additional parameters $b_{\epsilon}$ and $p_{\epsilon}$ that we
-  will respectively name `b.eff` and `p.eff` (and that needs to be added
+  will respectively name `b.eff` and `p.eff` (and that need to be added
   to `eff.arm.control` in `batss.glm`).
 
 ``` r
@@ -213,7 +213,7 @@ the arm needs to be stopped for futility and `FALSE` otherwise) and
 takes as input
 
 - the ingredient `posterior` for the posterior probability of the target
-  parameter being greater than `delta.fut = log(1.5)`,
+  parameter being greater than `delta.fut = 3`,
 - the additional parameter $b_{f}$ that we will name `b.fut` (and that
   needs to be added to `fut.arm.control` in `batss.glm`)
 
@@ -274,14 +274,14 @@ after one month (primary endpoint). Thus,
 
 For the $i$th participant, our assumed model is:
 
-$$y_{i} = \beta_{0} + \beta_{1}\iota\left( x_{i1} = \prime D1\prime \right) + \beta_{2}\iota\left( x_{i1} = \prime D2\prime \right) + \beta_{3}\iota\left( x_{i1} = \prime D3\prime \right) + \beta_{4}\left\lbrack x_{i2} - \bar{\_}x_{2} \right\rbrack + \epsilon_{i}$$,
+$$y_{i} = \beta_{0} + \beta_{1}\iota\left( x_{i1} = \prime D1\prime \right) + \beta_{2}\iota\left( x_{i1} = \prime D2\prime \right) + \beta_{3}\iota\left( x_{i1} = \prime D3\prime \right) + \beta_{4}\left\lbrack x_{i2} - {\bar{x}}_{2} \right\rbrack + \epsilon_{i}$$,
 
 where
 
 - $x_{ip}$ denotes the value of the predictor $p$ for participant $i$,
 - $\iota(.)$ denotes the indicator function that equals to 1 if the
   condition is satisfied and 0 otherwise,
-- $\bar{\_}x_{2}$ denotes the average ‘R-HAM-D scores’ at baseline.
+- ${\bar{x}}_{2}$ denotes the average ‘R-HAM-D scores’ at baseline.
 
 This parameterisation leads to the following parameter interpretation:
 
@@ -304,19 +304,26 @@ We assume
   predictor, equal to 7, i.e., $\sigma_{y} = 7$.
 
 When controlling for the (centered) ‘R-HAM-D scores’ at baseline, we
-further need to define \* the value of $\beta_{4}$, \* the values of
-$\sigma_{x_{4}}$ and $\sigma_{\epsilon}$, the standard deviations of
-‘baseline R-HAM-D scores’ and of the error term, so that $\rho$, the
-Pearson’s correlation level between the centered ‘baseline R-HAM-D
-scores’ and ‘R-HAM-D scores at one month’ *given* the 4-level
-‘treatment’ predictor, equals the target correlation level. This is
-achieved, in the ANCOVA setting, by choosing values respecting the
-following equalities: \*
-$\rho = \beta_{4}\frac{\sigma_{x_{4}}}{\sigma_{y}}$, \*
-$\sigma_{y}^{2} = \beta_{4}^{2}\sigma_{x_{4}}^{2} + \sigma_{\epsilon}^{2}$,
-where the former comes from the relationship between (simple) linear
-regression and Pearson’s correlation coefficient and the later comes
-from the law of total variance.
+further need to define
+
+- the value of $\beta_{4}$,
+- the values of $\sigma_{x_{4}}$ and $\sigma_{\epsilon}$, the standard
+  deviations of ‘baseline R-HAM-D scores’ and of the error term, so that
+  $\rho$, the Pearson’s correlation level between the centered ‘baseline
+  R-HAM-D scores’ and ‘R-HAM-D scores at one month’ *given* the 4-level
+  ‘treatment’ predictor, equals the target correlation level. This is
+  achieved, in the ANCOVA setting, by choosing values respecting the
+  following equalities:
+- $\rho = \beta_{4}\frac{\sigma_{x_{4}}}{\sigma_{y}}$,
+- $\sigma_{y}^{2} = \beta_{4}^{2}\sigma_{x_{4}}^{2} + \sigma_{\epsilon}^{2}$,
+  where the former comes from the relationship between (simple) linear
+  regression and Pearson’s correlation coefficient and the later comes
+  from the law of total variance.
+
+### Adaptive designs
+
+We first show the code corresponding to the planned adaptive design for
+each Scenario:
 
 #### Scenario 0
 
@@ -404,7 +411,7 @@ baseline and after one month so that
 - $\beta_{4} = 0$,
 - $\sigma_{\epsilon} = 7$. This corresponds to a very unlikely scenario
   allowing us to see the drop in power induced by adding to the model a
-  predictor unrelated to the response
+  predictor unrelated to the response.
 
 ``` r
 library(BATSS)
@@ -443,7 +450,7 @@ scenario1 = batss.glm(
   extended        = 1)   
 ```
 
-Compared to scenario 0, you can note that
+Compared to Scenario 0, you can note that
 
 - `y`, the outcome vector, now depends on the R-HAM-D scores at
   baseline,
@@ -463,7 +470,7 @@ $\sigma_{\epsilon} = 7$, so that
 $$\beta_{4} = \rho\frac{\sigma_{y}}{\sigma_{x_{4}}} = 0.6 \times \frac{7}{3.5} = 1.2,$$$$\sigma_{\epsilon}^{2} = \sigma_{y}^{2} - \beta_{4}^{2}\sigma_{x_{4}}^{2} = 7^{2} - 1.2^{2} \times 3.5^{2} = 5.6.$$
 
 The following code first defines the values of $\beta_{4}$ and
-$\sigma_{\epsilon}$, the checks this values by simulation and finally
+$\sigma_{\epsilon}$, then checks these values by simulation and finally
 defines the operating characteristics of the design.
 
 ``` r
@@ -499,7 +506,6 @@ sim.fun = function(seed, Xmat, BETA, SIGMA.x,SIGMA.e){
 
 library(future.apply)
 plan(multisession)
-.idf(1:1000,"seed")
 toto = t(future_sapply(1:1000, sim.fun, Xmat=X, BETA=BETA, 
          SIGMA.x=SIGMA.x,SIGMA.e=SIGMA.e, future.seed=TRUE))
 boxplot(toto-matrix(rep(c(BETA,RHO,NA,SIGMA.y,SIGMA.e),nrow(toto)),nrow=nrow(toto),byrow=TRUE))
@@ -541,15 +547,147 @@ scenario2 = batss.glm(
   computation     = "parallel",
   mc.cores        = 9,
   H0              = TRUE,
-  extended        = 1)# 2  
+  extended        = 1)  
 ```
 
 Compared to ‘Scenario 1’, we can note the following differences:
 
-- `beta`, now a taking `1.2` as last value instead of `0`,
+- `beta`, now taking `1.2` as last value instead of `0`,
 - `var.control`, now indicating
   - an amended value for the standard deviation of the error term,
   - the standard deviation of the variable `baseline`.
+
+### Fixed designs
+
+We now show how to use `batss.glm` to obtain the operating
+characteristics of the corresponding fixed designs, considering the same
+efficacy and futility parameters as well as the same maximum sample size
+of $N = 130$ patients. The easiest way to fit a fixed design with
+**BATSS** is to plan a single interim analysis defined so that no
+adaptations are allowed. This is ensured by setting the `delta.eff` and
+`delta.fut` values to `NA` for the interim, as well as by setting the
+`RAR` argument to `NULL` (as treatment allocation after the interim
+analysis would otherwise be based on posterior probabilities estimated
+on interim data). Note that the sample size at the dummy interim should
+ideally be a multiple of the number of arms in the trial.
+
+#### Scenario 0 (fixed)
+
+Same as the adaptive Scenario 0 above, except `interim` is reduced to a
+single dummy interim at 52 participants, `delta.eff` and `delta.fut` are
+set to `c(NA, 0)` and `c(NA, 3)` respectively so that no decisions are
+made at the interim, and `RAR` is set to `NULL` (with `RAR.control` and
+`delta.RAR` removed) so that equal group allocation is used throughout.
+
+``` r
+library(BATSS)
+# number of trials
+R = 100
+
+# simulation
+scenario0_fixed = batss.glm(   
+  model           = y~group,
+  var             = list(y = rnorm,
+                         group = treatalloc.fun),
+  var.control     = list(y = list(sd = 7)), 
+  family          = "gaussian",
+  link            = "identity",
+  beta            = c(5,5,5,5),
+  which           = c(2:4),
+  R               = R,
+  alternative     = c("greater"),
+  RAR             = NULL,
+  prob0           = c(Ctrl=1,D1=1,D2=1,D3=1),
+  N               = 130, 
+  interim         = list(recruited=c(52)),
+  eff.arm         = efficacy.arm.fun,
+  delta.eff       = c(NA, 0), 
+  eff.arm.control = list(b.eff = 0.0115, p.eff=1.575),
+  delta.fut       = c(NA, 3), 
+  fut.arm         = futility.arm.fun,
+  fut.arm.control = list(b.fut = 0.05),
+  computation     = "parallel",
+  mc.cores        = 9,
+  H0              = TRUE,
+  extended        = 1)   
+```
+
+#### Scenario 1 (fixed)
+
+Same as the fixed Scenario 0 above, but now including `baseline` as in
+the adaptive Scenario 1 (with $\beta_{4} = 0$).
+
+``` r
+# number of trials
+R = 100
+
+# simulation
+scenario1_fixed = batss.glm(   
+  model           = y~group+baseline,
+  var             = list(y = rnorm,
+                         group = treatalloc.fun,
+                         baseline = rnorm),
+  var.control     = list(y = list(sd = 7)), 
+  family          = "gaussian",
+  link            = "identity",
+  beta            = c(5,5,5,5,0),
+  which           = c(2:4),
+  R               = R,
+  alternative     = c("greater"),
+  RAR             = NULL,
+  prob0           = c(Ctrl=1,D1=1,D2=1,D3=1),
+  N               = 130, 
+  interim         = list(recruited=c(52)),
+  eff.arm         = efficacy.arm.fun,
+  delta.eff       = c(NA, 0), 
+  eff.arm.control = list(b.eff = 0.0115, p.eff=1.575),
+  delta.fut       = c(NA, 3), 
+  fut.arm         = futility.arm.fun,
+  fut.arm.control = list(b.fut = 0.05),
+  computation     = "parallel",
+  mc.cores        = 9,
+  H0              = TRUE,
+  extended        = 1)   
+```
+
+#### Scenario 2 (fixed)
+
+Same as the fixed Scenario 1 above, but with `beta`, `var.control` and
+`SIGMA.e`/`SIGMA.x` values as defined in the adaptive Scenario 2
+($\rho = 0.6$).
+
+``` r
+# number of trials
+R = 100
+
+# simulation
+scenario2_fixed = batss.glm(   
+  model           = y~group+baseline,
+  var             = list(y = rnorm,
+                         group = treatalloc.fun,
+                         baseline = rnorm),
+  var.control     = list(y = list(sd = SIGMA.e), baseline = list(sd = SIGMA.x)), 
+  family          = "gaussian",
+  link            = "identity",
+  beta            = BETA,
+  which           = c(2:4),
+  R               = R,
+  alternative     = c("greater"),
+  RAR             = NULL,
+  prob0           = c(Ctrl=1,D1=1,D2=1,D3=1),
+  N               = 130, 
+  interim         = list(recruited=c(52)),
+  eff.arm         = efficacy.arm.fun,
+  delta.eff       = c(NA, 0), 
+  eff.arm.control = list(b.eff = 0.0115, p.eff=1.575),
+  delta.fut       = c(NA, 3), 
+  fut.arm         = futility.arm.fun,
+  fut.arm.control = list(b.fut = 0.05),
+  computation     = "parallel",
+  mc.cores        = 9,
+  H0              = TRUE,
+  extended        = 1)   
+```
 
 #### Scenario comparison
 
@@ -570,6 +708,8 @@ This suggests that adding a predictor has little downside as:
 predictor are not associated, \* it strongly increases the power when
 the endpoint and new predictor are associated, whilst maintaining very
 reasonable FWER control.
+
+## References
 
 Cellamare, Matteo, Steffen Ventz, Elisabeth Baudin, Carole D. Mitnick,
 and Lorenzo Trippa. 2017. “A Bayesian Response-Adaptive Trial in
